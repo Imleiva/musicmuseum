@@ -1,0 +1,937 @@
+.global-blur-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.18);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  transition: opacity 0.08s linear;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.global-blur-backdrop[style*="display: none"] {
+  opacity: 0;
+}
+/* ===================================== */
+/* ROCK & METAL CONCERT MUSEUM STYLES */
+/* ===================================== */
+
+/* Import modern font */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+/* Reset and global configuration */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: url("/images/rockhand.png") 16 16, auto;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  background: radial-gradient(ellipse at center, #000000 0%, #000000 70%);
+  overflow: hidden;
+  height: 100vh;
+  color: #ffffff;
+  cursor: url("/images/rockhand.png") 16 16, auto;
+}
+
+/* Main app container */
+.app {
+  position: relative;
+  height: 100vh;
+  cursor: url("/images/rockhand.png") 16 16, auto;
+  overflow: hidden;
+}
+
+.app:active {
+  cursor: url("/images/rockhand.png") 16 16, auto;
+}
+
+/* Canvas específico */
+canvas {
+  cursor: url("/images/rockhand.png") 16 16, auto !important;
+}
+
+canvas:active {
+  cursor: url("/images/rockhand.png") 16 16, auto !important;
+}
+
+/* Asegurar rock hand en todos los estados de arrastre */
+*:active {
+  cursor: url("/images/rockhand.png") 16 16, auto !important;
+}
+
+/* Estados específicos de arrastre para Three.js */
+canvas[style*="cursor"] {
+  cursor: url("/images/rockhand.png") 16 16, auto !important;
+}
+
+.canvas-3d:active,
+.canvas-3d[data-dragging="true"] {
+  cursor: url("/images/rockhand.png") 16 16, auto !important;
+}
+
+/* 3D Canvas - Simplified */
+.canvas-3d {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1;
+  cursor: url("/images/rockhand.png") 16 16, auto !important;
+}
+
+/* Museum header */
+.museum-header {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    rgba(40, 0, 0, 0.95),
+    rgba(80, 20, 20, 0.95)
+  );
+  border: 2px solid #ff4444;
+  border-radius: 20px;
+  padding: 1.5rem 3rem;
+  box-shadow: 0 10px 40px rgba(255, 68, 68, 0.4);
+  animation: slideInDown 1s ease-out;
+}
+
+.museum-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #ff4444;
+  text-shadow: 0 0 20px rgba(255, 68, 68, 0.6);
+  letter-spacing: 3px;
+  text-transform: capitalize;
+  margin-bottom: 0.5rem;
+}
+
+.museum-header p {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Rock Navigator */
+.rock-navigator {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  background: linear-gradient(
+    135deg,
+    rgba(40, 0, 0, 0.95),
+    rgba(80, 20, 20, 0.95)
+  );
+  border: 2px solid #ff4444;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 40px rgba(255, 68, 68, 0.4);
+  animation: slideInLeft 0.8s ease-out;
+  max-width: 320px;
+  cursor: url("/images/rockhand.png") 16 16, auto !important;
+}
+
+.rock-navigator h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ff4444;
+  text-shadow: 0 0 15px rgba(255, 68, 68, 0.6);
+  letter-spacing: 2px;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+}
+
+.navigator-header {
+  cursor: url("/images/rockhand.png") 16 16, auto;
+}
+
+.navigator-header h1 {
+  cursor: url("/images/rockhand.png") 16 16, auto;
+}
+
+.navigator-header p {
+  cursor: url("/images/rockhand.png") 16 16, auto;
+}
+
+.room-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.room-btn {
+  background: linear-gradient(135deg, #2a0000, #440000);
+  border: 2px solid #666666;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.8rem 1rem;
+  cursor: url("/images/rockhand.png") 16 16, pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+.room-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.room-btn:hover::before {
+  left: 100%;
+}
+
+.room-btn:hover {
+  background: linear-gradient(135deg, #440000, #660000);
+  border-color: #ff4444;
+  color: #ff4444;
+  box-shadow: 0 8px 25px rgba(255, 68, 68, 0.4), 0 0 30px rgba(255, 68, 68, 0.2);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.room-btn.active {
+  background: linear-gradient(135deg, #ff4444, #cc0000);
+  border-color: #ffffff;
+  color: #ffffff;
+  box-shadow: 0 10px 30px rgba(255, 68, 68, 0.6);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.room-info {
+  border-top: 1px solid rgba(255, 68, 68, 0.3);
+  padding-top: 1rem;
+  font-size: 0.85rem;
+  cursor: url("/images/rockhand.png") 16 16, auto;
+}
+
+.room-info .current-room {
+  color: #ff4444;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  cursor: url("/images/rockhand.png") 16 16, auto;
+}
+
+.room-info .room-description {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  cursor: url("/images/rockhand.png") 16 16, auto;
+}
+
+.room-info .room-counter {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8rem;
+  cursor: url("/images/rockhand.png") 16 16, auto;
+}
+
+/* Controls help */
+.controls-help {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  background: linear-gradient(
+    135deg,
+    rgba(40, 0, 0, 0.95),
+    rgba(80, 20, 20, 0.95)
+  );
+  border: 2px solid #ff4444;
+  border-radius: 15px;
+  padding: 1.2rem 1.5rem;
+  box-shadow: 0 10px 40px rgba(255, 68, 68, 0.4);
+  animation: slideInRight 0.8s ease-out;
+}
+
+.controls-help h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ff4444;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+
+.controls-help ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.controls-help li {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0.4rem 0;
+  padding-left: 0.8rem;
+  position: relative;
+}
+
+.controls-help li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #ff4444;
+  font-weight: bold;
+}
+
+.concert-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 68, 68, 0.3);
+  padding-bottom: 0.8rem;
+}
+
+.concert-header h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ff4444;
+  text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+  flex: 1;
+}
+
+.concert-date {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #74b9ff;
+  background: rgba(116, 185, 255, 0.15);
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  border: 1px solid rgba(116, 185, 255, 0.3);
+}
+
+.concert-venue {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0.8rem 0;
+  font-weight: 500;
+}
+
+.concert-description {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 1rem 0;
+}
+
+.play-audio-btn {
+  background: linear-gradient(135deg, #ff4444, #cc0000);
+  border: none;
+  border-radius: 25px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.8rem 1.5rem;
+  cursor: url("/images/rockhand.png") 16 16, pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.play-audio-btn:hover {
+  background: linear-gradient(135deg, #cc0000, #aa0000);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 68, 68, 0.6);
+}
+
+/* Audio Player */
+.audio-player-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.audio-player {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.98),
+    rgba(15, 15, 15, 0.98)
+  );
+  border: 3px solid #ff4444;
+  border-radius: 25px;
+  padding: 2.5rem;
+  color: #ffffff;
+  max-width: 650px;
+  width: 92%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.9), 0 0 50px rgba(255, 68, 68, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  animation: slideInScale 0.4s ease-out;
+  position: relative;
+}
+
+.audio-player::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #ff4444, #cc0000, #ff6644, #ff4444);
+  border-radius: 27px;
+  z-index: -1;
+  opacity: 0.4;
+  animation: audioPlayerGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes audioPlayerGlow {
+  0% {
+    opacity: 0.3;
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 0.6;
+    filter: blur(8px);
+  }
+}
+
+@keyframes headerUnderline {
+  0% {
+    width: 20%;
+    opacity: 0.6;
+  }
+  100% {
+    width: 40%;
+    opacity: 1;
+  }
+}
+
+.band-info h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ff4444;
+  text-shadow: 0 0 15px rgba(255, 68, 68, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 0 0.5rem 0;
+}
+
+.genre-tag {
+  background: rgba(255, 68, 68, 0.2);
+  border: 1px solid #ff4444;
+  border-radius: 15px;
+  color: #ff4444;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.3rem 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-block;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 68, 68, 0.15),
+    rgba(255, 68, 68, 0.25)
+  );
+  border: 2px solid #ff4444;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  color: #ff4444;
+  font-size: 1.3rem;
+  font-weight: bold;
+  cursor: url("/images/rockhand.png") 16 16, pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.close-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle, rgba(255, 68, 68, 0.3), transparent);
+  transform: scale(0);
+  transition: transform 0.3s ease;
+}
+
+.close-btn:hover {
+  background: linear-gradient(135deg, #ff4444, #cc0000);
+  color: #ffffff;
+  transform: rotate(90deg) scale(1.1);
+  box-shadow: 0 0 25px rgba(255, 68, 68, 0.8), 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.close-btn:hover::before {
+  transform: scale(1);
+}
+
+.concert-details {
+  margin-bottom: 1.5rem;
+}
+
+.venue-info,
+.concert-date,
+.attendance {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  padding: 0.5rem 0;
+}
+
+.venue-info {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.concert-date {
+  color: #74b9ff;
+}
+
+.attendance {
+  color: rgba(255, 68, 68, 0.8);
+}
+
+.audio-section {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: rgba(255, 68, 68, 0.08);
+  border: 1px solid rgba(255, 68, 68, 0.25);
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.audio-controls {
+  width: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.9),
+    rgba(20, 20, 20, 0.9)
+  );
+  border: 2px solid #ff4444;
+  border-radius: 15px;
+  padding: 1.2rem;
+  box-shadow: 0 8px 25px rgba(255, 68, 68, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.audio-controls::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 68, 68, 0.6),
+    transparent
+  );
+  animation: audioGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes audioGlow {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+
+.concert-description h4 {
+  color: #ff4444;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.concert-description p {
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1rem;
+}
+
+.setlist {
+  background: rgba(255, 68, 68, 0.1);
+  border: 1px solid rgba(255, 68, 68, 0.3);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.setlist h5 {
+  color: #ff4444;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.8rem 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.setlist ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.setlist li {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  margin: 0.4rem 0;
+  padding: 0.6rem 1rem;
+  position: relative;
+  transition: background 0.2s ease;
+}
+
+.setlist li:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.setlist li::before {
+  content: "♪";
+  color: #ff4444;
+  font-weight: bold;
+  margin-right: 0.8rem;
+}
+
+.player-controls {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  background: rgba(255, 68, 68, 0.2);
+  border: 1px solid #ff4444;
+  border-radius: 20px;
+  color: #ff4444;
+  cursor: url("/images/rockhand.png") 16 16, pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.6rem 1rem;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.action-btn:hover {
+  background: #ff4444;
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
+  transform: translateY(-2px);
+}
+
+/* ===================================== */
+/* POSTER LABEL STYLES */
+/* ===================================== */
+
+.poster-label {
+  background: rgba(26, 0, 0, 0.9);
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+  border: 1px solid #ff4444;
+  box-shadow: 0 2px 8px rgba(255, 68, 68, 0.3);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ===================================== */
+/* ENHANCED VISUAL EFFECTS */
+/* ===================================== */
+
+/* Enhanced glow effect for active elements */
+.museum-header::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #ff4444, #cc0000, #ff6644, #ff4444);
+  border-radius: 22px;
+  z-index: -1;
+  opacity: 0.5;
+  filter: blur(8px);
+  animation: glowPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+  0% {
+    opacity: 0.3;
+    filter: blur(6px);
+  }
+  100% {
+    opacity: 0.7;
+    filter: blur(12px);
+  }
+}
+
+/* Enhanced room button hover effects */
+.room-btn:hover {
+  background: linear-gradient(135deg, #440000, #660000);
+  border-color: #ff4444;
+  color: #ff4444;
+  box-shadow: 0 8px 25px rgba(255, 68, 68, 0.4), 0 0 30px rgba(255, 68, 68, 0.2);
+  transform: translateY(-2px) scale(1.02);
+}
+
+@keyframes loadingPulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+/* Animations */
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ===================================== */
+/* PERFORMANCE OPTIMIZATIONS */
+/* ===================================== */
+
+/* Optimize animations for better performance */
+.room-btn,
+.close-btn,
+.play-audio-btn,
+.action-btn {
+  will-change: transform, box-shadow;
+}
+
+.museum-header,
+.rock-navigator,
+.controls-help {
+  will-change: transform;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .room-btn:hover {
+    transform: none;
+  }
+
+  .museum-header::before {
+    animation: none;
+  }
+}
+
+/* GPU acceleration for smooth 3D interactions */
+.canvas-3d {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .museum-header {
+    top: 10px;
+    padding: 1rem 2rem;
+  }
+
+  .museum-header h1 {
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+  }
+
+  .rock-navigator {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    max-width: none;
+    padding: 1rem;
+  }
+
+  .controls-help {
+    top: 10px;
+    right: 10px;
+    padding: 1rem;
+  }
+
+  .audio-player {
+    margin: 1rem;
+    padding: 1.5rem;
+    max-height: 85vh;
+  }
+
+  .room-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+
+  .room-btn {
+    font-size: 0.8rem;
+    padding: 0.6rem 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .museum-header h1 {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+
+  .museum-header p {
+    font-size: 0.8rem;
+  }
+
+  .audio-player {
+    margin: 0.5rem;
+    padding: 1rem;
+  }
+}
+
+/* ===================================== */
+/* MODAL OVERLAY STYLES */
+/* ===================================== */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 999;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.3s ease-out;
+  cursor: url("/images/rockhand.png") 16 16, pointer;
+}
+
+/* ===================================== */

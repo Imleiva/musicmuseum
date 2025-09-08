@@ -1,0 +1,1049 @@
+/* ===================================== */
+/* ROCK & METAL CONCERT MUSEUM STYLES */
+/* Reset específico para el museo */
+/* ===================================== */
+
+/* Import modern font */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+/* Reset completo */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  background: radial-gradient(ellipse at center, #1a0000 0%, #000000 70%);
+  color: #ffffff;
+  cursor: url("/images/rockhand.png") 16 16, auto;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+/* Main app container */
+.app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  cursor: grab;
+}
+
+/* Canvas 3D - ocupar toda la pantalla */
+canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1 !important;
+}
+
+/* Animaciones */
+@keyframes slideInDown {
+  from {
+    transform: translateX(-50%) translateY(-100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Navigation controls - Panel unificado a la izquierda - más compacto */
+.rock-navigator {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 100000;
+  background: linear-gradient(
+    135deg,
+    rgba(40, 0, 0, 0.85),
+    rgba(80, 20, 20, 0.85)
+  );
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 2px solid #ff4444;
+  border-radius: 15px;
+  padding: 1rem;
+  box-shadow: 0 10px 40px rgba(255, 68, 68, 0.4);
+  animation: slideInLeft 0.8s ease-out;
+  max-width: 270px;
+  min-width: 240px;
+  transform: translateZ(0);
+  will-change: transform;
+  cursor: url("/images/rockhand.png") 16 16, auto;
+}
+
+/* Header dentro del navegador - más compacto */
+.navigator-header {
+  text-align: center;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid rgba(255, 68, 68, 0.3);
+}
+
+.navigator-header h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #ff4444;
+  text-shadow: 0 0 20px rgba(255, 68, 68, 0.6);
+  letter-spacing: 2px;
+  margin-bottom: 0.3rem;
+}
+
+.navigator-header p {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin: 0;
+}
+
+.room-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.room-btn {
+  padding: 12px 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(80, 20, 20, 0.8),
+    rgba(40, 0, 0, 0.8)
+  );
+  border: 2px solid #666;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.room-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 68, 68, 0.3),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.room-btn:hover::before {
+  left: 100%;
+}
+
+.room-btn:hover {
+  border-color: #ff4444;
+  color: #ff4444;
+  box-shadow: 0 0 20px rgba(255, 68, 68, 0.4);
+  transform: translateY(-2px);
+  cursor: url("/images/hand.png") 10 10, pointer;
+}
+
+.room-btn.active {
+  background: linear-gradient(135deg, #ff4444, #cc3333);
+  border-color: #ff4444;
+  color: #ffffff;
+  box-shadow: 0 0 25px rgba(255, 68, 68, 0.6);
+  transform: translateY(-3px);
+}
+
+/* Información de la sala - más compacta */
+.room-info {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 68, 68, 0.15);
+}
+
+.current-room {
+  color: #ff4444;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.4rem;
+  opacity: 0.9;
+}
+
+.room-description {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.7rem;
+  line-height: 1.3;
+  margin-bottom: 0.4rem;
+  font-style: italic;
+}
+
+.room-counter {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.65rem;
+  text-align: center;
+  margin: 0;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+/* Animaciones adicionales - SOLO slideInLeft */
+
+/* Controls help */
+.controls-help {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 50000;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 15px;
+  border-radius: 8px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 68, 68, 0.3);
+  max-width: 200px;
+}
+
+.controls-help h4 {
+  color: #ff4444;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.controls-help ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.controls-help li {
+  color: #cccccc;
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+  padding-left: 12px;
+  position: relative;
+}
+
+.controls-help li:before {
+  content: "▶";
+  position: absolute;
+  left: 0;
+  color: #ff4444;
+  font-size: 0.7rem;
+}
+
+/* Poster labels - más grandes y legibles */
+.poster-label {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(26, 0, 0, 0.9) 100%
+  );
+  color: #ffffff;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 1.9rem;
+  letter-spacing: 1px;
+  text-align: center;
+  min-width: 250px;
+  max-width: 500px;
+  border: 1px solid #ff4444;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 68, 68, 0.3),
+    0 0 10px rgba(255, 68, 68, 0.2);
+  position: relative;
+  z-index: 100 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transform: translateZ(10px) !important;
+  will-change: transform;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  transition: all 0.3s ease;
+}
+
+.poster-label:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    rgba(255, 68, 68, 0.1) 50%,
+    transparent 100%
+  );
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+/* Forzar que todos los elementos Html de drei estén por detrás del sidebar */
+div[style*="transform-style: preserve-3d"] {
+  z-index: 1 !important;
+}
+
+/* Específicamente para los contenedores de etiquetas de pósters - más visibles */
+div[style*="transform-style: preserve-3d"] div.poster-label {
+  z-index: 100 !important;
+  transform: translateZ(10px) !important;
+}
+
+/* Regla más agresiva para todo el contenedor de drei */
+div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
+  z-index: 1 !important;
+}
+
+/* Forzar elementos HTML de drei bajo el sidebar */
+.app > div:not(.rock-navigator):not(.controls-help):not(.audio-player) {
+  z-index: 1 !important;
+}
+
+.concert-header {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 10px;
+}
+
+.concert-header h3 {
+  color: #ff4444;
+  margin-bottom: 5px;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.concert-date {
+  color: #888;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.concert-venue {
+  color: #ccc;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.concert-description {
+  color: #ddd;
+  line-height: 1.4;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+}
+
+.play-audio-btn {
+  background: linear-gradient(45deg, #ff4444, #cc3333);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  width: 100%;
+}
+
+.play-audio-btn:hover {
+  background: linear-gradient(45deg, #ff6666, #ff4444);
+  box-shadow: 0 4px 15px rgba(255, 68, 68, 0.4);
+  transform: translateY(-2px);
+  cursor: url("/images/hand.png") 10 10, pointer;
+}
+
+/* Audio player */
+.audio-player {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 75000;
+  background: rgba(0, 0, 0, 0.9);
+  padding: 20px;
+  border-radius: 12px;
+  min-width: 300px;
+  border: 2px solid #ff4444;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+}
+
+/* Audio Player Overlay - Máxima prioridad visual */
+.audio-player-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(0, 0, 0, 0.85) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  backdrop-filter: blur(10px) !important;
+  z-index: 2147483647 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  animation: fadeIn 0.3s ease-out !important;
+  padding: 20px !important;
+  box-sizing: border-box !important;
+  pointer-events: all !important;
+  isolation: isolate !important;
+  transform: translateZ(999999px) !important;
+}
+
+/* Asegurar que NINGÚN otro elemento interfiera */
+.audio-player-overlay::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: transparent;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateZ(999999px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(999999px) scale(1);
+  }
+}
+
+/* Rediseño completo del audio player */
+.audio-player {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.95),
+    rgba(40, 0, 0, 0.9)
+  ) !important;
+  border: 2px solid #ff4444 !important;
+  border-radius: 20px !important;
+  padding: 2rem !important;
+  max-width: 500px !important;
+  width: 90vw !important;
+  max-height: 85vh !important;
+  overflow-y: auto !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 68, 68, 0.3) !important;
+  position: relative !important;
+  animation: slideInScale 0.4s ease-out !important;
+  z-index: 2147483647 !important;
+  margin: auto !important;
+  pointer-events: all !important;
+  isolation: isolate !important;
+  transform: translateZ(999999px) !important;
+}
+
+@keyframes slideInScale {
+  from {
+    opacity: 0;
+    transform: translateZ(999999px) scale(0.8) translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(999999px) scale(1) translateY(0);
+  }
+}
+
+@keyframes slideInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.band-info h3 {
+  color: #ff4444;
+  font-size: 1.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+}
+
+.genre-tag {
+  background: linear-gradient(45deg, #ff4444, #cc3333);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 8px rgba(255, 68, 68, 0.4);
+}
+
+/* Botón de cerrar mejorado */
+.close-btn {
+  background: linear-gradient(135deg, #666, #444);
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 1000002;
+}
+
+.close-btn:hover {
+  background: linear-gradient(135deg, #ff4444, #cc3333);
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(255, 68, 68, 0.5);
+  cursor: url("/images/hand.png") 10 10, pointer;
+}
+
+/* Image carousel styles */
+.image-carousel {
+  margin-bottom: 1.5rem;
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #111;
+}
+
+/* Carrusel cuadrado y más alto para el overlay */
+.carousel-square {
+  aspect-ratio: 1/1;
+  height: 320px;
+  max-width: 340px;
+  margin: 1rem auto;
+}
+
+.concert-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: #111;
+  transition: opacity 0.3s ease;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.carousel-btn:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: translateY(-50%) scale(1.1);
+  cursor: url("/images/hand.png") 10 10, pointer;
+}
+
+.prev-btn {
+  left: 10px;
+}
+
+.next-btn {
+  right: 10px;
+}
+
+.image-counter {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Detalles del concierto */
+.concert-details {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(255, 68, 68, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 68, 68, 0.2);
+}
+
+.venue-info,
+.concert-date,
+.attendance {
+  color: #ffffff;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.venue-info {
+  color: #ff6666;
+  font-weight: 600;
+}
+
+/* Sección de audio */
+.audio-section {
+  margin-bottom: 1.5rem;
+}
+
+.audio-controls {
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  background: #222;
+  outline: none;
+}
+
+.audio-controls::-webkit-media-controls-panel {
+  background-color: #222;
+  border-radius: 10px;
+}
+
+/* Descripción del concierto */
+.concert-description {
+  margin-bottom: 1.5rem;
+}
+
+.concert-description h4 {
+  color: #ff4444;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.8rem;
+}
+
+.concert-description p {
+  color: #ddd;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* Setlist */
+.setlist {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border-left: 4px solid #ff4444;
+}
+
+.setlist h5 {
+  color: #ff4444;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.8rem;
+}
+
+.setlist ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.setlist li {
+  color: #ccc;
+  padding: 0.3rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  font-weight: 500;
+}
+
+.setlist li:before {
+  content: "🎵";
+  position: absolute;
+  left: 0;
+  color: #ff4444;
+}
+
+/* Controles del player - Botones de acción mejorados */
+.player-controls {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 68, 68, 0.2);
+}
+
+.action-btn {
+  flex: 1;
+  background: linear-gradient(
+    135deg,
+    rgba(80, 20, 20, 0.8),
+    rgba(40, 0, 0, 0.8)
+  );
+  color: white;
+  border: 2px solid #666;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 68, 68, 0.3),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.action-btn:hover::before {
+  left: 100%;
+}
+
+.action-btn:hover {
+  border-color: #ff4444;
+  color: #ff4444;
+  box-shadow: 0 0 20px rgba(255, 68, 68, 0.4);
+  transform: translateY(-2px);
+  cursor: url("/images/hand.png") 10 10, pointer;
+}
+
+.action-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 0 10px rgba(255, 68, 68, 0.6);
+}
+
+/* Scrollbar personalizado para el audio player */
+.audio-player::-webkit-scrollbar {
+  width: 8px;
+}
+
+.audio-player::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+.audio-player::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #ff4444, #cc3333);
+  border-radius: 4px;
+}
+
+.audio-player::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #ff6666, #ff4444);
+}
+
+/* Controles de elementos cuando el overlay está activo */
+body.has-audio-player .rock-navigator,
+body.has-audio-player .controls-help {
+  pointer-events: none !important;
+  opacity: 0.1 !important;
+  transition: opacity 0.3s ease !important;
+  z-index: 1 !important;
+}
+
+/* Forzar que el canvas y elementos 3D estén por debajo */
+body.has-audio-player canvas {
+  z-index: 1 !important;
+  position: relative !important;
+}
+
+/* Ocultar completamente elementos drei cuando el overlay está activo */
+body.has-audio-player
+  div[style*="position: absolute"]:not(.audio-player-overlay *) {
+  z-index: 1 !important;
+  visibility: hidden !important;
+}
+
+body.has-audio-player
+  div[style*="transform-style"]:not(.audio-player-overlay *) {
+  z-index: 1 !important;
+  visibility: hidden !important;
+}
+
+/* Asegurar que nada interfiera con el overlay */
+.rock-navigator,
+.controls-help {
+  z-index: 100000 !important;
+}
+
+/* Forzar todos los elementos drei por debajo */
+div[style*="transform-style"]:not(.audio-player-overlay *),
+div[style*="position: absolute"]:not(.audio-player-overlay *),
+div[data-r3f]:not(.audio-player-overlay *) {
+  z-index: 1 !important;
+}
+
+/* ===== OVERLAY SUPREMO - GARANTIZADO POR ENCIMA DE TODO ===== */
+/* Crear un stacking context completamente aislado */
+.audio-player-overlay {
+  /* Crear nueva capa de apilamiento */
+  contain: layout style paint;
+  will-change: transform;
+
+  /* Forzar a estar en la capa más alta */
+  transform: translate3d(0, 0, 999999px) !important;
+
+  /* Evitar que cualquier otro elemento interfiera */
+  isolation: isolate !important;
+
+  /* Asegurar que esté por encima de cualquier modal o popup */
+  z-index: 2147483647 !important;
+}
+
+/* El audio player también debe estar aislado */
+.audio-player {
+  contain: layout style paint;
+  will-change: transform;
+  transform: translate3d(0, 0, 1px) !important;
+}
+
+/* Forzar que TODOS los demás elementos estén por debajo cuando el overlay está activo */
+body.has-audio-player * {
+  z-index: 1 !important;
+}
+
+/* Excepciones para el overlay y sus hijos */
+body.has-audio-player .audio-player-overlay,
+body.has-audio-player .audio-player-overlay *,
+body.has-audio-player .audio-player,
+body.has-audio-player .audio-player * {
+  z-index: 2147483647 !important;
+}
+
+/* ===================================== */
+/* MUSIC LINKS COMPONENT STYLES */
+/* ===================================== */
+
+.music-links {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 68, 68, 0.1),
+    rgba(255, 68, 68, 0.05)
+  );
+  border: 2px solid rgba(255, 68, 68, 0.3);
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.music-links::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 68, 68, 0.6),
+    transparent
+  );
+  animation: musicLinksGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes musicLinksGlow {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+
+.music-links-title {
+  color: #ff4444;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+}
+
+.music-platforms {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.music-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1rem;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.8),
+    rgba(40, 40, 40, 0.8)
+  );
+  border: 2px solid transparent;
+  border-radius: 20px;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.8rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  min-width: 100px;
+  justify-content: center;
+}
+
+.music-link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.music-link:hover::before {
+  left: 100%;
+}
+
+.music-link.spotify {
+  border-color: #1db954;
+  box-shadow: 0 4px 15px rgba(29, 185, 84, 0.2);
+}
+
+.music-link.spotify:hover {
+  background: linear-gradient(135deg, #1db954, #1ed760);
+  border-color: #ffffff;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(29, 185, 84, 0.4);
+  cursor: url("/images/hand.png") 10 10, pointer;
+}
+
+.music-link.youtube {
+  border-color: #ff0000;
+  box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2);
+}
+
+.music-link.youtube:hover {
+  background: linear-gradient(135deg, #ff0000, #ff3333);
+  border-color: #ffffff;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(255, 0, 0, 0.4);
+  cursor: url("/images/hand.png") 10 10, pointer;
+}
+
+.platform-icon {
+  font-size: 1rem;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+}
+
+.platform-name {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+  .music-platforms {
+    flex-direction: column;
+    align-items: center;
+  }
+  .music-link {
+    min-width: 160px;
+    padding: 0.8rem 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .music-links {
+    margin-top: 1rem;
+    padding: 1rem;
+  }
+  .music-link {
+    min-width: 140px;
+    padding: 0.7rem 1rem;
+    font-size: 0.75rem;
+  }
+}

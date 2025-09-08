@@ -1,0 +1,40 @@
+/* Toolbar vertical para el guía del museo */
+.guide-toolbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin: 0 2px;
+  background: rgba(30, 0, 0, 0.18);
+  border-radius: 12px;
+  padding: 10px 4px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.guide-toolbar-btn {
+  background: none;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  padding: 6px;
+  transition: background 0.18s, box-shadow 0.18s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.guide-toolbar-btn:hover,
+.guide-toolbar-btn:focus {
+  cursor: url("/images/hand.png"), pointer;
+}
+
+.guide-toolbar-btn:hover,
+.guide-toolbar-btn.active {
+  background: rgba(255, 68, 68, 0.12);
+  box-shadow: 0 2px 8px rgba(255, 68, 68, 0.1);
+}
+
+.guide-toolbar-btn svg {
+  display: block;
+}

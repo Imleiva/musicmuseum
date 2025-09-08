@@ -1,0 +1,53 @@
+.avatar-img-thewarning {
+  max-width: 340px;
+  transform: translateY(-1rem);
+  margin: -1rem;
+}
+
+.avatar-img-queen {
+  width: 250px;
+
+  margin: -0.8rem;
+}
+
+.avatar-img-ironmaiden {
+  width: 270px;
+  margin: -1.7rem;
+}
+
+.avatar-img-ghost {
+  width: 260px;
+  transform: translateY(-1.6rem);
+  margin: -1.6rem;
+}
+
+.avatar-img-pinkfloyd {
+  width: 280px;
+
+  margin: -1rem;
+}
+
+.avatar-img-ozzy {
+  width: 250px;
+  transform: translateY(-1.5rem);
+  margin: -1rem;
+}
+
+.avatar-img-eltonjohn {
+  width: 280px;
+  transform: translateY(-1.5rem);
+  margin: 1rem;
+}
+
+.avatar-img-judaspriest {
+  width: 270px;
+  transform: translateY(-0.6rem);
+  margin: -1.9rem;
+}
+
+/* Regla general para aplicar un halo claro a todos los avatares con clases específicas */
+[class^="avatar-img-"] {
+  filter: drop-shadow(
+    0 0 10px rgba(255, 255, 255, 0.516)
+  ); /* Halo claro general */
+}

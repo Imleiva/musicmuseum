@@ -1,0 +1,38 @@
+/* Estilos específicos para el efecto de hover predictivo */
+.predictive-hover-container {
+  position: relative;
+  overflow: hidden; /* Para evitar que los puntos del rastro se salgan del contenedor */
+}
+
+.predictive-hover-container .predictive-hover-trail-point {
+  box-shadow: 0 0 20px rgba(229, 57, 53, 0.8);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Estilos para el grid con efecto de hover predictivo */
+.predictive-hover-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  overflow-y: auto;
+  max-height: 70vh;
+  margin-bottom: 18px;
+}
+
+.predictive-hover-grid .grid-item {
+  background: #232323;
+  border-radius: 8px;
+  padding: 8px 2px 4px 2px;
+  text-align: center;
+  cursor: pointer;
+  min-height: 130px;
+  min-width: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.predictive-hover-grid .grid-item:hover {
+  box-shadow: 0 0 20px rgba(188, 44, 42, 0.66);
+}
