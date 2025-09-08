@@ -88,7 +88,7 @@ const SmokeTransition = ({
 
       {isTransitioning && (
         <video
-          src="/images/humo.mp4"
+          src="/images/humo1.mp4"
           autoPlay
           muted
           playsInline
