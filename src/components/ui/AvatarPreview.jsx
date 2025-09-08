@@ -78,6 +78,14 @@ export default function AvatarPreview({ avatarKey }) {
       ? "avatar-img-judaspriest"
       : avatarKey === "queen"
       ? "avatar-img-queen"
+      : avatarKey === "blondie"
+      ? "avatar-img-blondie"
+      : avatarKey === "thebaboonshow"
+      ? "avatar-img-thebaboonshow"
+      : avatarKey === "oasis"
+      ? "avatar-img-oasis"
+      : avatarKey === "jeffscottsoto"
+      ? "avatar-img-jeffscottsoto"
       : "avatar-preview-img";
 
   return <img src={src} alt={avatarKey} className={className} />;
