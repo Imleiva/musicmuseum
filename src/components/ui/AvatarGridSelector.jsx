@@ -21,9 +21,9 @@ export default function AvatarGridSelector({ onSelect, onClose, selectedKey }) {
   const [search, setSearch] = useState("");
   const [genre, setGenre] = useState("Todos");
   const [decade, setDecade] = useState("Todas");
-  const [preview, setPreview] = useState(selectedKey || null);
+  const [preview, setPreview] = useState(selectedKey || "leiva");
   const [nextPrev, setNextPrev] = useState(null);
-  const [currentAvatar, setCurrentAvatar] = useState(selectedKey || null);
+  const [currentAvatar, setCurrentAvatar] = useState(selectedKey || "leiva");
   const [smokeActive, setSmokeActive] = useState(false);
 
   const filtered = bands.filter(
@@ -61,7 +61,11 @@ export default function AvatarGridSelector({ onSelect, onClose, selectedKey }) {
             </select>
           </div>
           <PredictiveHoverEffect>
-            <div className="avatar-grid-selector-grid">
+            <div
+              className={`avatar-grid-selector-grid ${
+                smokeActive ? "transitioning" : ""
+              }`}
+            >
               {filtered.map((item) => (
                 <div
                   key={item.key}
@@ -70,6 +74,9 @@ export default function AvatarGridSelector({ onSelect, onClose, selectedKey }) {
                     (preview === item.key ? " selected" : "")
                   }
                   onClick={() => {
+                    // Bloquear interacciones durante la transición
+                    if (smokeActive) return;
+
                     if (preview !== item.key) {
                       if (!preview) {
                         setPreview(item.key);
