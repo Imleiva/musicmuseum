@@ -392,4 +392,18 @@ export const bands = [
     genre: "Rock",
     decade: "2000s",
   },
+  {
+    key: "stevenwilson",
+    name: "Steven Wilson",
+    logo: "/images/logos/stevenwilson.png",
+    genre: "Progressive Rock",
+    decade: "2000s",
+  },
+  {
+    key: "stevevai",
+    name: "Steve Vai",
+    logo: "/images/logos/stevevai.png",
+    genre: "Rock",
+    decade: "80s",
+  },
 ];

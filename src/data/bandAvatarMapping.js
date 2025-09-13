@@ -57,4 +57,6 @@ export const bandAvatarMapping = {
   manowaraspriest: "judaspriest",
   u2: "u2",
   jeffscottsoto: "jeffscottsoto",
+  stevenwilson: "stevenwilson",
+  stevevai: "stevevai",
 };
