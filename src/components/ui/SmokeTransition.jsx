@@ -33,14 +33,22 @@ const SmokeTransition = ({
     const video = e.target;
     const progress = video.currentTime / video.duration;
 
-    if (progress >= 0.35 && smokePhase === "appearing") {
+    if (progress >= 0.1 && smokePhase === "appearing") {
+      setSmokePhase("covering");
+    } else if (progress >= 0.2 && smokePhase === "covering") {
       setSmokePhase("peak");
-    } else if (progress >= 0.45 && smokePhase === "peak") {
+    } else if (progress >= 0.35 && smokePhase === "peak") {
       setSmokePhase("disappearing");
-    } else if (progress >= 0.85 && smokePhase === "disappearing") {
+    } else if (progress >= 0.55 && smokePhase === "disappearing") {
       const smokeElement = e.target;
       smokeElement.style.opacity = "0";
-      smokeElement.style.transition = "opacity 1s ease-out";
+      smokeElement.style.transition = "opacity 0.4s ease-out";
+      // Finalizar transición inmediatamente para mejor UX
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setSmokePhase("none");
+        onTransitionComplete && onTransitionComplete();
+      }, 400);
     }
   };
 
@@ -68,19 +76,21 @@ const SmokeTransition = ({
           opacity:
             smokePhase === "appearing"
               ? 1
+              : smokePhase === "covering"
+              ? 1
               : smokePhase === "peak"
-              ? 0
+              ? 0.5
               : smokePhase === "disappearing"
-              ? 0.7
+              ? 1
               : 1,
           transition:
             smokePhase === "appearing"
-              ? "opacity 0.8s ease-in-out"
-              : smokePhase === "disappearing"
-              ? "opacity 0.6s ease-out"
+              ? "opacity 0.2s ease-out"
               : smokePhase === "peak"
-              ? "opacity 0.8s ease-in-out"
-              : "opacity 0.8s ease-out",
+              ? "opacity 0.6s ease-in-out"
+              : smokePhase === "disappearing"
+              ? "opacity 0.4s ease-in"
+              : "none",
         }}
       >
         {children}
@@ -96,13 +106,14 @@ const SmokeTransition = ({
           style={{
             opacity:
               smokePhase === "appearing"
-                ? 1
+                ? 0.7
+                : smokePhase === "covering"
+                ? 1.0
                 : smokePhase === "peak"
-                ? 0.9
+                ? 1.0
                 : smokePhase === "disappearing"
-                ? 0.3
-                : 1,
-            transition: "opacity 0.8s ease-out",
+                ? 0.4
+                : 0.7,
           }}
           onLoadedData={() => console.log("Video humo cargado")}
           onTimeUpdate={handleTimeUpdate}
