@@ -1,13 +1,13 @@
 /*
  * Modal para seleccionar avatares y bandas
  * • Muestra grid filtrable de logos de bandas
- * • Preview en tiempo real con transición de humo
+ * • Preview en tiempo real con transición personalizada
  * • Filtros por género, década y búsqueda de texto
  * • Mapea bandas a sus avatares correspondientes
  */
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import SmokeTransition from "./SmokeTransition";
+import AlternatingTransition from "./AlternatingTransition";
 import PredictiveHoverEffect from "./PredictiveHoverEffect";
 import AvatarPreview from "./AvatarPreview";
 import { avatars } from "../../data/avatars.js";
@@ -26,12 +26,30 @@ export default function AvatarGridSelector({ onSelect, onClose, selectedKey }) {
   const [currentAvatar, setCurrentAvatar] = useState(selectedKey || "leiva");
   const [smokeActive, setSmokeActive] = useState(false);
 
-  const filtered = bands.filter(
-    (band) =>
-      (genre === "Todos" || band.genre === genre) &&
-      (decade === "Todas" || band.decade === decade) &&
-      band.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = bands
+    .filter(
+      (band) =>
+        (genre === "Todos" || band.genre === genre) &&
+        (decade === "Todas" || band.decade === decade) &&
+        band.name.toLowerCase().includes(search.toLowerCase())
+    )
+    .sort((a, b) => {
+      // Leiva siempre el primero
+      if (a.key === "leiva") return -1;
+      if (b.key === "leiva") return 1;
+
+      // Ordenar: primero los que tienen avatar, luego los que no
+      const aHasAvatar = bandAvatarMapping[a.key] ? 1 : 0;
+      const bHasAvatar = bandAvatarMapping[b.key] ? 1 : 0;
+
+      // Si uno tiene avatar y el otro no, priorizar el que tiene avatar
+      if (aHasAvatar !== bHasAvatar) {
+        return bHasAvatar - aHasAvatar; // Los que tienen avatar (1) van antes que los que no (0)
+      }
+
+      // Si ambos tienen o no tienen avatar, ordenar alfabéticamente
+      return a.name.localeCompare(b.name);
+    });
 
   return ReactDOM.createPortal(
     <>
@@ -117,7 +135,7 @@ export default function AvatarGridSelector({ onSelect, onClose, selectedKey }) {
         </div>
         <div className="avatar-grid-preview">
           {preview ? (
-            <SmokeTransition
+            <AlternatingTransition
               isActive={smokeActive}
               onPhaseChange={(phase) => {
                 if (phase === "peak" && nextPrev) {
@@ -166,7 +184,7 @@ export default function AvatarGridSelector({ onSelect, onClose, selectedKey }) {
                   </div>
                 );
               })()}
-            </SmokeTransition>
+            </AlternatingTransition>
           ) : (
             <div className="avatar-preview-placeholder">
               Selecciona un grupo o avatar para ver su información
