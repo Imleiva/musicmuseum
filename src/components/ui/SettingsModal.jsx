@@ -14,7 +14,7 @@ export default function SettingsModal({ isOpen, onClose }) {
   const [settings, setSettings] = useState({
     language: "es",
     soundEnabled: true,
-    theme: "dark",
+    avatarTransitions: true,
     animationSpeed: "normal",
     imageQuality: "high",
     showTooltips: true,
@@ -29,7 +29,7 @@ export default function SettingsModal({ isOpen, onClose }) {
       const defaultSettings = {
         language: "es",
         soundEnabled: true,
-        theme: "dark",
+        avatarTransitions: true,
         animationSpeed: "normal",
         imageQuality: "high",
         showTooltips: true,
@@ -41,6 +41,14 @@ export default function SettingsModal({ isOpen, onClose }) {
         setSettings(finalSettings);
         setTempSettings(finalSettings);
       } else {
+        const defaultSettings = {
+          language: "es",
+          soundEnabled: true,
+          avatarTransitions: true,
+          animationSpeed: "normal",
+          imageQuality: "high",
+          showTooltips: true,
+        };
         setSettings(defaultSettings);
         setTempSettings(defaultSettings);
       }
@@ -60,6 +68,7 @@ export default function SettingsModal({ isOpen, onClose }) {
     if (tempSettings) {
       saveSettings(tempSettings);
       setHasUnsavedChanges(false);
+      onClose(); // Cerrar el modal después de guardar
     }
   };
 
@@ -147,27 +156,33 @@ export default function SettingsModal({ isOpen, onClose }) {
             </div>
           </div>
 
-          {/* Tema Visual */}
+          {/* Transiciones de Avatar */}
           <div className="settings-group">
-            <h3 className="settings-group-title">{t("settings.theme")}</h3>
+            <h3 className="settings-group-title">
+              {t("settings.transitions")}
+            </h3>
             <div className="settings-option">
-              <span className="settings-label">{t("settings.themeLabel")}</span>
+              <span className="settings-label">
+                {t("settings.transitionsLabel")}
+              </span>
               <div className="toggle-buttons">
                 <button
                   className={`toggle-btn ${
-                    tempSettings?.theme === "dark" ? "active" : ""
+                    tempSettings?.avatarTransitions === true ? "active" : ""
                   }`}
-                  onClick={() => handleSettingChange("theme", "dark")}
+                  onClick={() => handleSettingChange("avatarTransitions", true)}
                 >
-                  {t("settings.dark")}
+                  {t("settings.enabled")}
                 </button>
                 <button
                   className={`toggle-btn ${
-                    tempSettings?.theme === "light" ? "active" : ""
+                    tempSettings?.avatarTransitions === false ? "active" : ""
                   }`}
-                  onClick={() => handleSettingChange("theme", "light")}
+                  onClick={() =>
+                    handleSettingChange("avatarTransitions", false)
+                  }
                 >
-                  {t("settings.light")}
+                  {t("settings.disabled")}
                 </button>
               </div>
             </div>
@@ -278,7 +293,7 @@ export default function SettingsModal({ isOpen, onClose }) {
                 const defaultSettings = {
                   language: "es",
                   soundEnabled: true,
-                  theme: "dark",
+                  avatarTransitions: true,
                   animationSpeed: "normal",
                   imageQuality: "high",
                   showTooltips: true,

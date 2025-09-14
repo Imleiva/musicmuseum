@@ -13,7 +13,7 @@ import VenueRoom from "./components/3d/VenueRoom";
 import RockPoster from "./components/3d/RockPoster";
 import Projector from "./components/3d/Projector";
 import RockNavigator from "./components/ui/RockNavigator";
-import AudioPlayer from "./components/ui/AudioPlayer";
+import PosterModal from "./components/ui/PosterModal";
 import MuseumGuide from "./components/ui/MuseumGuide";
 import SettingsModal from "./components/ui/SettingsModal";
 import ControlsHelp from "./components/ui/ControlsHelp";
@@ -75,7 +75,7 @@ function App() {
 
         <ControlsHelp />
 
-        <AudioPlayer
+        <PosterModal
           concert={selectedConcert}
           onClose={() => setSelectedConcert(null)}
         />
