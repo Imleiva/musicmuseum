@@ -17,14 +17,23 @@ import { genres, decades } from "../../data/filterUtils.js";
 import "./AvatarImages.css";
 import "./AvatarGridSelector.css";
 
-export default function AvatarGridSelector({ onSelect, onClose, selectedKey }) {
+export default function AvatarGridSelector({
+  isOpen,
+  onAvatarSelect,
+  onClose,
+  currentAvatar,
+  transitionsEnabled,
+}) {
   const [search, setSearch] = useState("");
   const [genre, setGenre] = useState("Todos");
   const [decade, setDecade] = useState("Todas");
-  const [preview, setPreview] = useState(selectedKey || "leiva");
+  const [preview, setPreview] = useState(currentAvatar || "leiva");
   const [nextPrev, setNextPrev] = useState(null);
-  const [currentAvatar, setCurrentAvatar] = useState(selectedKey || "leiva");
+  const [displayAvatar, setDisplayAvatar] = useState(currentAvatar || "leiva");
   const [smokeActive, setSmokeActive] = useState(false);
+
+  // Si no está abierto, no renderizar nada
+  if (!isOpen) return null;
 
   const filtered = bands
     .filter(
@@ -96,14 +105,20 @@ export default function AvatarGridSelector({ onSelect, onClose, selectedKey }) {
                     if (smokeActive) return;
 
                     if (preview !== item.key) {
-                      if (!preview) {
-                        setPreview(item.key);
-                        setCurrentAvatar(item.key);
-                        setSmokeActive(true);
+                      setPreview(item.key);
+
+                      if (transitionsEnabled) {
+                        // Con transiciones
+                        if (!preview) {
+                          setDisplayAvatar(item.key);
+                          setSmokeActive(true);
+                        } else {
+                          setNextPrev(item.key);
+                          setSmokeActive(true);
+                        }
                       } else {
-                        setNextPrev(item.key);
-                        setPreview(item.key);
-                        setSmokeActive(true);
+                        // Sin transiciones: cambio inmediato
+                        setDisplayAvatar(item.key);
                       }
                     }
                   }}
@@ -123,7 +138,7 @@ export default function AvatarGridSelector({ onSelect, onClose, selectedKey }) {
               onClick={() => {
                 if (preview) {
                   console.log("Seleccionado:", preview);
-                  onSelect(preview);
+                  onAvatarSelect(preview);
                   onClose();
                 }
               }}
@@ -135,56 +150,97 @@ export default function AvatarGridSelector({ onSelect, onClose, selectedKey }) {
         </div>
         <div className="avatar-grid-preview">
           {preview ? (
-            <AlternatingTransition
-              isActive={smokeActive}
-              onPhaseChange={(phase) => {
-                if (phase === "peak" && nextPrev) {
-                  setCurrentAvatar(nextPrev);
-                  setNextPrev(null);
-                }
-              }}
-              onTransitionComplete={() => {
-                setSmokeActive(false);
-              }}
-            >
-              {(() => {
-                const currentKey = currentAvatar;
-                const item = [...bands, ...avatars].find(
-                  (band) => band.key === currentKey
-                );
-                if (!item) return null;
+            transitionsEnabled ? (
+              <AlternatingTransition
+                isActive={smokeActive}
+                onPhaseChange={(phase) => {
+                  if (phase === "peak" && nextPrev) {
+                    setDisplayAvatar(nextPrev);
+                    setNextPrev(null);
+                  }
+                }}
+                onTransitionComplete={() => {
+                  setSmokeActive(false);
+                }}
+              >
+                {(() => {
+                  const currentKey = displayAvatar;
+                  const item = [...bands, ...avatars].find(
+                    (band) => band.key === currentKey
+                  );
+                  if (!item) return null;
 
-                let avatarKey = null;
-                if (item.genre !== "Avatar" && bandAvatarMapping[item.key]) {
-                  avatarKey = bandAvatarMapping[item.key];
-                }
-                // TODO: hacer esto más genérico
-                const isMaeseLeiva = item.key === "leiva";
-                return (
-                  <div className="avatar-preview-col" key={item.key}>
-                    {item.genre === "Avatar" ? (
-                      <AvatarPreview avatarKey={item.key} />
-                    ) : avatarKey ? (
-                      <AvatarPreview avatarKey={avatarKey} />
-                    ) : (
-                      <img
-                        src={item.logo}
-                        alt={item.name}
-                        className="avatar-preview-img"
-                      />
-                    )}
-                    <div className="avatar-preview-name">
-                      {isMaeseLeiva ? "Maese Leiva" : item.name}
-                    </div>
-                    {!isMaeseLeiva && item.genre !== "Avatar" && (
-                      <div className="avatar-preview-meta">
-                        {item.genre} · {item.decade}
+                  let avatarKey = null;
+                  if (item.genre !== "Avatar" && bandAvatarMapping[item.key]) {
+                    avatarKey = bandAvatarMapping[item.key];
+                  }
+                  // TODO: hacer esto más genérico
+                  const isMaeseLeiva = item.key === "leiva";
+                  return (
+                    <div className="avatar-preview-col" key={item.key}>
+                      {item.genre === "Avatar" ? (
+                        <AvatarPreview avatarKey={item.key} />
+                      ) : avatarKey ? (
+                        <AvatarPreview avatarKey={avatarKey} />
+                      ) : (
+                        <img
+                          src={item.logo}
+                          alt={item.name}
+                          className="avatar-preview-img"
+                        />
+                      )}
+                      <div className="avatar-preview-name">
+                        {isMaeseLeiva ? "Maese Leiva" : item.name}
                       </div>
-                    )}
-                  </div>
-                );
-              })()}
-            </AlternatingTransition>
+                      {!isMaeseLeiva && item.genre !== "Avatar" && (
+                        <div className="avatar-preview-meta">
+                          {item.genre} · {item.decade}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
+              </AlternatingTransition>
+            ) : (
+              <div className="no-transition-preview">
+                {(() => {
+                  const currentKey = displayAvatar;
+                  const item = [...bands, ...avatars].find(
+                    (band) => band.key === currentKey
+                  );
+                  if (!item) return null;
+
+                  let avatarKey = null;
+                  if (item.genre !== "Avatar" && bandAvatarMapping[item.key]) {
+                    avatarKey = bandAvatarMapping[item.key];
+                  }
+                  const isMaeseLeiva = item.key === "leiva";
+                  return (
+                    <div className="avatar-preview-col" key={item.key}>
+                      {item.genre === "Avatar" ? (
+                        <AvatarPreview avatarKey={item.key} />
+                      ) : avatarKey ? (
+                        <AvatarPreview avatarKey={avatarKey} />
+                      ) : (
+                        <img
+                          src={item.logo}
+                          alt={item.name}
+                          className="avatar-preview-img"
+                        />
+                      )}
+                      <div className="avatar-preview-name">
+                        {isMaeseLeiva ? "Maese Leiva" : item.name}
+                      </div>
+                      {!isMaeseLeiva && item.genre !== "Avatar" && (
+                        <div className="avatar-preview-meta">
+                          {item.genre} · {item.decade}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
+              </div>
+            )
           ) : (
             <div className="avatar-preview-placeholder">
               Selecciona un grupo o avatar para ver su información

@@ -434,6 +434,18 @@ const avatarData = {
       "Son referentes del rock de los 90.",
     ],
   },
+  davidbowie: {
+    saludo:
+      "¡Ground Control to Major Tom! Soy David Bowie, el Camaleón del Rock. ¿Preparado para un viaje espacial?",
+    burbujas: [
+      "David Bowie fue el camaleón del rock, reinventándose constantemente durante 5 décadas.",
+      "Ziggy Stardust es su alter ego más famoso, una estrella de rock alienígena andrógina.",
+      "Influyó no solo en la música sino en la moda, el arte y la cultura LGBTQ+.",
+      "Sus álbumes de Berlín ('Low', 'Heroes', 'Lodger') experimentaron con ambient y electrónica.",
+      "Fue actor, pintor, y pionero en el uso de nuevas tecnologías musicales.",
+      "Su muerte en 2016 conmocionó al mundo entero, dejando un legado imborrable.",
+    ],
+  },
 };
 
 export default function AvatarBubbles({ avatarKey }) {
