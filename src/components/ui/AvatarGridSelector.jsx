@@ -10,10 +10,10 @@ import ReactDOM from "react-dom";
 import AlternatingTransition from "./AlternatingTransition";
 import PredictiveHoverEffect from "./PredictiveHoverEffect";
 import AvatarPreview from "./AvatarPreview";
+import { useTranslation } from "../../hooks/useTranslation";
 import { avatars } from "../../data/avatars.js";
 import { bands } from "../../data/bands.js";
 import { bandAvatarMapping } from "../../data/bandAvatarMapping.js";
-import { genres, decades } from "../../data/filterUtils.js";
 import "./AvatarImages.css";
 import "./AvatarGridSelector.css";
 
@@ -24,9 +24,21 @@ export default function AvatarGridSelector({
   currentAvatar,
   transitionsEnabled,
 }) {
+  const { t } = useTranslation();
   const [search, setSearch] = useState("");
-  const [genre, setGenre] = useState("Todos");
-  const [decade, setDecade] = useState("Todas");
+  const [genre, setGenre] = useState(""); // Vacío para mostrar placeholder
+  const [decade, setDecade] = useState(""); // Vacío para mostrar placeholder
+
+  // Generar listas localizadas de géneros y décadas
+  const localizedGenres = [
+    t("avatarGridSelector.allGenres"),
+    ...Array.from(new Set(bands.map((b) => b.genre))),
+  ];
+
+  const localizedDecades = [
+    t("avatarGridSelector.allDecades"),
+    ...Array.from(new Set([...avatars, ...bands].map((b) => b.decade))),
+  ];
   const [preview, setPreview] = useState(currentAvatar || "leiva");
   const [nextPrev, setNextPrev] = useState(null);
   const [displayAvatar, setDisplayAvatar] = useState(currentAvatar || "leiva");
@@ -38,8 +50,8 @@ export default function AvatarGridSelector({
   const filtered = bands
     .filter(
       (band) =>
-        (genre === "Todos" || band.genre === genre) &&
-        (decade === "Todas" || band.decade === decade) &&
+        (genre === "" || genre === t("avatarGridSelector.allGenres") || band.genre === genre) &&
+        (decade === "" || decade === t("avatarGridSelector.allDecades") || band.decade === decade) &&
         band.name.toLowerCase().includes(search.toLowerCase())
     )
     .sort((a, b) => {
@@ -68,19 +80,25 @@ export default function AvatarGridSelector({
           <div className="avatar-grid-selector-header">
             <input
               type="text"
-              placeholder="Buscar grupo..."
+              placeholder={t("avatarGridSelector.searchPlaceholder")}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
             <select value={genre} onChange={(e) => setGenre(e.target.value)}>
-              {genres.map((g) => (
+              <option value="" disabled>
+                {t("avatarGridSelector.genrePlaceholder")}
+              </option>
+              {localizedGenres.map((g) => (
                 <option key={g} value={g}>
                   {g}
                 </option>
               ))}
             </select>
             <select value={decade} onChange={(e) => setDecade(e.target.value)}>
-              {decades.map((d) => (
+              <option value="" disabled>
+                {t("avatarGridSelector.decadePlaceholder")}
+              </option>
+              {localizedDecades.map((d) => (
                 <option key={d} value={d}>
                   {d}
                 </option>
@@ -143,9 +161,9 @@ export default function AvatarGridSelector({
                 }
               }}
             >
-              OK
+              {t("avatarGridSelector.ok")}
             </button>
-            <button onClick={onClose}>Cancelar</button>
+            <button onClick={onClose}>{t("avatarGridSelector.cancel")}</button>
           </div>
         </div>
         <div className="avatar-grid-preview">
@@ -243,7 +261,7 @@ export default function AvatarGridSelector({
             )
           ) : (
             <div className="avatar-preview-placeholder">
-              Selecciona un grupo o avatar para ver su información
+              {t("avatarGridSelector.selectPrompt")}
             </div>
           )}
         </div>

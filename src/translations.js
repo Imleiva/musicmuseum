@@ -38,9 +38,16 @@ export const translations = {
       settings: "Ajustes",
     },
 
-    // Ruleta de avatares
+    //Grid de avatares
     avatarGridSelector: {
-      confirm: "¡Decidido!",
+      searchPlaceholder: "Buscar grupo...",
+      genrePlaceholder: "Género",
+      decadePlaceholder: "Época",
+      allGenres: "Todos",
+      allDecades: "Todas",
+      selectPrompt: "Selecciona un grupo o avatar para ver su información",
+      ok: "OK",
+      cancel: "Cancelar",
     },
 
     // Modal de ajustes
@@ -841,6 +848,14 @@ export const translations = {
 
     // Avatar grid selector
     avatarGridSelector: {
+      searchPlaceholder: "Search band...",
+      genrePlaceholder: "Genre",
+      decadePlaceholder: "Era", 
+      allGenres: "All",
+      allDecades: "All",
+      selectPrompt: "Select a band or avatar to see information",
+      ok: "OK",
+      cancel: "Cancel",
       confirm: "Done!",
     },
 
