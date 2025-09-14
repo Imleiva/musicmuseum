@@ -21,6 +21,19 @@ body {
   min-height: 100vh;
 }
 
+/* Ocultar cursor del teclado en toda la aplicación excepto inputs */
+* {
+  caret-color: transparent;
+}
+
+/* Mantener cursor visible solo en inputs y elementos editables */
+input,
+textarea,
+[contenteditable="true"],
+[contenteditable] {
+  caret-color: auto;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;

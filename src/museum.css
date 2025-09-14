@@ -11,6 +11,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* Ocultar cursor del teclado en toda la aplicación */
+  caret-color: transparent;
 }
 
 html,
@@ -22,12 +24,20 @@ body {
     sans-serif;
   background: radial-gradient(ellipse at center, #1a0000 0%, #000000 70%);
   color: #ffffff;
-  cursor: url("/images/rockhand.png") 16 16, auto;
+  cursor: url("/images/pointers/rockhand.png") 16 16, auto;
 }
 
 #root {
   width: 100%;
   height: 100%;
+}
+
+/* Mantener cursor visible solo en inputs y elementos editables */
+input,
+textarea,
+[contenteditable="true"],
+[contenteditable] {
+  caret-color: auto !important;
 }
 
 /* Main app container */
@@ -92,7 +102,7 @@ canvas {
   min-width: 240px;
   transform: translateZ(0);
   will-change: transform;
-  cursor: url("/images/rockhand.png") 16 16, auto;
+  cursor: url("/images/pointers/rockhand.png") 16 16, auto;
 }
 
 /* Header dentro del navegador - más compacto */
@@ -173,7 +183,7 @@ canvas {
   color: #ff4444;
   box-shadow: 0 0 20px rgba(255, 68, 68, 0.4);
   transform: translateY(-2px);
-  cursor: url("/images/hand.png") 10 10, pointer;
+  cursor: url("/images/pointers/hand.png") 10 10, pointer;
 }
 
 .room-btn.active {
@@ -331,7 +341,7 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
 }
 
 /* Forzar elementos HTML de drei bajo el sidebar */
-.app > div:not(.rock-navigator):not(.controls-help):not(.audio-player) {
+.app > div:not(.rock-navigator):not(.controls-help):not(.poster-modal) {
   z-index: 1 !important;
 }
 
@@ -387,11 +397,11 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
   background: linear-gradient(45deg, #ff6666, #ff4444);
   box-shadow: 0 4px 15px rgba(255, 68, 68, 0.4);
   transform: translateY(-2px);
-  cursor: url("/images/hand.png") 10 10, pointer;
+  cursor: url("/images/pointers/hand.png") 10 10, pointer;
 }
 
-/* Audio player */
-.audio-player {
+/* Poster modal */
+.poster-modal {
   position: absolute;
   bottom: 20px;
   right: 20px;
@@ -406,8 +416,8 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
   backdrop-filter: blur(15px);
 }
 
-/* Audio Player Overlay - Máxima prioridad visual */
-.audio-player-overlay {
+/* Poster Modal Overlay - Máxima prioridad visual */
+.poster-modal-overlay {
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
@@ -429,7 +439,7 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
 }
 
 /* Asegurar que NINGÚN otro elemento interfiera */
-.audio-player-overlay::before {
+.poster-modal-overlay::before {
   content: "";
   position: absolute;
   top: 0;
@@ -451,8 +461,8 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
   }
 }
 
-/* Rediseño completo del audio player */
-.audio-player {
+/* Rediseño completo del poster modal */
+.poster-modal {
   background: linear-gradient(
     135deg,
     rgba(0, 0, 0, 0.95),
@@ -497,53 +507,11 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
   }
 }
 
-.band-info h3 {
-  color: #ff4444;
-  font-size: 1.8rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 0.5rem;
-  text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
-}
-
-.genre-tag {
-  background: linear-gradient(45deg, #ff4444, #cc3333);
-  color: white;
-  padding: 4px 12px;
-  border-radius: 15px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 0 2px 8px rgba(255, 68, 68, 0.4);
-}
-
-/* Botón de cerrar mejorado */
-.close-btn {
-  background: linear-gradient(135deg, #666, #444);
-  color: white;
-  border: none;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  position: relative;
-  z-index: 1000002;
-}
-
 .close-btn:hover {
   background: linear-gradient(135deg, #ff4444, #cc3333);
   transform: scale(1.1);
   box-shadow: 0 6px 20px rgba(255, 68, 68, 0.5);
-  cursor: url("/images/hand.png") 10 10, pointer;
+  cursor: url("/images/pointers/hand.png") 10 10, pointer;
 }
 
 /* Image carousel styles */
@@ -600,7 +568,7 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
 .carousel-btn:hover {
   background: rgba(0, 0, 0, 0.9);
   transform: translateY(-50%) scale(1.1);
-  cursor: url("/images/hand.png") 10 10, pointer;
+  cursor: url("/images/pointers/hand.png") 10 10, pointer;
 }
 
 .prev-btn {
@@ -623,154 +591,9 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
   font-weight: bold;
 }
 
-/* Detalles del concierto */
-.concert-details {
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  background: rgba(255, 68, 68, 0.1);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 68, 68, 0.2);
-}
-
-.venue-info,
-.concert-date,
-.attendance {
-  color: #ffffff;
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-
 .venue-info {
   color: #ff6666;
   font-weight: 600;
-}
-
-/* Sección de audio */
-.audio-section {
-  margin-bottom: 1.5rem;
-}
-
-.audio-controls {
-  width: 100%;
-  height: 50px;
-  border-radius: 10px;
-  background: #222;
-  outline: none;
-}
-
-.audio-controls::-webkit-media-controls-panel {
-  background-color: #222;
-  border-radius: 10px;
-}
-
-/* Descripción del concierto */
-.concert-description {
-  margin-bottom: 1.5rem;
-}
-
-.concert-description h4 {
-  color: #ff4444;
-  font-size: 1.2rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 0.8rem;
-}
-
-.concert-description p {
-  color: #ddd;
-  line-height: 1.6;
-  margin-bottom: 1rem;
-}
-
-/* Setlist */
-.setlist {
-  margin-top: 1rem;
-  padding: 1rem;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
-  border-left: 4px solid #ff4444;
-}
-
-.setlist h5 {
-  color: #ff4444;
-  font-size: 1rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 0.8rem;
-}
-
-.setlist ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.setlist li {
-  color: #ccc;
-  padding: 0.3rem 0;
-  padding-left: 1.5rem;
-  position: relative;
-  font-weight: 500;
-}
-
-.setlist li:before {
-  content: "🎵";
-  position: absolute;
-  left: 0;
-  color: #ff4444;
-}
-
-/* Controles del player - Botones de acción mejorados */
-.player-controls {
-  display: flex;
-  gap: 0.8rem;
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255, 68, 68, 0.2);
-}
-
-.action-btn {
-  flex: 1;
-  background: linear-gradient(
-    135deg,
-    rgba(80, 20, 20, 0.8),
-    rgba(40, 0, 0, 0.8)
-  );
-  color: white;
-  border: 2px solid #666;
-  padding: 12px 16px;
-  border-radius: 10px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.action-btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 68, 68, 0.3),
-    transparent
-  );
-  transition: left 0.5s;
-}
-
-.action-btn:hover::before {
-  left: 100%;
 }
 
 .action-btn:hover {
@@ -778,36 +601,31 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
   color: #ff4444;
   box-shadow: 0 0 20px rgba(255, 68, 68, 0.4);
   transform: translateY(-2px);
-  cursor: url("/images/hand.png") 10 10, pointer;
+  cursor: url("/images/pointers/hand.png") 10 10, pointer;
 }
 
-.action-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 0 10px rgba(255, 68, 68, 0.6);
-}
-
-/* Scrollbar personalizado para el audio player */
-.audio-player::-webkit-scrollbar {
+/* Scrollbar personalizado para el poster modal */
+.poster-modal::-webkit-scrollbar {
   width: 8px;
 }
 
-.audio-player::-webkit-scrollbar-track {
+.poster-modal::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.3);
   border-radius: 4px;
 }
 
-.audio-player::-webkit-scrollbar-thumb {
+.poster-modal::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, #ff4444, #cc3333);
   border-radius: 4px;
 }
 
-.audio-player::-webkit-scrollbar-thumb:hover {
+.poster-modal::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, #ff6666, #ff4444);
 }
 
 /* Controles de elementos cuando el overlay está activo */
-body.has-audio-player .rock-navigator,
-body.has-audio-player .controls-help {
+body.has-poster-modal .rock-navigator,
+body.has-poster-modal .controls-help {
   pointer-events: none !important;
   opacity: 0.1 !important;
   transition: opacity 0.3s ease !important;
@@ -815,20 +633,20 @@ body.has-audio-player .controls-help {
 }
 
 /* Forzar que el canvas y elementos 3D estén por debajo */
-body.has-audio-player canvas {
+body.has-poster-modal canvas {
   z-index: 1 !important;
   position: relative !important;
 }
 
 /* Ocultar completamente elementos drei cuando el overlay está activo */
-body.has-audio-player
-  div[style*="position: absolute"]:not(.audio-player-overlay *) {
+body.has-poster-modal
+  div[style*="position: absolute"]:not(.poster-modal-overlay *) {
   z-index: 1 !important;
   visibility: hidden !important;
 }
 
-body.has-audio-player
-  div[style*="transform-style"]:not(.audio-player-overlay *) {
+body.has-poster-modal
+  div[style*="transform-style"]:not(.poster-modal-overlay *) {
   z-index: 1 !important;
   visibility: hidden !important;
 }
@@ -840,15 +658,15 @@ body.has-audio-player
 }
 
 /* Forzar todos los elementos drei por debajo */
-div[style*="transform-style"]:not(.audio-player-overlay *),
-div[style*="position: absolute"]:not(.audio-player-overlay *),
-div[data-r3f]:not(.audio-player-overlay *) {
+div[style*="transform-style"]:not(.poster-modal-overlay *),
+div[style*="position: absolute"]:not(.poster-modal-overlay *),
+div[data-r3f]:not(.poster-modal-overlay *) {
   z-index: 1 !important;
 }
 
 /* ===== OVERLAY SUPREMO - GARANTIZADO POR ENCIMA DE TODO ===== */
 /* Crear un stacking context completamente aislado */
-.audio-player-overlay {
+.poster-modal-overlay {
   /* Crear nueva capa de apilamiento */
   contain: layout style paint;
   will-change: transform;
@@ -863,23 +681,77 @@ div[data-r3f]:not(.audio-player-overlay *) {
   z-index: 2147483647 !important;
 }
 
-/* El audio player también debe estar aislado */
-.audio-player {
+/* El poster modal también debe estar aislado */
+.poster-modal {
   contain: layout style paint;
   will-change: transform;
   transform: translate3d(0, 0, 1px) !important;
 }
 
+/* Estilos específicos del poster modal */
+.poster-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid #ff4444;
+}
+
+.poster-modal-band-info h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.poster-modal-genre-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff4444, #cc0000);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(255, 68, 68, 0.3);
+}
+
+.poster-modal-close {
+  background: #ff4444;
+  border: none;
+  color: white;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 68, 68, 0.4);
+}
+
+.poster-modal-close:hover {
+  background: #ff6666;
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(255, 68, 68, 0.6);
+}
+
 /* Forzar que TODOS los demás elementos estén por debajo cuando el overlay está activo */
-body.has-audio-player * {
+body.has-poster-modal * {
   z-index: 1 !important;
 }
 
 /* Excepciones para el overlay y sus hijos */
-body.has-audio-player .audio-player-overlay,
-body.has-audio-player .audio-player-overlay *,
-body.has-audio-player .audio-player,
-body.has-audio-player .audio-player * {
+body.has-poster-modal .poster-modal-overlay,
+body.has-poster-modal .poster-modal-overlay *,
+body.has-poster-modal .poster-modal,
+body.has-poster-modal .poster-modal * {
   z-index: 2147483647 !important;
 }
 
@@ -998,7 +870,7 @@ body.has-audio-player .audio-player * {
   border-color: #ffffff;
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 8px 25px rgba(29, 185, 84, 0.4);
-  cursor: url("/images/hand.png") 10 10, pointer;
+  cursor: url("/images/pointers/hand.png") 10 10, pointer;
 }
 
 .music-link.youtube {
@@ -1011,7 +883,7 @@ body.has-audio-player .audio-player * {
   border-color: #ffffff;
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 8px 25px rgba(255, 0, 0, 0.4);
-  cursor: url("/images/hand.png") 10 10, pointer;
+  cursor: url("/images/pointers/hand.png") 10 10, pointer;
 }
 
 .platform-icon {
@@ -1046,4 +918,90 @@ body.has-audio-player .audio-player * {
     padding: 0.7rem 1rem;
     font-size: 0.75rem;
   }
+}
+
+/* ===================================== */
+/* POSTER MODAL SPECIFIC STYLES */
+/* ===================================== */
+
+.concert-details {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: rgba(255, 68, 68, 0.1);
+  border-radius: 10px;
+  border-left: 4px solid #ff4444;
+}
+
+.concert-details p {
+  margin: 0.5rem 0;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.venue-info {
+  font-weight: bold;
+  color: #ffdddd;
+}
+
+.concert-date {
+  color: #ffcccc;
+}
+
+.attendance {
+  color: #ffaaaa;
+  font-style: italic;
+}
+
+.concert-description {
+  margin: 1.5rem 0;
+}
+
+.concert-description h4 {
+  color: #ff4444;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.concert-description p {
+  color: #fff;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.setlist {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 68, 68, 0.3);
+}
+
+.setlist h5 {
+  color: #ff4444;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+}
+
+.setlist ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.setlist li {
+  color: #fff;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+}
+
+.setlist li:last-child {
+  border-bottom: none;
+}
+
+.setlist li:before {
+  content: "♪ ";
+  color: #ff4444;
+  margin-right: 0.5rem;
 }
