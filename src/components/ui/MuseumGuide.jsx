@@ -5,7 +5,7 @@
  * • Sistema de burbujas de texto con hechos de cada banda/avatar
  * • Integración con selector de avatares y modal de configuración
  */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import "./MuseumGuide.css";
 import "./AvatarImages.css";
 import GuideToolbar from "./GuideToolbar";
@@ -13,25 +13,37 @@ import AvatarGridSelector from "./AvatarGridSelector";
 import GuideAvatar from "./GuideAvatar";
 import GuideBubble from "./GuideBubble";
 import { useTranslation } from "../../hooks/useTranslation";
+import { greetings } from "../../data/greetings";
+import { facts } from "../../data/facts";
 
-const AVATAR_SRC = "/images/avatartete.png";
+const AVATAR_SRC = "/images/avatars/tete.png";
 
 export default function MuseumGuide({ onOverlay, onOpenSettings }) {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const [activeTool, setActiveTool] = useState("curiosities");
   const [avatar, setAvatar] = useState("leiva");
   const [showBubbles, setShowBubbles] = useState(true);
   const [bubbleIdx, setBubbleIdx] = useState(0);
+  const [avatarBubbles, setAvatarBubbles] = useState({});
+  const [currentGreeting, setCurrentGreeting] = useState({});
+  const [settings, setSettings] = useState({
+    avatarTransitions: true,
+  });
 
-  const greeting = t("museumGuide.greeting");
-  const curiosities = [
-    t("museumGuide.curiosities.ozzy"),
-    t("museumGuide.curiosities.ironMaiden"),
-    t("museumGuide.curiosities.keithRichards"),
-    t("museumGuide.curiosities.daveGrohl"),
-    t("museumGuide.curiosities.joeyJordison"),
-    t("museumGuide.curiosities.kiss"),
-  ];
+  // Cargar configuraciones desde localStorage
+  useEffect(() => {
+    const savedSettings = localStorage.getItem("museumSettings");
+    if (savedSettings) {
+      const parsedSettings = JSON.parse(savedSettings);
+      setSettings((prev) => ({
+        ...prev,
+        avatarTransitions:
+          parsedSettings.avatarTransitions !== undefined
+            ? parsedSettings.avatarTransitions
+            : true,
+      }));
+    }
+  }, []);
 
   useEffect(() => {
     if (typeof onOverlay === "function") {
@@ -62,50 +74,93 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
     setActiveTool("curiosities");
   };
 
-  const handleNextBubble = () => {
-    const bubbles = avatarBubbles[avatar] || [];
-    setBubbleIdx((idx) => (idx + 1) % bubbles.length);
+  const handleAvatarChange = (newAvatar) => {
+    if (settings.avatarTransitions) {
+      // Con transiciones: cambio normal con animaciones
+      setAvatar(newAvatar);
+    } else {
+      // Sin transiciones
+      setAvatar(newAvatar);
+      // Forzar re-render inmediato sin animaciones
+      setBubbleIdx(0);
+    }
+    // Generar nuevas bubbles para el nuevo avatar con NUEVO saludo
+    const newBubbles = generateAvatarBubbles(newAvatar);
+    setAvatarBubbles((prev) => ({
+      ...prev,
+      [newAvatar]: newBubbles,
+    }));
+    // Marcar que este avatar tiene saludo activo
+    setCurrentGreeting((prev) => ({
+      ...prev,
+      [newAvatar]: newBubbles[0] || null,
+    }));
+    setBubbleIdx(0);
   };
 
-  const avatarBubbles = {
-    leiva: [greeting, ...curiosities],
-    thewarning: [
-      t("museumGuide.avatars.thewarning.greeting"),
-      t("museumGuide.avatars.thewarning.fact1"),
-      t("museumGuide.avatars.thewarning.fact2"),
-      t("museumGuide.avatars.thewarning.fact3"),
-      t("museumGuide.avatars.thewarning.fact4"),
-      t("museumGuide.avatars.thewarning.fact5"),
-      t("museumGuide.avatars.thewarning.fact6"),
-    ],
-    ghost: [
-      t("museumGuide.avatars.ghost.greeting"),
-      t("museumGuide.avatars.ghost.fact1"),
-      t("museumGuide.avatars.ghost.fact2"),
-      t("museumGuide.avatars.ghost.fact3"),
-      t("museumGuide.avatars.ghost.fact4"),
-      t("museumGuide.avatars.ghost.fact5"),
-      t("museumGuide.avatars.ghost.fact6"),
-    ],
-    acdc: [
-      t("museumGuide.avatars.acdc.greeting"),
-      t("museumGuide.avatars.acdc.fact1"),
-      t("museumGuide.avatars.acdc.fact2"),
-      t("museumGuide.avatars.acdc.fact3"),
-      t("museumGuide.avatars.acdc.fact4"),
-      t("museumGuide.avatars.acdc.fact5"),
-      t("museumGuide.avatars.acdc.fact6"),
-    ],
-    ironmaiden: [
-      t("museumGuide.avatars.ironmaiden.greeting"),
-      t("museumGuide.avatars.ironmaiden.fact1"),
-      t("museumGuide.avatars.ironmaiden.fact2"),
-      t("museumGuide.avatars.ironmaiden.fact3"),
-      t("museumGuide.avatars.ironmaiden.fact4"),
-      t("museumGuide.avatars.ironmaiden.fact5"),
-      t("museumGuide.avatars.ironmaiden.fact6"),
-    ],
+  const handleAvatarClick = () => {
+    // Solo cambiar al siguiente fact, sin regenerar saludo
+    const bubbles = avatarBubbles[avatar] || [];
+    const factStartIndex = currentGreeting[avatar] ? 1 : 0; // Saltar saludo si existe
+    const totalFacts = bubbles.length - factStartIndex;
+
+    if (totalFacts > 0) {
+      const nextFactIndex =
+        factStartIndex + ((bubbleIdx - factStartIndex + 1) % totalFacts);
+      setBubbleIdx(nextFactIndex);
+    }
   };
+
+  const handleNextBubble = () => {
+    const bubbles = avatarBubbles[avatar] || [];
+    const hasGreeting = currentGreeting[avatar] ? 1 : 0;
+    const factCount = bubbles.length - hasGreeting;
+
+    if (factCount > 0) {
+      // Si estamos en el saludo (índice 0) y hay facts, ir al primer fact
+      if (bubbleIdx === 0 && hasGreeting && factCount > 0) {
+        setBubbleIdx(1);
+      } else {
+        // Ciclar solo entre facts (índices 1+)
+        const currentFactIndex = bubbleIdx - hasGreeting;
+        const nextFactIndex =
+          hasGreeting + ((currentFactIndex + 1) % factCount);
+        setBubbleIdx(nextFactIndex);
+      }
+    }
+  };
+
+  // Función para generar bubbles con saludo aleatorio (solo para cambio de avatar)
+  const generateAvatarBubbles = useCallback(
+    (avatarKey) => {
+      const avatarGreetings = greetings[language]?.[avatarKey] || [];
+      const avatarFacts = facts[language]?.[avatarKey] || [];
+
+      // Seleccionar UN saludo aleatorio para el nuevo avatar
+      const randomGreeting =
+        avatarGreetings.length > 0
+          ? avatarGreetings[Math.floor(Math.random() * avatarGreetings.length)]
+          : null;
+
+      // Estructura: [saludo, ...facts] o solo [...facts] si no hay saludo
+      return randomGreeting ? [randomGreeting, ...avatarFacts] : avatarFacts;
+    },
+    [language]
+  );
+
+  // Inicializar bubbles para el avatar actual
+  useEffect(() => {
+    const newBubbles = generateAvatarBubbles(avatar);
+    setAvatarBubbles((prev) => ({
+      ...prev,
+      [avatar]: newBubbles,
+    }));
+    // Marcar el saludo actual
+    setCurrentGreeting((prev) => ({
+      ...prev,
+      [avatar]: newBubbles[0] || null,
+    }));
+  }, [avatar, language, generateAvatarBubbles]);
 
   const AVATAR_MAP = {
     leiva: "/images/avatars/tete.png",
@@ -117,7 +172,6 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
     aerosmith: "/images/avatars/aerosmith.png",
     kiss: "/images/avatars/kiss.png",
     metallica: "/images/avatars/metallica.png",
-    megadeth: "/images/avatars/megadeth.png",
     gnr: "/images/avatars/gnr.png",
     bonjovi: "/images/avatars/bonjovi.png",
     defleppard: "/images/avatars/defleppard.png",
@@ -128,6 +182,35 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
     vanhalen: "/images/avatars/vanhalen.png",
     extreme: "/images/avatars/extreme.png",
     thebaboonshow: "/images/avatars/thebaboonshow.png",
+    pinkfloyd: "/images/avatars/pinkfloyd.png",
+    davidbowie: "/images/avatars/davidbowie.png",
+    nirvana: "/images/avatars/nirvana.png",
+    ozzy: "/images/avatars/ozzy.png",
+    brucespringsteen: "/images/avatars/brucespringsteen.png",
+    oasis: "/images/avatars/oasis.png",
+    jinjer: "/images/avatars/jinjer.png",
+    archenemy: "/images/avatars/archenemy.png",
+    blondie: "/images/avatars/blondie.png",
+    slash: "/images/avatars/slash.png",
+    eltonjohn: "/images/avatars/eltonjohn.png",
+    motorhead: "/images/avatars/motorhead.png",
+    pantera: "/images/avatars/pantera.png",
+    radiohead: "/images/avatars/radiohead.png",
+    ratm: "/images/avatars/ratm.png",
+    gretavanfleet: "/images/avatars/gretavanfleet.png",
+    manowar: "/images/avatars/manowar.png",
+    judaspriest: "/images/avatars/judaspriest.png",
+    scorpions: "/images/avatars/scorpions.png",
+    blueoystercult: "/images/avatars/blueoystercult.png",
+    jeffscottsoto: "/images/avatars/jeffscottsoto.png",
+    opeth: "/images/avatars/opeth.png",
+    stevenwilson: "/images/avatars/stevenwilson.png",
+    stevevai: "/images/avatars/stevevai.png",
+    michaeljackson: "/images/avatars/michaeljackson.png",
+    bryanadams: "/images/avatars/bryanadams.png",
+    johnmayer: "/images/avatars/johnmayer.png",
+    jimihendrix: "/images/avatars/jimihendrix.png",
+    prince: "/images/avatars/prince.png",
   };
 
   return (
@@ -146,6 +229,7 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
               className={`museum-guide-avatar avatar-img-${avatar}`}
               onClick={(e) => {
                 e.stopPropagation();
+                handleAvatarClick();
               }}
             />
           </div>
@@ -161,15 +245,15 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
           <GuideToolbar active={activeTool} onSelect={handleToolSelect} />
         </div>
       </div>
-      {activeTool === "customize" && (
-        <AvatarGridSelector
-          onSelect={(key) => {
-            setAvatar(key);
-          }}
-          onClose={handleAvatarSelectorClose}
-          currentAvatar={avatar}
-        />
-      )}
+      <AvatarGridSelector
+        isOpen={activeTool === "customize"}
+        onAvatarSelect={(key) => {
+          handleAvatarChange(key);
+        }}
+        onClose={handleAvatarSelectorClose}
+        currentAvatar={avatar}
+        transitionsEnabled={settings.avatarTransitions}
+      />
     </div>
   );
 }
