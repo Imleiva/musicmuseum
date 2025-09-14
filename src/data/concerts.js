@@ -547,8 +547,8 @@ const concerts = [
     date: "2025-03-20",
     description:
       "Celebración del 20 aniversario de la banda sueca. Cecilia Boström demostró por qué es considerada un auténtico animal de escenario, haciendo crowdsurfing, escalando al primer piso y saltando en plancha al vacío. Una explosión de energía punk con el lema 'Girls to the front' como bandera.",
-    imageUrl: "/images/BaboonShow.jpg",
-    additionalImages: ["/images/BaboonShow.jpg", "/images/guitar.png"],
+    imageUrl: "/images/posters/BaboonShow.jpg",
+    additionalImages: ["/images/posters/BaboonShow.jpg", "/images/guitar.png"],
     position: [223.5, 5, -18], // Punk space - pared derecha arriba - espaciado aumentado
     genre: "punk",
     attendance: "Sold Out",

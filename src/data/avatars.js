@@ -68,10 +68,24 @@ export const avatars = [
     genre: "Progressive Rock",
     decade: "2000s",
   },
+  { key: "stevevai", name: "Steve Vai Avatar", genre: "Rock", decade: "80s" },
   {
-    key: "stevevai",
-    name: "Steve Vai Avatar",
+    key: "bryanadams",
+    name: "Bryan Adams Avatar",
     genre: "Rock",
     decade: "80s",
   },
+  {
+    key: "johnmayer",
+    name: "John Mayer Avatar",
+    genre: "Rock",
+    decade: "2000s",
+  },
+  {
+    key: "jimihendrix",
+    name: "Jimi Hendrix Avatar",
+    genre: "Rock",
+    decade: "60s",
+  },
+  { key: "prince", name: "Prince Avatar", genre: "Pop", decade: "80s" },
 ];
