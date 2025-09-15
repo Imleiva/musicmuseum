@@ -15,7 +15,7 @@
   font-size: 17px;
   font-weight: 700;
   margin-right: 12px;
-  cursor: pointer;
+  cursor: url("../../../public/images/pointers/hand.png"), pointer;
   transition: background 0.2s, box-shadow 0.2s;
   box-shadow: 0 2px 12px #e5393533;
 }
@@ -59,6 +59,91 @@
 
 .avatar-grid-selector-header select {
   min-width: 110px;
+}
+
+/* Switch moderno para transiciones */
+.transitions-switch-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 8px;
+}
+
+.transitions-switch-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ccc;
+  min-width: 80px;
+}
+
+.transitions-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+  cursor: pointer;
+}
+
+.transitions-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Estado desactivado (gris) */
+.transitions-switch-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #333;
+  border: 2px solid #555;
+  transition: all 0.3s ease;
+  border-radius: 26px;
+}
+
+.transitions-switch-slider:before {
+  position: absolute;
+  content: "OFF";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 2px;
+  background-color: #888;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: bold;
+  color: transparent;
+}
+
+/* Estado activado (rojo brillante) */
+.transitions-switch input:checked + .transitions-switch-slider {
+  background-color: #c62828;
+  border-color: #d32f2f;
+  box-shadow: 0 0 12px rgba(211, 47, 47, 0.4);
+}
+
+.transitions-switch input:checked + .transitions-switch-slider:before {
+  transform: translateX(22px);
+  background-color: #fff;
+  content: "ON";
+  color: transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.transitions-switch:hover .transitions-switch-slider {
+  border-color: #666;
+}
+
+.transitions-switch:hover input:checked + .transitions-switch-slider {
+  border-color: #f44336;
+  box-shadow: 0 0 16px rgba(244, 67, 54, 0.5);
 }
 
 /* Mejorar el grid para que no quede pegado arriba */
@@ -234,7 +319,7 @@
   border-radius: 8px;
   padding: 8px 2px 4px 2px;
   text-align: center;
-  cursor: pointer;
+  cursor: url("../../../public/images/pointers/hand.png"), pointer;
   transition: box-shadow 0.1, background 0.2s;
   min-height: 130px;
   min-width: 130px;
@@ -275,7 +360,7 @@
   color: #fff;
   font-weight: bold;
   font-size: 1rem;
-  cursor: pointer;
+  cursor: url("../../../public/images/pointers/hand.png"), pointer;
   transition: background 0.2s;
 }
 .avatar-grid-selector-footer button:disabled {

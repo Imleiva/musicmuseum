@@ -5,9 +5,9 @@
  * • Filtros por género, década y búsqueda de texto
  * • Mapea bandas a sus avatares correspondientes
  */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import AlternatingTransition from "./AlternatingTransition";
+import AlternatingTransition from "./TransitionEffects/AlternatingTransition.jsx";
 import PredictiveHoverEffect from "./PredictiveHoverEffect";
 import AvatarPreview from "./AvatarPreview";
 import { useTranslation } from "../../hooks/useTranslation";
@@ -28,6 +28,13 @@ export default function AvatarGridSelector({
   const [search, setSearch] = useState("");
   const [genre, setGenre] = useState(""); // Vacío para mostrar placeholder
   const [decade, setDecade] = useState(""); // Vacío para mostrar placeholder
+  const [localTransitionsEnabled, setLocalTransitionsEnabled] =
+    useState(transitionsEnabled);
+
+  // Sincronizar con prop externa cuando cambie
+  useEffect(() => {
+    setLocalTransitionsEnabled(transitionsEnabled);
+  }, [transitionsEnabled]);
 
   // Generar listas localizadas de géneros y décadas
   const localizedGenres = [
@@ -50,8 +57,12 @@ export default function AvatarGridSelector({
   const filtered = bands
     .filter(
       (band) =>
-        (genre === "" || genre === t("avatarGridSelector.allGenres") || band.genre === genre) &&
-        (decade === "" || decade === t("avatarGridSelector.allDecades") || band.decade === decade) &&
+        (genre === "" ||
+          genre === t("avatarGridSelector.allGenres") ||
+          band.genre === genre) &&
+        (decade === "" ||
+          decade === t("avatarGridSelector.allDecades") ||
+          band.decade === decade) &&
         band.name.toLowerCase().includes(search.toLowerCase())
     )
     .sort((a, b) => {
@@ -104,6 +115,19 @@ export default function AvatarGridSelector({
                 </option>
               ))}
             </select>
+            <div className="transitions-switch-container">
+              <span className="transitions-switch-label">
+                Animaciones {t.transitionsToggle}
+              </span>
+              <label className="transitions-switch">
+                <input
+                  type="checkbox"
+                  checked={localTransitionsEnabled}
+                  onChange={(e) => setLocalTransitionsEnabled(e.target.checked)}
+                />
+                <span className="transitions-switch-slider"></span>
+              </label>
+            </div>
           </div>
           <PredictiveHoverEffect>
             <div
@@ -125,7 +149,7 @@ export default function AvatarGridSelector({
                     if (preview !== item.key) {
                       setPreview(item.key);
 
-                      if (transitionsEnabled) {
+                      if (localTransitionsEnabled) {
                         // Con transiciones
                         if (!preview) {
                           setDisplayAvatar(item.key);
@@ -137,6 +161,7 @@ export default function AvatarGridSelector({
                       } else {
                         // Sin transiciones: cambio inmediato
                         setDisplayAvatar(item.key);
+                        setSmokeActive(false); // Asegurar que no hay animación
                       }
                     }
                   }}
@@ -168,7 +193,7 @@ export default function AvatarGridSelector({
         </div>
         <div className="avatar-grid-preview">
           {preview ? (
-            transitionsEnabled ? (
+            localTransitionsEnabled ? (
               <AlternatingTransition
                 isActive={smokeActive}
                 onPhaseChange={(phase) => {
