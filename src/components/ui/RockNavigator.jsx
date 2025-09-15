@@ -6,6 +6,7 @@
  * • Descripciones localizadas de cada sala
  */
 import { useTranslation } from "../../hooks/useTranslation";
+import { useTooltipContext, TooltipMessages } from "../tooltips";
 
 export default function RockNavigator({
   currentRoom,
@@ -13,6 +14,7 @@ export default function RockNavigator({
   totalRooms,
 }) {
   const { t } = useTranslation();
+  const { showTooltip, hideTooltip } = useTooltipContext();
 
   const roomNames = [t("rooms.metal"), t("rooms.rock"), t("rooms.punk")];
 
@@ -21,6 +23,14 @@ export default function RockNavigator({
     t("navigator.descriptions.rock"),
     t("navigator.descriptions.punk"),
   ];
+
+  const roomTypes = ["metal", "rock", "punk"];
+
+  const getTooltipMessage = (roomIndex) => {
+    const roomType = roomTypes[roomIndex];
+    const message = TooltipMessages.navigation[roomType];
+    return message;
+  };
 
   return (
     <nav className="rock-navigator">
@@ -35,6 +45,14 @@ export default function RockNavigator({
             key={index}
             className={`room-btn ${currentRoom === index ? "active" : ""}`}
             onClick={() => onRoomChange(index)}
+            onMouseEnter={() => {
+              const message = getTooltipMessage(index);
+              const title = `🎸 ${roomNames[index]}`;
+              showTooltip(message, title);
+            }}
+            onMouseLeave={() => {
+              hideTooltip();
+            }}
           >
             {roomNames[index] || `Room ${index + 1}`}
           </button>
