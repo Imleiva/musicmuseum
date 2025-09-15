@@ -24,14 +24,6 @@ function PosterTexture({ imageUrl }) {
       texture.minFilter = 1008; // LinearFilter
       texture.magFilter = 1008; // LinearFilter
       texture.needsUpdate = true;
-
-      console.log(
-        "Poster texture loaded:",
-        imageUrl,
-        texture.image.width,
-        "x",
-        texture.image.height
-      );
     }
   }, [texture, imageUrl]);
 
@@ -170,13 +162,6 @@ export default function RockPoster({ concert, onSelect }) {
   }
 
   // Debug log para verificar renderizado de etiquetas
-  console.log(
-    "RockPoster rendering:",
-    concert.band,
-    "at position:",
-    concert.position
-  );
-
   // Todas las imágenes son cuadradas 1:1, por lo tanto todos los pósters son cuadrados
   const posterWidth = 4.0;
   const posterHeight = 4.0;

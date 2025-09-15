@@ -153,8 +153,6 @@ function GuitarWithTexture() {
   texture.wrapS = ClampToEdgeWrapping;
   texture.wrapT = ClampToEdgeWrapping;
 
-  console.log("Texture loaded successfully:", texture);
-
   return (
     <mesh
       position={[0, 0.26, 0]} // Slightly adjusted position for better visibility
