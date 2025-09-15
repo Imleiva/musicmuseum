@@ -23,6 +23,7 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
   const [activeTool, setActiveTool] = useState("curiosities");
   const [avatar, setAvatar] = useState("leiva");
   const [showBubbles, setShowBubbles] = useState(true);
+  const [curiositiesEnabled, setCuriositiesEnabled] = useState(true);
   const [bubbleIdx, setBubbleIdx] = useState(0);
   const [avatarBubbles, setAvatarBubbles] = useState({});
   const [currentGreeting, setCurrentGreeting] = useState({});
@@ -86,6 +87,16 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
   const handleToolSelect = (tool) => {
     if (tool === "settings") {
       onOpenSettings();
+    } else if (tool === "curiosities") {
+      // Toggle las curiosidades
+      setCuriositiesEnabled(!curiositiesEnabled);
+      setShowBubbles(!curiositiesEnabled);
+      // Si las estamos deshabilitando, cambiar el tool activo
+      if (curiositiesEnabled) {
+        setActiveTool("none");
+      } else {
+        setActiveTool("curiosities");
+      }
     } else {
       setActiveTool(tool);
       if (tool === "customize") {
@@ -95,9 +106,12 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
   };
 
   const handleAvatarSelectorClose = () => {
-    setShowBubbles(true);
+    // Solo restaurar las curiosidades si estaban habilitadas
+    if (curiositiesEnabled) {
+      setShowBubbles(true);
+      setActiveTool("curiosities");
+    }
     setBubbleIdx(0);
-    setActiveTool("curiosities");
   };
 
   const handleAvatarChange = (newAvatar) => {
@@ -259,7 +273,7 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
               }}
             />
           </div>
-          {activeTool !== "customize" && showBubbles && (
+          {activeTool !== "customize" && showBubbles && curiositiesEnabled && (
             <GuideBubble
               text={avatarBubbles[avatar]?.[bubbleIdx] || ""}
               title={t("museumGuide.clickForMore")}
@@ -268,7 +282,11 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
           )}
         </div>
         <div className="museum-guide-toolbar-container">
-          <GuideToolbar active={activeTool} onSelect={handleToolSelect} />
+          <GuideToolbar
+            active={activeTool}
+            onSelect={handleToolSelect}
+            curiositiesEnabled={curiositiesEnabled}
+          />
         </div>
       </div>
       <AvatarGridSelector

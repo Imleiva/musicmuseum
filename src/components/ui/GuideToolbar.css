@@ -39,3 +39,35 @@
   display: block;
 }
 
+/* Estilo para botón deshabilitado */
+.guide-toolbar-btn.disabled {
+  opacity: 0.6;
+  position: relative;
+}
+
+.guide-toolbar-btn.disabled:hover {
+  background: rgba(255, 68, 68, 0.08);
+}
+
+/* Línea diagonal para indicar deshabilitado */
+.disabled-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.disabled-line::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: #ff4444;
+  transform: translateY(-50%) rotate(-45deg);
+  border-radius: 1px;
+  box-shadow: 0 0 4px rgba(255, 68, 68, 0.5);
+}
