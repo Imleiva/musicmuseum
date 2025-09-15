@@ -14,9 +14,8 @@ export default function SettingsModal({ isOpen, onClose }) {
   const [settings, setSettings] = useState({
     language: "es",
     soundEnabled: true,
-    avatarTransitions: true,
-    animationSpeed: "normal",
-    imageQuality: "high",
+    // animationSpeed: "normal", // TODO: Implementar funcionalidad
+    // imageQuality: "high", // TODO: Implementar funcionalidad
     showTooltips: true,
   });
 
@@ -29,9 +28,8 @@ export default function SettingsModal({ isOpen, onClose }) {
       const defaultSettings = {
         language: "es",
         soundEnabled: true,
-        avatarTransitions: true,
-        animationSpeed: "normal",
-        imageQuality: "high",
+        // animationSpeed: "normal", // TODO: Implementar funcionalidad
+        // imageQuality: "high", // TODO: Implementar funcionalidad
         showTooltips: true,
       };
 
@@ -44,7 +42,6 @@ export default function SettingsModal({ isOpen, onClose }) {
         const defaultSettings = {
           language: "es",
           soundEnabled: true,
-          avatarTransitions: true,
           animationSpeed: "normal",
           imageQuality: "high",
           showTooltips: true,
@@ -62,6 +59,13 @@ export default function SettingsModal({ isOpen, onClose }) {
     if (newSettings.language !== language) {
       setLanguage(newSettings.language);
     }
+
+    // Emitir evento personalizado para notificar cambios
+    window.dispatchEvent(
+      new CustomEvent("museumSettingsChanged", {
+        detail: newSettings,
+      })
+    );
   };
 
   const handleSaveChanges = () => {
@@ -156,39 +160,8 @@ export default function SettingsModal({ isOpen, onClose }) {
             </div>
           </div>
 
-          {/* Transiciones de Avatar */}
-          <div className="settings-group">
-            <h3 className="settings-group-title">
-              {t("settings.transitions")}
-            </h3>
-            <div className="settings-option">
-              <span className="settings-label">
-                {t("settings.transitionsLabel")}
-              </span>
-              <div className="toggle-buttons">
-                <button
-                  className={`toggle-btn ${
-                    tempSettings?.avatarTransitions === true ? "active" : ""
-                  }`}
-                  onClick={() => handleSettingChange("avatarTransitions", true)}
-                >
-                  {t("settings.enabled")}
-                </button>
-                <button
-                  className={`toggle-btn ${
-                    tempSettings?.avatarTransitions === false ? "active" : ""
-                  }`}
-                  onClick={() =>
-                    handleSettingChange("avatarTransitions", false)
-                  }
-                >
-                  {t("settings.disabled")}
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Animaciones */}
+          {/* TODO: Implementar velocidad de animaciones */}
+          {/*
           <div className="settings-group">
             <h3 className="settings-group-title">{t("settings.animations")}</h3>
             <div className="settings-option">
@@ -225,8 +198,10 @@ export default function SettingsModal({ isOpen, onClose }) {
               </div>
             </div>
           </div>
+          */}
 
-          {/* Calidad de Imágenes */}
+          {/* TODO: Implementar calidad de imágenes */}
+          {/*
           <div className="settings-group">
             <h3 className="settings-group-title">
               {t("settings.performance")}
@@ -263,6 +238,7 @@ export default function SettingsModal({ isOpen, onClose }) {
               </div>
             </div>
           </div>
+          */}
 
           {/* Tooltips */}
           <div className="settings-group">
@@ -293,9 +269,8 @@ export default function SettingsModal({ isOpen, onClose }) {
                 const defaultSettings = {
                   language: "es",
                   soundEnabled: true,
-                  avatarTransitions: true,
-                  animationSpeed: "normal",
-                  imageQuality: "high",
+                  // animationSpeed: "normal", // TODO: Implementar funcionalidad
+                  // imageQuality: "high", // TODO: Implementar funcionalidad
                   showTooltips: true,
                 };
                 setTempSettings(defaultSettings);
