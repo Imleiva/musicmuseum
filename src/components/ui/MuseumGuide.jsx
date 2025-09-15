@@ -32,17 +32,43 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
 
   // Cargar configuraciones desde localStorage
   useEffect(() => {
-    const savedSettings = localStorage.getItem("museumSettings");
-    if (savedSettings) {
-      const parsedSettings = JSON.parse(savedSettings);
-      setSettings((prev) => ({
-        ...prev,
-        avatarTransitions:
-          parsedSettings.avatarTransitions !== undefined
-            ? parsedSettings.avatarTransitions
-            : true,
-      }));
-    }
+    const loadSettings = () => {
+      const savedSettings = localStorage.getItem("museumSettings");
+      if (savedSettings) {
+        const parsedSettings = JSON.parse(savedSettings);
+        setSettings((prev) => ({
+          ...prev,
+          avatarTransitions:
+            parsedSettings.avatarTransitions !== undefined
+              ? parsedSettings.avatarTransitions
+              : true,
+        }));
+      }
+    };
+
+    // Cargar al inicio
+    loadSettings();
+
+    // Escuchar cambios en localStorage
+    const handleStorageChange = (e) => {
+      if (e.key === "museumSettings") {
+        loadSettings();
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    // También escuchar eventos personalizados para cambios en la misma pestaña
+    const handleSettingsChange = () => {
+      loadSettings();
+    };
+
+    window.addEventListener("museumSettingsChanged", handleSettingsChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("museumSettingsChanged", handleSettingsChange);
+    };
   }, []);
 
   useEffect(() => {
