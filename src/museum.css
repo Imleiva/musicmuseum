@@ -234,6 +234,7 @@ canvas {
 
 /* Controls help */
 .controls-help {
+  cursor: url("/images/pointers/rockhand.png") 16 16, auto;
   position: absolute;
   bottom: 20px;
   left: 20px;
@@ -572,11 +573,11 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
 }
 
 .prev-btn {
-  left: 10px;
+  left: -30px;
 }
 
 .next-btn {
-  right: 10px;
+  right: -30px;
 }
 
 .image-counter {
