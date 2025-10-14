@@ -2,7 +2,6 @@
  * Sala 3D del museo con elementos arquitectónicos
  * • Genera salas temáticas (Metal, Rock, Punk) con colores específicos
  * • Paredes, suelo, techo con vigas y luces LED
- * • Detalles como conductos de ventilación y sistemas de sonido
  * • Iluminación ambiental adaptada al tema de cada sala
  */
 

@@ -15,7 +15,7 @@
   font-size: 17px;
   font-weight: 700;
   margin-right: 12px;
-  cursor: pointer;
+  cursor: url("../../../public/images/pointers/hand.png"), pointer;
   transition: background 0.2s, box-shadow 0.2s;
   box-shadow: 0 2px 12px #e5393533;
 }
@@ -59,6 +59,91 @@
 
 .avatar-grid-selector-header select {
   min-width: 110px;
+}
+
+/* Switch moderno para transiciones */
+.transitions-switch-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 8px;
+}
+
+.transitions-switch-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ccc;
+  min-width: 80px;
+}
+
+.transitions-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+  cursor: pointer;
+}
+
+.transitions-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Estado desactivado (gris) */
+.transitions-switch-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #333;
+  border: 2px solid #555;
+  transition: all 0.3s ease;
+  border-radius: 26px;
+}
+
+.transitions-switch-slider:before {
+  position: absolute;
+  content: "OFF";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 2px;
+  background-color: #888;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: bold;
+  color: transparent;
+}
+
+/* Estado activado (rojo brillante) */
+.transitions-switch input:checked + .transitions-switch-slider {
+  background-color: #c62828;
+  border-color: #d32f2f;
+  box-shadow: 0 0 12px rgba(211, 47, 47, 0.4);
+}
+
+.transitions-switch input:checked + .transitions-switch-slider:before {
+  transform: translateX(22px);
+  background-color: #fff;
+  content: "ON";
+  color: transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.transitions-switch:hover .transitions-switch-slider {
+  border-color: #666;
+}
+
+.transitions-switch:hover input:checked + .transitions-switch-slider {
+  border-color: #f44336;
+  box-shadow: 0 0 16px rgba(244, 67, 54, 0.5);
 }
 
 /* Mejorar el grid para que no quede pegado arriba */
@@ -158,35 +243,37 @@
 }
 /* Preview avatar image */
 .avatar-preview-img {
-  width: 340px;
-  height: 340px;
+  width: 350px;
+  height: 350px;
   object-fit: contain;
   display: block;
   filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.516));
 }
 
 .avatar-preview-name {
-  color: #fff;
-  font-size: 28px;
-  font-weight: 700;
+  color: #e0e0e0e7;
+  font-size: 27px;
+  font-weight: 600;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  letter-spacing: 0.5px;
   margin-bottom: 8px;
   text-align: center;
+  text-shadow: 0 0 5px #a41d1d, 0 0 10px #a41d1d, 0 0 15px #a41d1d,
+    0 0 20px #a41d1d, 0 0 25px #a41d1d;
 }
 
 .avatar-preview-meta {
-  color: #aaa;
+  color: #b8b8b8;
   font-size: 18px;
+  font-weight: 400;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  letter-spacing: 0.3px;
   text-align: center;
+  text-shadow: 0 0 3px #dd4444, 0 0 6px #dd4444, 0 0 9px #dd4444;
 }
 
-/* Estilo para el video de humo */
-.smoke-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 16px;
-  display: block;
-}
 .avatar-grid-selector-overlay {
   position: fixed;
   top: 0;
@@ -232,7 +319,7 @@
   border-radius: 8px;
   padding: 8px 2px 4px 2px;
   text-align: center;
-  cursor: pointer;
+  cursor: url("../../../public/images/pointers/hand.png"), pointer;
   transition: box-shadow 0.1, background 0.2s;
   min-height: 130px;
   min-width: 130px;
@@ -242,7 +329,7 @@
   justify-content: center;
 }
 .avatar-grid-selector-item.selected {
-  box-shadow: 0 2px 12px #cc22226f;
+  box-shadow: 0 2px 12px #a41d1d6f;
   transform: scale(1.01);
   background-color: #7a28277a;
   transition: transform 0.2s ease, background-color 0.2s ease;
@@ -273,7 +360,7 @@
   color: #fff;
   font-weight: bold;
   font-size: 1rem;
-  cursor: pointer;
+  cursor: url("../../../public/images/pointers/hand.png"), pointer;
   transition: background 0.2s;
 }
 .avatar-grid-selector-footer button:disabled {
@@ -340,4 +427,28 @@
 
 .avatar-grid-preview {
   position: relative;
+}
+
+/* Bloquear interacción durante transiciones */
+.avatar-grid-selector-grid.transitioning {
+  pointer-events: none;
+  opacity: 0.7;
+  position: relative;
+}
+
+.avatar-grid-selector-grid.transitioning::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(24, 24, 24, 0.3);
+  cursor: wait;
+  z-index: 10;
+}
+
+.avatar-grid-selector-grid.transitioning .avatar-grid-selector-item {
+  cursor: wait;
+  filter: brightness(0.6);
 }

@@ -26,7 +26,6 @@ const VideoProjection = React.memo(function VideoProjection({
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    console.log(`🎬 Loading video: ${videoUrl}`);
     setVideoLoaded(false);
     setHasError(false);
     setVideoTexture(null);
@@ -43,7 +42,6 @@ const VideoProjection = React.memo(function VideoProjection({
     video.height = 288;
 
     const handleLoadedData = () => {
-      console.log(`✅ Video loaded: ${videoUrl}`);
       setVideoLoaded(true);
       setHasError(false);
 
@@ -58,7 +56,6 @@ const VideoProjection = React.memo(function VideoProjection({
         texture.generateMipmaps = false;
         texture.needsUpdate = true;
 
-        console.log(`🎨 Texture created successfully for: ${videoUrl}`);
         setVideoTexture(texture);
 
         video.play().catch((e) => {
@@ -118,14 +115,8 @@ const VideoProjection = React.memo(function VideoProjection({
 
   // Renderizar el material basado en el estado
   if (videoTexture && videoLoaded && !hasError) {
-    console.log(`🎥 Rendering video material for: ${videoUrl}`);
     return <meshBasicMaterial map={videoTexture} side={2} />;
   }
-
-  // Log cuando se renderiza el fallback
-  console.log(
-    `🎨 Rendering fallback material for: ${genre}, error: ${hasError}, loaded: ${videoLoaded}`
-  );
 
   const fallbackColors = {
     metal: "#8B0000",
@@ -169,12 +160,10 @@ export default function Projector({ position, genre = "metal" }) {
       ? testVideoMapping[genre] || testVideoMapping.metal
       : allVideos[currentVideoIndex] || allVideos[0];
 
-    console.log(`🎬 Projector using video: ${url}`);
     return url;
   }, [currentVideoIndex, fallbackToTest, genre]);
 
   const handleVideoError = useCallback(() => {
-    console.log(`🔄 Video error, switching to fallback`);
     if (!fallbackToTest) {
       setFallbackToTest(true);
     }
@@ -184,19 +173,11 @@ export default function Projector({ position, genre = "metal" }) {
     const interval = setInterval(() => {
       setCurrentVideoIndex((prevIndex) => {
         const newIndex = (prevIndex + 1) % allVideos.length;
-        console.log(
-          `🔄 Switching to video ${newIndex + 1}/${allVideos.length}`
-        );
         return newIndex;
       });
     }, 15000);
     return () => clearInterval(interval);
   }, []);
-
-  // Log cuando se inicialice o cambie el género
-  useEffect(() => {
-    console.log(`🎭 Projector initialized for ${genre}`);
-  }, [genre]);
 
   const animationFrame = useRef(0);
   useFrame((state) => {

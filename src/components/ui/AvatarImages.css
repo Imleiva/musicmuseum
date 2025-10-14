@@ -6,19 +6,17 @@
 
 .avatar-img-queen {
   width: 250px;
-
-  margin: -0.8rem;
 }
 
 .avatar-img-ironmaiden {
   width: 270px;
-  margin: -1.7rem;
+  margin: -1.4rem;
 }
 
 .avatar-img-ghost {
   width: 260px;
   transform: translateY(-1.6rem);
-  margin: -1.6rem;
+  margin: -1rem;
 }
 
 .avatar-img-pinkfloyd {
@@ -30,7 +28,7 @@
 .avatar-img-ozzy {
   width: 250px;
   transform: translateY(-1.5rem);
-  margin: -1rem;
+  margin: -0.7rem;
 }
 
 .avatar-img-eltonjohn {
@@ -40,9 +38,28 @@
 }
 
 .avatar-img-judaspriest {
-  width: 270px;
+  width: 280px;
   transform: translateY(-0.6rem);
-  margin: -1.9rem;
+  margin: -1.5rem;
+}
+
+.avatar-img-blondie {
+  width: 210px;
+  transform: translateY(-1.3rem);
+}
+
+.avatar-img-thebaboonshow {
+  width: 230px;
+  transform: translateY(-1.3rem);
+}
+
+.avatar-img-oasis {
+  width: 255px;
+  transform: translateY(-1.3rem);
+}
+.avatar-img-jeffscottsoto {
+  width: 320px;
+  transform: translateY(-1.3rem);
 }
 
 /* Regla general para aplicar un halo claro a todos los avatares con clases específicas */

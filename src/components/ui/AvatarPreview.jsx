@@ -2,9 +2,11 @@
  * Renderiza imágenes de avatares con estilos específicos
  * • Mapea keys de avatares a sus rutas de imágenes
  * • Aplica clases CSS específicas para ciertos avatares
+ * • Maneja errores de carga mostrando logo como fallback
  * • Componente simple para mostrar preview de personajes
  */
-import React from "react";
+import React, { useState } from "react";
+import { bands } from "../../data/bands.js";
 
 const avatarImages = {
   tete: "/images/avatars/tete.png",
@@ -13,10 +15,9 @@ const avatarImages = {
   ghost: "/images/avatars/ghost.png",
   aerosmith: "/images/avatars/aerosmith.png",
   metallica: "/images/avatars/metallica.png",
-  megadeth: "/images/avatars/megadeth.png",
   gnr: "/images/avatars/gnr.png",
   bonjovi: "/images/avatars/bonjovi.png",
-  defleppard: "/images/avatars/defleppard.png",
+  defleppard: "/images/avatars/.png",
   poison: "/images/avatars/poison.png",
   motleycrue: "/images/avatars/motleycrue.png",
   alicecooper: "/images/avatars/alicecooper.png",
@@ -25,10 +26,6 @@ const avatarImages = {
   extreme: "/images/avatars/extreme.png",
   jimihendrix: "/images/avatars/jimihendrix.png",
   prince: "/images/avatars/prince.png",
-  therollingstones: "/images/avatars/therollingstones.png",
-  thebeatles: "/images/avatars/thebeatles.png",
-  thecure: "/images/avatars/thecure.png",
-  theverve: "/images/avatars/theverve.png",
   thebaboonshow: "/images/avatars/thebaboonshow.png",
   pinkfloyd: "/images/avatars/pinkfloyd.png",
   queen: "/images/avatars/queen.png",
@@ -52,14 +49,31 @@ const avatarImages = {
   manowar: "/images/avatars/manowar.png",
   judaspriest: "/images/avatars/judaspriest.png",
   scorpions: "/images/avatars/scorpions.png",
-  u2: "/images/avatars/u2.png",
   blueoystercult: "/images/avatars/blueoystercult.png",
   jeffscottsoto: "/images/avatars/jeffscottsoto.png",
+  opeth: "/images/avatars/opeth.png",
+  stevenwilson: "/images/avatars/stevenwilson.png",
+  stevevai: "/images/avatars/stevevai.png",
+  michaeljackson: "/images/avatars/michaeljackson.png",
+  bryanadams: "/images/avatars/bryanadams.png",
+  johnmayer: "/images/avatars/johnmayer.png",
+  aliceinchains: "/images/avatars/aliceinchains.png",
 };
 
 export default function AvatarPreview({ avatarKey }) {
+  const [hasError, setHasError] = useState(false);
   const src = avatarImages[avatarKey];
-  if (!src) return null;
+
+  // Si no hay imagen o ha fallado la carga, mostrar logo
+  if (!src || hasError) {
+    const band = bands.find((b) => b.key === avatarKey);
+    if (band?.logo) {
+      return (
+        <img src={band.logo} alt={band.name} className="avatar-preview-img" />
+      );
+    }
+    return null;
+  }
 
   const className =
     avatarKey === "thewarning"
@@ -78,7 +92,22 @@ export default function AvatarPreview({ avatarKey }) {
       ? "avatar-img-judaspriest"
       : avatarKey === "queen"
       ? "avatar-img-queen"
+      : avatarKey === "blondie"
+      ? "avatar-img-blondie"
+      : avatarKey === "thebaboonshow"
+      ? "avatar-img-thebaboonshow"
+      : avatarKey === "oasis"
+      ? "avatar-img-oasis"
+      : avatarKey === "jeffscottsoto"
+      ? "avatar-img-jeffscottsoto"
       : "avatar-preview-img";
 
-  return <img src={src} alt={avatarKey} className={className} />;
+  return (
+    <img
+      src={src}
+      alt={avatarKey}
+      className={className}
+      onError={() => setHasError(true)}
+    />
+  );
 }

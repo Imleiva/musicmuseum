@@ -7,7 +7,6 @@ An immersive 3D virtual museum experience dedicated to rock and metal concerts. 
 - **3D Immersive Experience** - Navigate through realistic virtual rooms
 - **Multi-Genre Themed Rooms** - Metal, Rock, and Punk dedicated spaces
 - **Interactive Concert Posters** - Hover and click for detailed information
-- **Audio System** - Built-in music player with concert recordings
 - **Video Projections** - Historical concert footage display
 - **360° Navigation** - Full freedom to look around each room
 - **Responsive Design** - Works on desktop and mobile devices
@@ -60,7 +59,7 @@ src/
 │ │ ├── RockPoster.jsx
 │ │ └── Projector.jsx
 │ └── ui/ # User interface components
-│ ├── AudioPlayer.jsx
+│ ├── PosterModal.jsx
 │ └── RockNavigator.jsx
 ├── data/ # Concert information
 │ └── concerts.js
@@ -80,7 +79,6 @@ Edit `src/data/concerts.js` to add new concert information:
   genre: "metal|rock|punk",
   description: "Concert description",
   imageUrl: "/images/poster.jpg",
-  audioUrl: "/audio/song.mp3",
   position: [x, y, z]
 }
 ```

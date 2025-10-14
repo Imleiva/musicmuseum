@@ -14,9 +14,8 @@ export default function SettingsModal({ isOpen, onClose }) {
   const [settings, setSettings] = useState({
     language: "es",
     soundEnabled: true,
-    theme: "dark",
-    animationSpeed: "normal",
-    imageQuality: "high",
+    // animationSpeed: "normal", // TODO: Implementar funcionalidad
+    // imageQuality: "high", // TODO: Implementar funcionalidad
     showTooltips: true,
   });
 
@@ -29,9 +28,8 @@ export default function SettingsModal({ isOpen, onClose }) {
       const defaultSettings = {
         language: "es",
         soundEnabled: true,
-        theme: "dark",
-        animationSpeed: "normal",
-        imageQuality: "high",
+        // animationSpeed: "normal", // TODO: Implementar funcionalidad
+        // imageQuality: "high", // TODO: Implementar funcionalidad
         showTooltips: true,
       };
 
@@ -41,6 +39,13 @@ export default function SettingsModal({ isOpen, onClose }) {
         setSettings(finalSettings);
         setTempSettings(finalSettings);
       } else {
+        const defaultSettings = {
+          language: "es",
+          soundEnabled: true,
+          animationSpeed: "normal",
+          imageQuality: "high",
+          showTooltips: true,
+        };
         setSettings(defaultSettings);
         setTempSettings(defaultSettings);
       }
@@ -54,12 +59,20 @@ export default function SettingsModal({ isOpen, onClose }) {
     if (newSettings.language !== language) {
       setLanguage(newSettings.language);
     }
+
+    // Emitir evento personalizado para notificar cambios
+    window.dispatchEvent(
+      new CustomEvent("museumSettingsChanged", {
+        detail: newSettings,
+      })
+    );
   };
 
   const handleSaveChanges = () => {
     if (tempSettings) {
       saveSettings(tempSettings);
       setHasUnsavedChanges(false);
+      onClose(); // Cerrar el modal después de guardar
     }
   };
 
@@ -147,33 +160,8 @@ export default function SettingsModal({ isOpen, onClose }) {
             </div>
           </div>
 
-          {/* Tema Visual */}
-          <div className="settings-group">
-            <h3 className="settings-group-title">{t("settings.theme")}</h3>
-            <div className="settings-option">
-              <span className="settings-label">{t("settings.themeLabel")}</span>
-              <div className="toggle-buttons">
-                <button
-                  className={`toggle-btn ${
-                    tempSettings?.theme === "dark" ? "active" : ""
-                  }`}
-                  onClick={() => handleSettingChange("theme", "dark")}
-                >
-                  {t("settings.dark")}
-                </button>
-                <button
-                  className={`toggle-btn ${
-                    tempSettings?.theme === "light" ? "active" : ""
-                  }`}
-                  onClick={() => handleSettingChange("theme", "light")}
-                >
-                  {t("settings.light")}
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Animaciones */}
+          {/* TODO: Implementar velocidad de animaciones */}
+          {/*
           <div className="settings-group">
             <h3 className="settings-group-title">{t("settings.animations")}</h3>
             <div className="settings-option">
@@ -210,8 +198,10 @@ export default function SettingsModal({ isOpen, onClose }) {
               </div>
             </div>
           </div>
+          */}
 
-          {/* Calidad de Imágenes */}
+          {/* TODO: Implementar calidad de imágenes */}
+          {/*
           <div className="settings-group">
             <h3 className="settings-group-title">
               {t("settings.performance")}
@@ -248,6 +238,7 @@ export default function SettingsModal({ isOpen, onClose }) {
               </div>
             </div>
           </div>
+          */}
 
           {/* Tooltips */}
           <div className="settings-group">
@@ -278,9 +269,8 @@ export default function SettingsModal({ isOpen, onClose }) {
                 const defaultSettings = {
                   language: "es",
                   soundEnabled: true,
-                  theme: "dark",
-                  animationSpeed: "normal",
-                  imageQuality: "high",
+                  // animationSpeed: "normal", // TODO: Implementar funcionalidad
+                  // imageQuality: "high", // TODO: Implementar funcionalidad
                   showTooltips: true,
                 };
                 setTempSettings(defaultSettings);
