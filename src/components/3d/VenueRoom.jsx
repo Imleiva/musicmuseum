@@ -56,22 +56,10 @@ const CeilingBeamsAndLEDs = () => {
     </group>
   );
 };
-{
-  /* ESFERA DEBUG VERDE (debería ser imposible no verla si la cámara funciona) */
-}
-<mesh position={[0, 5, 0]}>
-  <sphereGeometry args={[3, 32, 32]} />
-  <meshStandardMaterial color="#00ff00" />
-</mesh>;
-{
-  /* PANEL DEBUG ROJO (debería ser imposible no verlo, ahora en el centro de la sala) */
-}
-<mesh position={[0, 10, 0]} rotation={[Math.PI / 2, 0, 0]}>
-  <planeGeometry args={[58, 18]} />
-  <meshStandardMaterial color="#ff0000" transparent opacity={0.7} />
-</mesh>;
+
 import React, { Suspense, useEffect } from "react";
-import { useLoader, useThree } from "@react-three/fiber";
+import PickWithTexture from "./PickWithTexture";
+import { useLoader, useThree, useFrame } from "@react-three/fiber";
 import {
   TextureLoader,
   LinearFilter,
@@ -120,60 +108,62 @@ function FloorWithTexture({ theme }) {
   );
 }
 
-// Componente para mostrar la guitarra eléctrica usando tu imagen exacta
-function GuitarStage() {
-  return (
-    <Suspense
-      fallback={
-        <mesh position={[0, 0.25, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-          <planeGeometry args={[8, 8]} />
-          <meshStandardMaterial
-            color="#8B4513"
-            roughness={0.8}
-            metalness={0.1}
-            emissive="#441100"
-            emissiveIntensity={0.3}
-          />
-        </mesh>
-      }
-    >
-      <GuitarWithTexture />
-    </Suspense>
-  );
-}
+// Componente del escenario giratorio tipo vinilo
+function RotatingVinylStage({ roomTheme }) {
+  const groupRef = React.useRef();
 
-function GuitarWithTexture() {
-  // Load the guitar.png texture
-  const texture = useLoader(TextureLoader, "/images/guitar.png");
-
-  // Configure texture properties
-  texture.flipY = false;
-  texture.generateMipmaps = true;
-  texture.minFilter = LinearFilter;
-  texture.magFilter = LinearFilter;
-  texture.wrapS = ClampToEdgeWrapping;
-  texture.wrapT = ClampToEdgeWrapping;
-
-  console.log("Texture loaded successfully:", texture);
+  useFrame((state, delta) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y += delta * 0.2; // Gira como un vinilo
+    }
+  });
 
   return (
-    <mesh
-      position={[0, 0.26, 0]} // Slightly adjusted position for better visibility
-      rotation={[-Math.PI / 2, 0, -Math.PI / 2]} // 90º a la derecha respecto a la pantalla
-      castShadow
-      receiveShadow
-    >
-      <planeGeometry args={[10.5, 5]} />
-      <meshStandardMaterial
-        map={texture}
-        transparent={true}
-        opacity={1.0}
-        metalness={0.7}
-        roughness={0.2}
-        emissive="#000000"
-        emissiveIntensity={0.0}
-      />
-    </mesh>
+    <group ref={groupRef} position={[0, -4, 0]}>
+      {/* LED Underglow Bottom Layer */}
+      <mesh position={[0, 0.07, 0]} receiveShadow>
+        <cylinderGeometry args={[6.1, 6.2, 0.05, 100]} />
+        <meshStandardMaterial
+          color="#555555"
+          emissive={roomTheme.accent}
+          emissiveIntensity={0.3}
+          metalness={0.7}
+          roughness={0.3}
+        />
+      </mesh>
+
+      {/* Transparent Top Layer (Glass) */}
+      <mesh position={[0, 0.1, 0]} receiveShadow>
+        <cylinderGeometry args={[6.1, 5, 0.09, 70]} />
+        <meshPhysicalMaterial
+          transparent={true}
+          opacity={0.1}
+          transmission={0.9}
+          roughness={0.1}
+          metalness={0.1}
+          color="#dddddd"
+        />
+      </mesh>
+
+      {/* Logo de la púa: plano con efecto cristal sobre el círculo central */}
+      <Suspense fallback={null}>
+        <PickWithTexture position={[0, 0.15, 0]} scale={[8, 8, 1]} />
+      </Suspense>
+
+      {/* Neon light ring around the stage base */}
+      <mesh position={[0, 0.1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[5.8, 6.2, 100]} />
+        <meshStandardMaterial
+          emissive={roomTheme.accent}
+          emissiveIntensity={0.8}
+          color={roomTheme.accent}
+          transparent
+          opacity={0.9}
+          roughness={0.1}
+          metalness={0.8}
+        />
+      </mesh>
+    </group>
   );
 }
 
@@ -398,7 +388,7 @@ export default function VenueRoom({
         position={[0, -3.9, 0]}
         receiveShadow
       >
-        <ringGeometry args={[6.7, 10.5, 68]} />
+        <ringGeometry args={[6.2, 12, 68]} />
         <meshStandardMaterial
           color={roomTheme.floor}
           roughness={0.3}
@@ -409,49 +399,7 @@ export default function VenueRoom({
       </mesh>
 
       {/* Central Stage - Two Layer Design */}
-      <group position={[0, -4, 0]}>
-        {/* LED Underglow Bottom Layer */}
-        <mesh position={[0, 0, 0]} receiveShadow>
-          <cylinderGeometry args={[6.1, 6.2, 0.05, 100]} />
-          <meshStandardMaterial
-            color="#555555" // More grayish neutral color
-            emissive={roomTheme.accent}
-            emissiveIntensity={0.3}
-            metalness={0.7}
-            roughness={0.3}
-          />
-        </mesh>
-
-        {/* Transparent Top Layer (Glass) */}
-        <mesh position={[0, 0.1, 0]} receiveShadow>
-          <cylinderGeometry args={[6.1, 5, 0.09, 32]} />
-          <meshPhysicalMaterial
-            transparent={true}
-            opacity={0.15}
-            transmission={0.9}
-            roughness={0.1}
-            metalness={0.1}
-            color="#dddddd" // Lighter gray color
-          />
-        </mesh>
-
-        {/* Guitar on Stage */}
-        <GuitarStage />
-
-        {/* Neon light ring around the stage base */}
-        <mesh position={[0, 0.1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-          <ringGeometry args={[6.2, 6.7, 100]} />
-          <meshStandardMaterial
-            emissive={roomTheme.accent}
-            emissiveIntensity={0.8}
-            color={roomTheme.accent}
-            transparent
-            opacity={0.9}
-            roughness={0.1}
-            metalness={0.5}
-          />
-        </mesh>
-      </group>
+      <RotatingVinylStage roomTheme={roomTheme} />
 
       {/* Luz para la pared izquierda (west) */}
 
