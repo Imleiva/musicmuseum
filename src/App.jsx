@@ -143,7 +143,7 @@ function App() {
               maxPolarAngle={Math.PI * 0.5}
               minPolarAngle={Math.PI * 0.02}
               minDistance={-2}
-              maxDistance={15}
+              maxDistance={21}
               minAzimuthAngle={-Infinity}
               maxAzimuthAngle={Infinity}
               target={controlTargets[currentRoom]}
