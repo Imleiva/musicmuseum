@@ -89,7 +89,7 @@ function App() {
           <Canvas
             camera={{
               position: initialCameraPosition,
-              fov: 80,
+              fov: 40,
               near: 0.3,
               far: 1000,
             }}
@@ -140,7 +140,7 @@ function App() {
               enablePan={false}
               enableZoom={true}
               enableRotate={true}
-              maxPolarAngle={Math.PI * 0.85}
+              maxPolarAngle={Math.PI * 0.5}
               minPolarAngle={Math.PI * 0.02}
               minDistance={-2}
               maxDistance={15}
