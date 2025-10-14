@@ -116,4 +116,4 @@ WebGL 2.0 support required for optimal 3D performance.
 
 ---
 
-Enjoy exploring the Rock & Metal Museum!🤘
+Enjoy exploring the Leiva'n Roll Hall Of Fame!🤘
