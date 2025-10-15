@@ -33,9 +33,9 @@ function App() {
   const [showSettingsModal, setShowSettingsModal] = useState(false);
 
   const cameraPositions = [
-    [0, 1.7, 0],
-    [100, 1.7, 0],
-    [200, 1.7, 0],
+    [0, 1.7, 21],
+    [100, 1.7, 21],
+    [200, 1.7, 21],
   ];
 
   const controlTargets = [
