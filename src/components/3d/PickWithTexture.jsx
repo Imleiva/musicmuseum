@@ -7,6 +7,7 @@ export default function PickWithTexture({
   position = [0, 0.25, 0],
   rotation = [-Math.PI / 2, 0, 0],
   scale = [3.5, 3.5, 3.5],
+  rotationDirection = 1, // 1 normal, -1 invertida
 }) {
   const texture = useLoader(TextureLoader, textureUrl);
   const meshRef = useRef();
@@ -14,7 +15,7 @@ export default function PickWithTexture({
   // Animación de rotación continua
   useFrame((state, delta) => {
     if (meshRef.current) {
-      meshRef.current.rotation.z += delta * 0.5; // Gira suavemente
+      meshRef.current.rotation.z += delta * 0.5 * rotationDirection; // Gira suavemente
     }
   });
 
