@@ -270,7 +270,7 @@ export default function Projector({ position, genre = "metal" }) {
       </group>
 
       {/* Pantalla de proyección */}
-      <group position={[0, 6, 24.8]} rotation={[0, 0, Math.PI]}>
+      <group position={[0, 6, 29.5]} rotation={[0, 0, Math.PI]}>
         <mesh>
           <boxGeometry args={[20, 12, 0.2]} />
           <meshStandardMaterial

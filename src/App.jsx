@@ -5,7 +5,7 @@
  * • Integración de posters interactivos y reproductor de audio
  * • Guía virtual con avatares y configuración global
  */
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { useState, useRef, useEffect } from "react";
 import BlurBackground from "./components/ui/BlurBackground";
 import { OrbitControls, ContactShadows } from "@react-three/drei";
@@ -57,6 +57,8 @@ function App() {
 
   const lastRoom = useRef(currentRoom);
   const [shouldResetCamera, setShouldResetCamera] = useState(true);
+  const controlsRef = useRef();
+  const [pickRotationDirection, setPickRotationDirection] = useState(1);
   useEffect(() => {
     if (lastRoom.current !== currentRoom) {
       setShouldResetCamera(true);
@@ -65,6 +67,25 @@ function App() {
       setShouldResetCamera(false);
     }
   }, [currentRoom]);
+
+  // Small component inside the Canvas to watch controls azimuth and update pick rotation
+  function ControlsWatcher() {
+    const lastAz = useRef(0);
+    useFrame(() => {
+      const controls = controlsRef.current;
+      if (controls && typeof controls.getAzimuthalAngle === "function") {
+        const az = controls.getAzimuthalAngle();
+        const delta = az - (lastAz.current || az);
+        lastAz.current = az;
+        // If user is actively dragging (delta significant), set direction opposite to camera movement
+        if (Math.abs(delta) > 1e-4) {
+          const dir = delta > 0 ? -1 : 1; // camera moved positive -> pick should be -1
+          if (dir !== pickRotationDirection) setPickRotationDirection(dir);
+        }
+      }
+    });
+    return null;
+  }
 
   const initialCameraPosition = cameraPositions[currentRoom];
 
@@ -108,6 +129,7 @@ function App() {
               }
               theme={roomGenres[currentRoom]}
               shouldResetCamera={shouldResetCamera}
+              rotationDirection={pickRotationDirection}
             />
 
             {currentRoomConcerts.map((concert) => (
@@ -137,13 +159,14 @@ function App() {
             />
 
             <OrbitControls
+              ref={controlsRef}
               enablePan={false}
               enableZoom={true}
               enableRotate={true}
               maxPolarAngle={Math.PI * 0.5}
               minPolarAngle={Math.PI * 0.02}
-              minDistance={-2}
-              maxDistance={21}
+              minDistance={2}
+              maxDistance={21.5}
               minAzimuthAngle={-Infinity}
               maxAzimuthAngle={Infinity}
               target={controlTargets[currentRoom]}
@@ -154,6 +177,7 @@ function App() {
               autoRotate={false}
               makeDefault
             />
+            <ControlsWatcher />
           </Canvas>
 
           <MuseumGuide
