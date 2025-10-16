@@ -54,32 +54,20 @@ export default function RockPoster({ concert, onSelect }) {
   useEffect(() => {
     const canvas = document.querySelector("canvas");
     if (canvas) {
+      // Sólo establecer el cursor por defecto para posters.
+      // Evitamos añadir listeners globales por cada póster (pueden acumularse y causar
+      // comportamiento errático en el arrastre). Si hace falta control de arrastre,
+      // debe centralizarse en un solo lugar (p. ej. en App o un hook compartido).
       canvas.style.cursor = "url('/images/pointers/rockhand.png') 16 16, auto";
 
-      // Detectar cuando se inicia el arrastre
-      const handleMouseDown = () => {
-        canvas.style.cursor =
-          "url('/images/pointers/rockhand.png') 16 16, auto";
-        document.body.style.cursor =
-          "url('/images/pointers/rockhand.png') 16 16, auto";
-      };
-
-      // Detectar cuando termina el arrastre
-      const handleMouseUp = () => {
-        canvas.style.cursor =
-          "url('/images/pointers/rockhand.png') 16 16, auto";
-        document.body.style.cursor =
-          "url('/images/pointers/rockhand.png') 16 16, auto";
-      };
-
-      canvas.addEventListener("mousedown", handleMouseDown);
-      document.addEventListener("mouseup", handleMouseUp);
-      canvas.addEventListener("mouseleave", handleMouseUp);
-
       return () => {
-        canvas.removeEventListener("mousedown", handleMouseDown);
-        document.removeEventListener("mouseup", handleMouseUp);
-        canvas.removeEventListener("mouseleave", handleMouseUp);
+        // Restaurar cursor al desmontar
+        try {
+          canvas.style.cursor = "";
+          document.body.style.cursor = "";
+        } catch (e) {
+          /* ignore */
+        }
       };
     }
   }, []);
