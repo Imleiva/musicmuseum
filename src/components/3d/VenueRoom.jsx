@@ -92,7 +92,7 @@ function FloorWithTexture({ theme }) {
 
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -4, 0]} receiveShadow>
-      <planeGeometry args={[60, 60]} />
+      <planeGeometry args={[100, 100]} />
       <meshStandardMaterial
         map={floorTexture}
         color={roomTheme.floor}
@@ -108,7 +108,7 @@ function FloorWithTexture({ theme }) {
 }
 
 // Componente del escenario giratorio tipo vinilo
-function RotatingVinylStage({ roomTheme }) {
+function RotatingVinylStage({ roomTheme, rotationDirection = 1 }) {
   const groupRef = React.useRef();
 
   useFrame((state, delta) => {
@@ -146,7 +146,11 @@ function RotatingVinylStage({ roomTheme }) {
 
       {/* Logo de la púa: plano con efecto cristal sobre el círculo central */}
       <Suspense fallback={null}>
-        <PickWithTexture position={[0, 0.15, 0]} scale={[8, 8, 1]} />
+        <PickWithTexture
+          position={[0, 0.15, 0]}
+          scale={[8, 8, 1]}
+          rotationDirection={rotationDirection}
+        />
       </Suspense>
 
       {/* Neon light ring around the stage base */}
@@ -171,6 +175,8 @@ export default function VenueRoom({
   theme = "metal",
   shouldResetCamera = false,
   children,
+  rotationDirection = 1,
+  heightScale = 1.3, // scale room vertically to appear taller
 }) {
   const themes = {
     metal: {
@@ -195,7 +201,6 @@ export default function VenueRoom({
       lighting: "#7755bb", // Púrpura equilibrado
     },
   };
-
   const roomTheme = themes[theme] || themes.metal;
   const { camera } = useThree();
   useEffect(() => {
@@ -217,29 +222,7 @@ export default function VenueRoom({
   }, [camera, position, shouldResetCamera]);
 
   return (
-    <group position={position}>
-      {/* Vigas de madera y tiras LED modernas en el techo */}
-      <CeilingBeamsAndLEDs theme={theme} />
-      {/* FLOOR - Subtle and elegant */}
-      <Suspense
-        fallback={
-          <mesh
-            rotation={[-Math.PI / 2, 0, 0]}
-            position={[0, -4, 0]}
-            receiveShadow
-          >
-            <planeGeometry args={[60, 60]} />
-            <meshStandardMaterial
-              color={roomTheme.floor}
-              roughness={0.8}
-              metalness={0.05}
-            />
-          </mesh>
-        }
-      >
-        <FloorWithTexture theme={theme} />
-      </Suspense>
-
+    <group position={position} scale={[1, heightScale, 1]}>
       {/* Rodapié en las cuatro paredes, color igual al suelo */}
       {/* Pared norte (atrás) */}
       <mesh position={[0, -3.6, -29.7]}>
@@ -398,7 +381,10 @@ export default function VenueRoom({
       </mesh>
 
       {/* Central Stage - Two Layer Design */}
-      <RotatingVinylStage roomTheme={roomTheme} />
+      <RotatingVinylStage
+        roomTheme={roomTheme}
+        rotationDirection={rotationDirection}
+      />
 
       {/* Luz para la pared izquierda (west) */}
 
