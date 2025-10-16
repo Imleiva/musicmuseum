@@ -214,7 +214,7 @@ export default function RockPoster({ concert, onSelect }) {
   const wallRotation = getWallRotation(concert.position);
 
   return (
-    <group position={concert.position} rotation={wallRotation} scale={1.6}>
+    <group position={concert.position} rotation={wallRotation} scale={1.35}>
       {/* Marco metálico exterior - adaptativo al tipo de póster */}
       <mesh ref={frameRef} position={[0, 0, -0.08]} castShadow receiveShadow>
         <boxGeometry args={[outerFrameWidth, outerFrameHeight, 0.15]} />
