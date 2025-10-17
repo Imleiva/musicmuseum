@@ -125,78 +125,86 @@ export default function PosterModal({ concert, onClose }) {
   const overlayContent = (
     <div className="poster-modal-overlay" onClick={handleOverlayClick}>
       <div className="poster-modal">
-        <header
-          className="poster-modal-header"
-          style={{ position: "relative", minHeight: 48 }}
-        >
-          <div className="poster-modal-band-info">
-            <h3>🎸 {concert.band}</h3>
-            <span className="poster-modal-genre-tag">{concert.genre}</span>
-          </div>
-          <button
-            className="poster-modal-close"
-            onClick={onClose}
-            aria-label="Close poster modal"
-            style={{ position: "absolute", top: 0, right: 0 }}
+        <div className="poster-modal-inner">
+          <header
+            className="poster-modal-header"
+            style={{ position: "relative", minHeight: 48 }}
           >
-            ✕
-          </button>
-        </header>
-
-        {/* Image carousel section */}
-        {images.length > 0 && (
-          <div className="image-carousel">
-            <div className="carousel-container carousel-square">
-              <img
-                src={images[currentImageIndex]}
-                alt={`${concert.band} - Image ${currentImageIndex + 1}`}
-                className="concert-image"
-                onError={(e) => {
-                  e.target.style.display = "none";
-                }}
-              />
-
-              {hasMultipleImages && (
-                <>
-                  <button className="carousel-btn prev-btn" onClick={prevImage}>
-                    ‹
-                  </button>
-                  <button className="carousel-btn next-btn" onClick={nextImage}>
-                    ›
-                  </button>
-                  <div className="image-counter">
-                    {currentImageIndex + 1} / {images.length}
-                  </div>
-                </>
-              )}
+            <div className="poster-modal-band-info">
+              <h3>🎸 {concert.band}</h3>
+              <span className="poster-modal-genre-tag">{concert.genre}</span>
             </div>
-          </div>
-        )}
+            <button
+              className="poster-modal-close"
+              onClick={onClose}
+              aria-label="Close poster modal"
+              style={{ position: "absolute", top: 0, right: 0 }}
+            >
+              ✕
+            </button>
+          </header>
 
-        <div className="concert-details">
-          <p className="venue-info">📍 {concert.venue}</p>
-          <p className="concert-date">📅 {concert.date}</p>
-          <p className="attendance">👥 {concert.attendance || "Sold Out"}</p>
-        </div>
+          {/* Image carousel section */}
+          {images.length > 0 && (
+            <div className="image-carousel">
+              <div className="carousel-container carousel-square">
+                <img
+                  src={images[currentImageIndex]}
+                  alt={`${concert.band} - Image ${currentImageIndex + 1}`}
+                  className="concert-image"
+                  onError={(e) => {
+                    e.target.style.display = "none";
+                  }}
+                />
 
-        <div className="concert-description">
-          <h4>Concert Details</h4>
-          <p>{concert.description}</p>
-
-          {concert.setlist && (
-            <div className="setlist">
-              <h5>🎵 Setlist Highlights</h5>
-              <ul>
-                {concert.setlist.map((song, index) => (
-                  <li key={index}>{song}</li>
-                ))}
-              </ul>
+                {hasMultipleImages && (
+                  <>
+                    <button
+                      className="carousel-btn prev-btn"
+                      onClick={prevImage}
+                    >
+                      ‹
+                    </button>
+                    <button
+                      className="carousel-btn next-btn"
+                      onClick={nextImage}
+                    >
+                      ›
+                    </button>
+                    <div className="image-counter">
+                      {currentImageIndex + 1} / {images.length}
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           )}
-        </div>
 
-        {/* Enlaces a plataformas musicales */}
-        <MusicLinks bandName={concert.band} />
+          <div className="concert-details">
+            <p className="venue-info">📍 {concert.venue}</p>
+            <p className="concert-date">📅 {concert.date}</p>
+            <p className="attendance">👥 {concert.attendance || "Sold Out"}</p>
+          </div>
+
+          <div className="concert-description">
+            <h4>Concert Details</h4>
+            <p>{concert.description}</p>
+
+            {concert.setlist && (
+              <div className="setlist">
+                <h5>🎵 Setlist Highlights</h5>
+                <ul>
+                  {concert.setlist.map((song, index) => (
+                    <li key={index}>{song}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+
+          {/* Enlaces a plataformas musicales */}
+          <MusicLinks bandName={concert.band} />
+        </div>
       </div>
     </div>
   );

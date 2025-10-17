@@ -475,7 +475,8 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
   max-width: 500px !important;
   width: 90vw !important;
   max-height: 85vh !important;
-  overflow-y: auto !important;
+  /* Mantener overflow del modal en el contenedor interno para controlar el scrollbar */
+  overflow: hidden !important;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 68, 68, 0.3) !important;
   position: relative !important;
   animation: slideInScale 0.4s ease-out !important;
@@ -484,6 +485,33 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
   pointer-events: all !important;
   isolation: isolate !important;
   transform: translateZ(999999px) !important;
+}
+
+/* Inner wrapper that holds scrollable content so scrollbar stays inside rounded corners */
+.poster-modal-inner {
+  max-height: calc(85vh - 4rem);
+  overflow-y: auto;
+  padding-right: 12px; /* dejar espacio para el scrollbar sin salir de la caja */
+  box-sizing: content-box;
+}
+
+/* Scrollbar styles applied to the inner container */
+.poster-modal-inner::-webkit-scrollbar {
+  width: 10px;
+}
+
+.poster-modal-inner::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+}
+
+.poster-modal-inner::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #ff4444, #cc3333);
+  border-radius: 6px;
+}
+
+.poster-modal-inner::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #ff6666, #ff4444);
 }
 
 @keyframes slideInScale {
@@ -573,11 +601,11 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
 }
 
 .prev-btn {
-  left: -30px;
+  left: 8px; /* mover dentro del contenedor */
 }
 
 .next-btn {
-  right: -30px;
+  right: 8px; /* mover dentro del contenedor */
 }
 
 .image-counter {
