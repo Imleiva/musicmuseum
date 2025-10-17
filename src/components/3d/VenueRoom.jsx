@@ -223,6 +223,8 @@ export default function VenueRoom({
 
   return (
     <group position={position} scale={[1, heightScale, 1]}>
+      {/* Floor with wood texture */}
+      <FloorWithTexture theme={theme} />
       {/* Rodapié en las cuatro paredes, color igual al suelo */}
       {/* Pared norte (atrás) */}
       <mesh position={[0, -3.6, -29.7]}>
