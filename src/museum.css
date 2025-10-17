@@ -514,6 +514,27 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
   background: linear-gradient(135deg, #ff6666, #ff4444);
 }
 
+/* Mostrar cursor de dedo (hand) al hacer hover sobre el thumb del scrollbar (WebKit/Chromium) */
+.poster-modal-inner::-webkit-scrollbar-thumb:hover {
+  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+}
+
+/* Fallback: cuando se hace hover en la zona derecha del modal, usar cursor pointer para indicar interactividad (mejora en Firefox) */
+.poster-modal,
+.poster-modal .poster-modal-inner {
+  /* Usar el cursor 'rockhand' por defecto dentro del modal para mantener la estética */
+  cursor: url("/images/pointers/rockhand.png") 16 16, auto;
+}
+
+/* Elementos interactivos dentro del modal deben mostrar el cursor de dedo estándar */
+.poster-modal button,
+.poster-modal a,
+.poster-modal .carousel-btn,
+.poster-modal .poster-modal-close,
+.poster-modal .music-link {
+  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+}
+
 @keyframes slideInScale {
   from {
     opacity: 0;
