@@ -115,8 +115,15 @@ export default function PosterModal({ concert, onClose }) {
 
   if (!concert) return null;
 
+  const handleOverlayClick = (e) => {
+    // Close only when the overlay itself was clicked (not children)
+    if (e && e.target === e.currentTarget) {
+      if (onClose) onClose();
+    }
+  };
+
   const overlayContent = (
-    <div className="poster-modal-overlay">
+    <div className="poster-modal-overlay" onClick={handleOverlayClick}>
       <div className="poster-modal">
         <header
           className="poster-modal-header"
