@@ -9,7 +9,6 @@ import { useState, useRef, useCallback, useEffect, Suspense } from "react";
 import { Html } from "@react-three/drei";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three";
-import cursorOjoUrl from "/images/pointers/cursorojo.png";
 
 // Componente para manejar texturas de imágenes - optimizado para formato 1:1 (cuadradas)
 function PosterTexture({ imageUrl }) {
@@ -52,24 +51,17 @@ export default function RockPoster({ concert, onSelect }) {
 
   // Asegurar cursor rock hand en canvas
   useEffect(() => {
+    // Usar clases en body en lugar de estilos inline para mayor consistencia
     const canvas = document.querySelector("canvas");
     if (canvas) {
-      canvas.style.cursor = "url('/images/pointers/rockhand.png') 16 16, auto";
+      document.body.classList.add("cursor-rock");
 
-      // Detectar cuando se inicia el arrastre
       const handleMouseDown = () => {
-        canvas.style.cursor =
-          "url('/images/pointers/rockhand.png') 16 16, auto";
-        document.body.style.cursor =
-          "url('/images/pointers/rockhand.png') 16 16, auto";
+        document.body.classList.add("cursor-rock");
       };
 
-      // Detectar cuando termina el arrastre
       const handleMouseUp = () => {
-        canvas.style.cursor =
-          "url('/images/pointers/rockhand.png') 16 16, auto";
-        document.body.style.cursor =
-          "url('/images/pointers/rockhand.png') 16 16, auto";
+        document.body.classList.add("cursor-rock");
       };
 
       canvas.addEventListener("mousedown", handleMouseDown);
@@ -80,6 +72,10 @@ export default function RockPoster({ concert, onSelect }) {
         canvas.removeEventListener("mousedown", handleMouseDown);
         document.removeEventListener("mouseup", handleMouseUp);
         canvas.removeEventListener("mouseleave", handleMouseUp);
+        // Limpiar clases al desmontar
+        document.body.classList.remove("cursor-rock");
+        document.body.classList.remove("cursor-hand");
+        document.body.classList.remove("cursor-eye");
       };
     }
   }, []);
@@ -109,12 +105,10 @@ export default function RockPoster({ concert, onSelect }) {
     event.stopPropagation();
     setHovered(true);
 
-    // Aplicar cursor de ojo al canvas y al body (más pequeño)
-    const canvas = document.querySelector("canvas");
-    const cursorStyle = `url('${cursorOjoUrl}') 6 6, pointer`;
-
-    if (canvas) canvas.style.cursor = cursorStyle;
-    document.body.style.cursor = cursorStyle;
+    // Aplicar cursor de ojo usando clase en body
+    document.body.classList.add("cursor-eye");
+    document.body.classList.remove("cursor-rock");
+    document.body.classList.remove("cursor-hand");
 
     // Limpiar timeout anterior
     if (hoverTimeoutRef.current) {
@@ -126,12 +120,10 @@ export default function RockPoster({ concert, onSelect }) {
     event.stopPropagation();
     setHovered(false);
 
-    // Restaurar cursor rock hand explícitamente
-    const canvas = document.querySelector("canvas");
-    if (canvas)
-      canvas.style.cursor = "url('/images/pointers/rockhand.png') 16 16, auto";
-    document.body.style.cursor =
-      "url('/images/pointers/rockhand.png') 16 16, auto";
+    // Restaurar cursor rock hand explícitamente usando clases
+    document.body.classList.remove("cursor-eye");
+    document.body.classList.remove("cursor-hand");
+    document.body.classList.add("cursor-rock");
   }, []);
 
   const handleClick = useCallback(

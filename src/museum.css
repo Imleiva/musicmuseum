@@ -6,6 +6,46 @@
 /* Import modern font */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 
+/* Cursor variables and strong defaults to keep custom cursors stable */
+:root {
+  --cursor-rock: url("/images/pointers/rockhand.png") 16 16, auto;
+  --cursor-hand: url("/images/pointers/hand.png") 10 10, pointer;
+}
+
+/* High-priority baseline: ensure the site uses the rockhand cursor by default */
+html,
+body {
+  cursor: var(--cursor-rock) !important;
+}
+
+/* Ensure overlays and important containers keep the rockhand cursor */
+.poster-modal,
+.poster-modal-overlay,
+.rock-navigator,
+.controls-help,
+.tooltip,
+.tooltip * {
+  cursor: var(--cursor-rock) !important;
+}
+
+/* Force hand cursor for interactive elements globally to avoid defaults */
+button,
+a,
+input,
+textarea,
+[role="button"],
+.clickable,
+.carousel-btn,
+.poster-modal-close,
+.music-link,
+.room-btn,
+.room-btn:hover,
+.avatar-select-item,
+.nav-link {
+  cursor: var(--cursor-hand) !important;
+}
+
+
 /* Reset completo */
 * {
   margin: 0;
@@ -532,6 +572,12 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
 .poster-modal .carousel-btn,
 .poster-modal .poster-modal-close,
 .poster-modal .music-link {
+  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+}
+
+/* Clase temporal cuando el ratón está cerca del scrollbar: mostrar la mano even en Firefox */
+.poster-modal.scroll-near,
+.poster-modal.scroll-near .poster-modal-inner {
   cursor: url("/images/pointers/hand.png") 10 10, pointer;
 }
 
