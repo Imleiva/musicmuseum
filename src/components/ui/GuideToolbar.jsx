@@ -64,7 +64,7 @@ export default function GuideToolbar({
       {icons.map((item) => (
         <button
           key={item.key}
-          className={`guide-toolbar-btn${active === item.key ? " active" : ""}${
+          className={`guide-toolbar-btn clickable${active === item.key ? " active" : ""}${
             item.key === "curiosities" && !curiositiesEnabled ? " disabled" : ""
           }`}
           title={item.label}
