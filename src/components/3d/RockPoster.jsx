@@ -232,22 +232,28 @@ export default function RockPoster({ concert, onSelect }) {
         />
       </mesh>
 
-      {/* Bisel interior del marco más estrecho */}
-      <mesh position={[0, 0, -0.01]} castShadow>
-        <boxGeometry args={[frameWidth - 0.15, frameHeight - 0.15, 0.02]} />
-        <meshStandardMaterial color="#666666" metalness={0.8} roughness={0.2} />
+      {/* Bisel interior del marco - posicionado para evitar z-fighting */}
+      <mesh position={[0, 0, -0.02]} castShadow>
+        <boxGeometry args={[frameWidth - 0.15, frameHeight - 0.15, 0.01]} />
+        <meshStandardMaterial
+          color="#2a2a2a"
+          metalness={0.6}
+          roughness={0.4}
+          emissive="#1a1a1a"
+          emissiveIntensity={0.02}
+        />
       </mesh>
 
-      {/* Póster del concierto - dimensiones adaptativas, opaco y bloquea la luz */}
+      {/* Póster del concierto - ajustado para cubrir completamente el bisel */}
       <mesh
-        position={[0, 0, 0.02]}
+        position={[0, 0, 0.01]}
         castShadow
         receiveShadow
         onPointerOver={handlePointerOver}
         onPointerOut={handlePointerOut}
         onClick={handleClick}
       >
-        <planeGeometry args={[posterWidth, posterHeight]} />
+        <planeGeometry args={[frameWidth - 0.14, frameHeight - 0.14]} />
         {hasImage ? (
           <Suspense
             fallback={<FallbackMaterial color={getUnifiedPosterColor()} />}
@@ -259,18 +265,14 @@ export default function RockPoster({ concert, onSelect }) {
         )}
       </mesh>
 
-      {/* Cristal protector con reflejo suave - reducido para evitar reflejos excesivos */}
-      <mesh position={[0, 0, 0.03]}>
-        <planeGeometry args={[posterWidth, posterHeight]} />
-        <meshPhysicalMaterial
+      {/* Cristal protector simplificado - ajustado al tamaño del poster */}
+      <mesh position={[0, 0, 0.02]}>
+        <planeGeometry args={[frameWidth - 0.14, frameHeight - 0.14]} />
+        <meshBasicMaterial
           transparent
-          opacity={0.08}
-          roughness={0.05}
-          metalness={0.0}
-          reflectivity={0.1}
-          envMapIntensity={0.4}
-          clearcoat={0.6}
-          clearcoatRoughness={0.1}
+          opacity={0.03}
+          color="#ffffff"
+          blending={1}
         />
       </mesh>
 

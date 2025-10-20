@@ -6,7 +6,7 @@
  * • Guía virtual con avatares y configuración global
  */
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import BlurBackground from "./components/ui/BlurBackground";
 import { OrbitControls, ContactShadows } from "@react-three/drei";
 import VenueRoom from "./components/3d/VenueRoom";
@@ -38,11 +38,11 @@ function App() {
     [200, 1.7, 0],
   ];
 
-  const controlTargets = [
+  const controlTargets = useMemo(() => [
     [0, 1.7, -2],
     [100, 1.7, -2],
     [200, 1.7, -2],
-  ];
+  ], []);
 
   const roomGenres = ["metal", "rock", "punk"];
 
@@ -63,41 +63,52 @@ function App() {
     if (lastRoom.current !== currentRoom) {
       setShouldResetCamera(true);
       lastRoom.current = currentRoom;
-
+      
       // Estabilizar los controles después del cambio de sala
       if (controlsRef.current) {
         controlsRef.current.enabled = false;
+        // Resetear valores internos de damping
+        controlsRef.current.target.copy(controlTargets[currentRoom]);
+        
         setTimeout(() => {
           if (controlsRef.current) {
             controlsRef.current.enabled = true;
             controlsRef.current.update();
+            // Forzar reset del estado interno del damping
+            controlsRef.current.reset();
           }
-        }, 150);
+        }, 200); // Aumentar el timeout para mejor estabilización
       }
     } else {
       setShouldResetCamera(false);
     }
-  }, [currentRoom]);
-
-  // Small component inside the Canvas to watch controls azimuth and update pick rotation
+  }, [currentRoom, controlTargets]);  // Small component inside the Canvas to watch controls azimuth and update pick rotation
   function ControlsWatcher() {
     const lastAz = useRef(0);
     const frameCount = useRef(0);
-    useFrame(() => {
+    const lastUpdate = useRef(0);
+    
+    useFrame((state) => {
       const controls = controlsRef.current;
       if (controls && typeof controls.getAzimuthalAngle === "function") {
-        // Solo actualizar cada 5 frames para reducir interferencia
+        // Solo actualizar cada 10 frames y con cooldown temporal
         frameCount.current++;
-        if (frameCount.current % 5 !== 0) return;
+        if (frameCount.current % 10 !== 0) return;
+        
+        const now = state.clock.elapsedTime;
+        if (now - lastUpdate.current < 0.1) return; // Cooldown de 100ms
 
         const az = controls.getAzimuthalAngle();
         const delta = az - (lastAz.current || az);
         lastAz.current = az;
 
-        // Aumentar el threshold para evitar cambios menores
-        if (Math.abs(delta) > 0.01) {
+        // Aumentar significativamente el threshold para evitar cambios menores
+        if (Math.abs(delta) > 0.05) {
           const dir = delta > 0 ? -1 : 1;
-          if (dir !== pickRotationDirection) setPickRotationDirection(dir);
+          if (dir !== pickRotationDirection) {
+            setPickRotationDirection(dir);
+            lastUpdate.current = now;
+          }
         }
       }
     });
@@ -188,9 +199,9 @@ function App() {
               maxAzimuthAngle={Infinity}
               target={controlTargets[currentRoom]}
               enableDamping={true}
-              dampingFactor={0.25}
-              rotateSpeed={0.6}
-              zoomSpeed={1.2}
+              dampingFactor={0.15}
+              rotateSpeed={0.5}
+              zoomSpeed={1.0}
               autoRotate={false}
               makeDefault
             />
