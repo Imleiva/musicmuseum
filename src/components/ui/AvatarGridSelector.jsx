@@ -91,11 +91,16 @@ export default function AvatarGridSelector({
           <div className="avatar-grid-selector-header">
             <input
               type="text"
+              className="clickable"
               placeholder={t("avatarGridSelector.searchPlaceholder")}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <select value={genre} onChange={(e) => setGenre(e.target.value)}>
+            <select
+              className="clickable"
+              value={genre}
+              onChange={(e) => setGenre(e.target.value)}
+            >
               <option value="" disabled>
                 {t("avatarGridSelector.genrePlaceholder")}
               </option>
@@ -105,7 +110,11 @@ export default function AvatarGridSelector({
                 </option>
               ))}
             </select>
-            <select value={decade} onChange={(e) => setDecade(e.target.value)}>
+            <select
+              className="clickable"
+              value={decade}
+              onChange={(e) => setDecade(e.target.value)}
+            >
               <option value="" disabled>
                 {t("avatarGridSelector.decadePlaceholder")}
               </option>
@@ -119,7 +128,7 @@ export default function AvatarGridSelector({
               <span className="transitions-switch-label">
                 Animaciones {t.transitionsToggle}
               </span>
-              <label className="transitions-switch">
+              <label className="transitions-switch clickable">
                 <input
                   type="checkbox"
                   checked={localTransitionsEnabled}
@@ -139,7 +148,7 @@ export default function AvatarGridSelector({
                 <div
                   key={item.key}
                   className={
-                    "avatar-grid-selector-item" +
+                    "avatar-grid-selector-item clickable" +
                     (preview === item.key ? " selected" : "")
                   }
                   onClick={() => {
@@ -177,6 +186,7 @@ export default function AvatarGridSelector({
           </PredictiveHoverEffect>
           <div className="avatar-grid-selector-footer">
             <button
+              className="clickable"
               disabled={!preview}
               onClick={() => {
                 if (preview) {
@@ -188,7 +198,9 @@ export default function AvatarGridSelector({
             >
               {t("avatarGridSelector.ok")}
             </button>
-            <button onClick={onClose}>{t("avatarGridSelector.cancel")}</button>
+            <button className="clickable" onClick={onClose}>
+              {t("avatarGridSelector.cancel")}
+            </button>
           </div>
         </div>
         <div className="avatar-grid-preview">

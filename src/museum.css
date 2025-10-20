@@ -6,45 +6,102 @@
 /* Import modern font */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 
-/* Cursor variables and strong defaults to keep custom cursors stable */
+/* ===================================== */
+/* SISTEMA DE CURSORES PERSONALIZADOS */
+/* Jerarquía clara y sin conflictos */
+/* ===================================== */
+
+/* Variables de cursor */
 :root {
   --cursor-rock: url("/images/pointers/rockhand.png") 16 16, auto;
   --cursor-hand: url("/images/pointers/hand.png") 10 10, pointer;
+  --cursor-eye: url("/images/pointers/cursorojo.png") 6 6, pointer;
 }
 
-/* High-priority baseline: ensure the site uses the rockhand cursor by default */
+/* 1. CURSOR BASE: rockhand.png en toda la aplicación por defecto */
+*,
 html,
-body {
+body,
+#root {
   cursor: var(--cursor-rock) !important;
 }
 
-/* Ensure overlays and important containers keep the rockhand cursor */
-.poster-modal,
-.poster-modal-overlay,
-.rock-navigator,
-.controls-help,
-.tooltip,
-.tooltip * {
-  cursor: var(--cursor-rock) !important;
-}
-
-/* Force hand cursor for interactive elements globally to avoid defaults */
+/* 2. CURSOR DE MANO: hand.png en TODOS los elementos interactivos */
+/* Botones y controles */
 button,
-a,
-input,
-textarea,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+select,
+summary,
 [role="button"],
+[role="tab"],
 .clickable,
+.btn,
+.button,
+/* Botones específicos del museo */
+.room-btn,
 .carousel-btn,
 .poster-modal-close,
+.close-btn,
+.action-btn,
+.play-audio-btn,
+.guide-toolbar-btn,
+.settings-btn,
+/* Links y navegación */
+a,
+[role="link"],
+.nav-link,
 .music-link,
-.room-btn,
-.room-btn:hover,
+/* Elementos clickeables */
+[onclick],
+label[for],
+/* Selectores de avatar */
 .avatar-select-item,
-.nav-link {
+.avatar-item,
+/* Checkboxes y radios (el label completo) */
+input[type="checkbox"] + label,
+input[type="radio"] + label,
+.checkbox-label,
+.radio-label {
   cursor: var(--cursor-hand) !important;
 }
 
+/* 3. CURSOR DE MANO en SCROLLBARS (elementos accionables) */
+*::-webkit-scrollbar,
+*::-webkit-scrollbar-button,
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track-piece,
+*::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-corner,
+*::-webkit-resizer {
+  cursor: var(--cursor-hand) !important;
+}
+
+/* 4. Clases utilitarias para control dinámico desde JS */
+/* Estas clases SOBRESCRIBEN todo cuando se añaden al body */
+body.cursor-rock,
+body.cursor-rock *:not(button):not(a):not(.clickable):not([role="button"]) {
+  cursor: var(--cursor-rock) !important;
+}
+
+body.cursor-hand,
+body.cursor-hand * {
+  cursor: var(--cursor-hand) !important;
+}
+
+body.cursor-eye,
+body.cursor-eye *:not(button):not(a):not(.clickable) {
+  cursor: var(--cursor-eye) !important;
+}
+
+/* 5. Mantener interactivos incluso con clase body.cursor-eye */
+body.cursor-eye button,
+body.cursor-eye a,
+body.cursor-eye .clickable,
+body.cursor-eye [role="button"] {
+  cursor: var(--cursor-hand) !important;
+}
 
 /* Reset completo */
 * {
@@ -64,7 +121,7 @@ body {
     sans-serif;
   background: radial-gradient(ellipse at center, #1a0000 0%, #000000 70%);
   color: #ffffff;
-  cursor: url("/images/pointers/rockhand.png") 16 16, auto;
+  /* cursor definido arriba con !important para evitar duplicación */
 }
 
 #root {
@@ -86,7 +143,7 @@ textarea,
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  cursor: grab;
+  /* cursor heredado del sistema global (rockhand) */
 }
 
 /* Canvas 3D - ocupar toda la pantalla */
@@ -142,7 +199,7 @@ canvas {
   min-width: 240px;
   transform: translateZ(0);
   will-change: transform;
-  cursor: url("/images/pointers/rockhand.png") 16 16, auto;
+  /* Cursor heredado del sistema global */
 }
 
 /* Header dentro del navegador - más compacto */
@@ -605,7 +662,6 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
 
 .close-btn:hover {
   background: linear-gradient(135deg, #ff4444, #cc3333);
-  transform: scale(1.1);
   box-shadow: 0 6px 20px rgba(255, 68, 68, 0.5);
   cursor: url("/images/pointers/hand.png") 10 10, pointer;
 }
@@ -834,7 +890,6 @@ div[data-r3f]:not(.poster-modal-overlay *) {
 
 .poster-modal-close:hover {
   background: #ff6666;
-  transform: scale(1.1);
   box-shadow: 0 6px 20px rgba(255, 68, 68, 0.6);
 }
 
@@ -1101,3 +1156,5 @@ body.has-poster-modal .poster-modal * {
   color: #ff4444;
   margin-right: 0.5rem;
 }
+
+/* Fin del archivo - reglas de cursor definidas al principio */

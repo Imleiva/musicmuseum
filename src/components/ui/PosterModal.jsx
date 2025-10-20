@@ -5,12 +5,14 @@
  * • Enlaces a plataformas de música (Spotify, YouTube, etc.)
  * • Controles de navegación y cierre
  */
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import MusicLinks from "./MusicLinks";
 
 export default function PosterModal({ concert, onClose }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const innerRef = useRef(null);
+  const modalRef = useRef(null);
 
   // Crear array de imágenes
   const images = [];
@@ -113,6 +115,36 @@ export default function PosterModal({ concert, onClose }) {
     };
   }, [concert]);
 
+  // Detectar si el ratón está cerca del borde derecho del área scrollable
+  useEffect(() => {
+    const inner = innerRef.current;
+    const modal = modalRef.current;
+    if (!inner || !modal) return;
+
+    const onMove = (e) => {
+      const rect = inner.getBoundingClientRect();
+      const threshold = 22; // px desde el borde derecho para considerar 'sobre scrollbar'
+      if (e.clientX >= rect.right - threshold && e.clientX <= rect.right) {
+        modal.classList.add("scroll-near");
+      } else {
+        modal.classList.remove("scroll-near");
+      }
+    };
+
+    inner.addEventListener("mousemove", onMove);
+    inner.addEventListener("mouseleave", () =>
+      modal.classList.remove("scroll-near")
+    );
+
+    return () => {
+      inner.removeEventListener("mousemove", onMove);
+      inner.removeEventListener("mouseleave", () =>
+        modal.classList.remove("scroll-near")
+      );
+      modal.classList.remove("scroll-near");
+    };
+  }, []);
+
   if (!concert) return null;
 
   const handleOverlayClick = (e) => {
@@ -124,8 +156,8 @@ export default function PosterModal({ concert, onClose }) {
 
   const overlayContent = (
     <div className="poster-modal-overlay" onClick={handleOverlayClick}>
-      <div className="poster-modal">
-        <div className="poster-modal-inner">
+      <div className="poster-modal" ref={modalRef}>
+        <div className="poster-modal-inner" ref={innerRef}>
           <header
             className="poster-modal-header"
             style={{ position: "relative", minHeight: 48 }}

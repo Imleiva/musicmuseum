@@ -63,6 +63,17 @@ function App() {
     if (lastRoom.current !== currentRoom) {
       setShouldResetCamera(true);
       lastRoom.current = currentRoom;
+
+      // Estabilizar los controles después del cambio de sala
+      if (controlsRef.current) {
+        controlsRef.current.enabled = false;
+        setTimeout(() => {
+          if (controlsRef.current) {
+            controlsRef.current.enabled = true;
+            controlsRef.current.update();
+          }
+        }, 150);
+      }
     } else {
       setShouldResetCamera(false);
     }
@@ -71,15 +82,21 @@ function App() {
   // Small component inside the Canvas to watch controls azimuth and update pick rotation
   function ControlsWatcher() {
     const lastAz = useRef(0);
+    const frameCount = useRef(0);
     useFrame(() => {
       const controls = controlsRef.current;
       if (controls && typeof controls.getAzimuthalAngle === "function") {
+        // Solo actualizar cada 5 frames para reducir interferencia
+        frameCount.current++;
+        if (frameCount.current % 5 !== 0) return;
+
         const az = controls.getAzimuthalAngle();
         const delta = az - (lastAz.current || az);
         lastAz.current = az;
-        // If user is actively dragging (delta significant), set direction opposite to camera movement
-        if (Math.abs(delta) > 1e-4) {
-          const dir = delta > 0 ? -1 : 1; // camera moved positive -> pick should be -1
+
+        // Aumentar el threshold para evitar cambios menores
+        if (Math.abs(delta) > 0.01) {
+          const dir = delta > 0 ? -1 : 1;
           if (dir !== pickRotationDirection) setPickRotationDirection(dir);
         }
       }
@@ -165,15 +182,15 @@ function App() {
               enableRotate={true}
               maxPolarAngle={Math.PI * 0.5}
               minPolarAngle={Math.PI * 0.02}
-              minDistance={-2}
+              minDistance={2}
               maxDistance={21.5}
               minAzimuthAngle={-Infinity}
               maxAzimuthAngle={Infinity}
               target={controlTargets[currentRoom]}
               enableDamping={true}
-              dampingFactor={0.08}
-              rotateSpeed={0.8}
-              zoomSpeed={1.5}
+              dampingFactor={0.25}
+              rotateSpeed={0.6}
+              zoomSpeed={1.2}
               autoRotate={false}
               makeDefault
             />
