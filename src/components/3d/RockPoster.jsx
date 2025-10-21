@@ -7,8 +7,8 @@
  */
 import { useState, useRef, useCallback, useEffect, Suspense } from "react";
 import { Html } from "@react-three/drei";
-import { useFrame, useLoader } from "@react-three/fiber";
-import { TextureLoader } from "three";
+import { useLoader, useFrame } from "@react-three/fiber";
+import { TextureLoader, ClampToEdgeWrapping, LinearFilter } from "three";
 
 // Componente para manejar texturas de imágenes - optimizado para formato 1:1 (cuadradas)
 function PosterTexture({ imageUrl }) {
@@ -16,12 +16,12 @@ function PosterTexture({ imageUrl }) {
 
   useEffect(() => {
     if (texture) {
-      // Configurar textura para imágenes cuadradas 1:1
+      // Configurar textura para imágenes cuadradas 1:1 - usando constantes correctas
       texture.flipY = true;
-      texture.wrapS = texture.wrapT = 1001; // ClampToEdgeWrapping
+      texture.wrapS = texture.wrapT = ClampToEdgeWrapping;
       texture.generateMipmaps = false;
-      texture.minFilter = 1008; // LinearFilter
-      texture.magFilter = 1008; // LinearFilter
+      texture.minFilter = LinearFilter;
+      texture.magFilter = LinearFilter;
       texture.needsUpdate = true;
     }
   }, [texture, imageUrl]);
