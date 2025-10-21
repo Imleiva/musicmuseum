@@ -5,7 +5,7 @@
  * • Integración de posters interactivos y reproductor de audio
  * • Guía virtual con avatares y configuración global
  */
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { useState, useRef, useEffect, useMemo } from "react";
 import BlurBackground from "./components/ui/BlurBackground";
 import { OrbitControls, ContactShadows } from "@react-three/drei";
@@ -38,11 +38,14 @@ function App() {
     [200, 1.7, 21],
   ];
 
-  const controlTargets = useMemo(() => [
-    [0, 1.7, -2],
-    [100, 1.7, -2],
-    [200, 1.7, -2],
-  ], []);
+  const controlTargets = useMemo(
+    () => [
+      [0, 1.7, -2],
+      [100, 1.7, -2],
+      [200, 1.7, -2],
+    ],
+    []
+  );
 
   const roomGenres = ["metal", "rock", "punk"];
 
@@ -58,60 +61,32 @@ function App() {
   const lastRoom = useRef(currentRoom);
   const [shouldResetCamera, setShouldResetCamera] = useState(true);
   const controlsRef = useRef();
-  const [pickRotationDirection, setPickRotationDirection] = useState(1);
+  // Direcciones fijas para cada sala - eliminando dependencia del ControlsWatcher
+  const roomRotationDirections = [1, -1, 1]; // Metal: horario, Rock: antihorario, Punk: horario
   useEffect(() => {
     if (lastRoom.current !== currentRoom) {
       setShouldResetCamera(true);
       lastRoom.current = currentRoom;
-      
+
       // Estabilizar los controles después del cambio de sala
       if (controlsRef.current) {
         controlsRef.current.enabled = false;
         // Resetear valores internos de damping
         controlsRef.current.target.copy(controlTargets[currentRoom]);
-        
+
         setTimeout(() => {
           if (controlsRef.current) {
             controlsRef.current.enabled = true;
             controlsRef.current.update();
+            // Forzar reset del estado interno del damping
+            // controlsRef.current.reset(); // Comentado temporalmente
           }
-        }, 100); // Reducir timeout
+        }, 200); // Aumentar el timeout para mejor estabilización
       }
     } else {
       setShouldResetCamera(false);
     }
-  }, [currentRoom, controlTargets]);  // Small component inside the Canvas to watch controls azimuth and update pick rotation
-  function ControlsWatcher() {
-    const lastAz = useRef(0);
-    const frameCount = useRef(0);
-    const lastUpdate = useRef(0);
-    
-    useFrame((state) => {
-      const controls = controlsRef.current;
-      if (controls && typeof controls.getAzimuthalAngle === "function") {
-        // Solo actualizar cada 10 frames y con cooldown temporal
-        frameCount.current++;
-        if (frameCount.current % 10 !== 0) return;
-        
-        const now = state.clock.elapsedTime;
-        if (now - lastUpdate.current < 0.1) return; // Cooldown de 100ms
-
-        const az = controls.getAzimuthalAngle();
-        const delta = az - (lastAz.current || az);
-        lastAz.current = az;
-
-        // Aumentar significativamente el threshold para evitar cambios menores
-        if (Math.abs(delta) > 0.05) {
-          const dir = delta > 0 ? -1 : 1;
-          if (dir !== pickRotationDirection) {
-            setPickRotationDirection(dir);
-            lastUpdate.current = now;
-          }
-        }
-      }
-    });
-    return null;
-  }
+  }, [currentRoom, controlTargets]);
 
   const initialCameraPosition = cameraPositions[currentRoom];
 
@@ -155,7 +130,7 @@ function App() {
               }
               theme={roomGenres[currentRoom]}
               shouldResetCamera={shouldResetCamera}
-              rotationDirection={pickRotationDirection}
+              rotationDirection={roomRotationDirections[currentRoom]}
             />
 
             {currentRoomConcerts.map((concert) => (
@@ -197,13 +172,12 @@ function App() {
               maxAzimuthAngle={Infinity}
               target={controlTargets[currentRoom]}
               enableDamping={true}
-              dampingFactor={0.15}
-              rotateSpeed={0.5}
-              zoomSpeed={1.0}
+              dampingFactor={0.1}
+              rotateSpeed={0.4}
+              zoomSpeed={0.8}
               autoRotate={false}
               makeDefault
             />
-            <ControlsWatcher />
           </Canvas>
 
           <MuseumGuide
