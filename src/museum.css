@@ -85,8 +85,12 @@ body.cursor-rock *:not(button):not(a):not(.clickable):not([role="button"]) {
   cursor: var(--cursor-rock) !important;
 }
 
+/* CURSOR HAND - MÁXIMA PRIORIDAD */
 body.cursor-hand,
-body.cursor-hand * {
+body.cursor-hand *,
+body.cursor-hand *:not(button):not(a):not(.clickable):not([role="button"]),
+body.cursor-hand.cursor-rock
+  *:not(button):not(a):not(.clickable):not([role="button"]) {
   cursor: var(--cursor-hand) !important;
 }
 

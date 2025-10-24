@@ -13,7 +13,9 @@ import React, {
   useCallback,
 } from "react";
 import { useFrame } from "@react-three/fiber";
+import { Html } from "@react-three/drei";
 import { VideoTexture } from "three";
+import CreditsButton from "./CreditsButton";
 
 const VideoProjection = React.memo(function VideoProjection({
   videoUrl,
@@ -174,11 +176,45 @@ export default function Projector({ position, genre = "metal" }) {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [fallbackToTest, setFallbackToTest] = useState(true); // Empezar con playlist directamente
   const [currentVideoDuration, setCurrentVideoDuration] = useState(30000); // Duración por defecto
+  const [creditsActivated, setCreditsActivated] = useState(false);
 
   const lightRef = useRef();
   const lensRef = useRef();
 
+  // Debug log para verificar que el componente se monta
+  useEffect(() => {
+    console.log(
+      `🎬 Projector component mounted at position:`,
+      position,
+      `genre: ${genre}`
+    );
+  }, [position, genre]);
+
+  // Función para alternar el video de créditos
+  const toggleCreditsVideo = useCallback((shouldActivate) => {
+    if (shouldActivate) {
+      console.log("🎬 Activating credits video!");
+      setCreditsActivated(true);
+      // Ir directamente al video de créditos (índice 2 en la playlist)
+      setCurrentVideoIndex(2);
+      setFallbackToTest(true);
+      setCurrentVideoDuration(videoPlaylist[2].duration);
+    } else {
+      console.log("🔄 Deactivating credits - returning to normal rotation");
+      setCreditsActivated(false);
+      // Volver al primer video de la playlist para reiniciar la rotación
+      setCurrentVideoIndex(0);
+      setFallbackToTest(true);
+      setCurrentVideoDuration(videoPlaylist[0].duration);
+    }
+  }, []);
+
   const videoUrl = useMemo(() => {
+    if (creditsActivated) {
+      // Si se activaron los créditos, mostrar solo el video de créditos
+      return videoPlaylist[2].url; // Video de créditos
+    }
+
     if (fallbackToTest) {
       // Usar la playlist con videos reales
       const currentVideo = videoPlaylist[currentVideoIndex] || videoPlaylist[0];
@@ -188,7 +224,7 @@ export default function Projector({ position, genre = "metal" }) {
 
     // Fallback al testVideoMapping si hay error
     return testVideoMapping[genre] || testVideoMapping.metal;
-  }, [currentVideoIndex, fallbackToTest, genre]);
+  }, [currentVideoIndex, fallbackToTest, genre, creditsActivated]);
 
   const handleVideoError = useCallback(() => {
     console.warn(`⚠️ Video error, using genre fallback for ${genre}`);
@@ -209,7 +245,7 @@ export default function Projector({ position, genre = "metal" }) {
 
   // Sistema de rotación inteligente con duraciones dinámicas
   useEffect(() => {
-    if (!fallbackToTest) return; // No rotar si estamos en fallback
+    if (!fallbackToTest || creditsActivated) return; // No rotar si estamos en fallback o créditos activados
 
     const interval = setInterval(() => {
       setCurrentVideoIndex((prevIndex) => {
@@ -222,9 +258,10 @@ export default function Projector({ position, genre = "metal" }) {
     }, currentVideoDuration);
 
     return () => clearInterval(interval);
-  }, [currentVideoDuration, fallbackToTest]);
+  }, [currentVideoDuration, fallbackToTest, creditsActivated]);
 
-  const animationFrame = useRef(0);
+  const animationFrame = useRef();
+
   useFrame((state) => {
     animationFrame.current++;
     const time = state.clock.elapsedTime;
@@ -239,7 +276,6 @@ export default function Projector({ position, genre = "metal" }) {
       lensRef.current.material.emissiveIntensity = lensGlow;
     }
   });
-
   return (
     <group position={position}>
       <group position={[0, 15, 8]}>
@@ -342,6 +378,13 @@ export default function Projector({ position, genre = "metal" }) {
           />
         </mesh>
       </group>
+
+      {/* Botón para alternar video de créditos */}
+      <CreditsButton
+        position={[0, -5, 25.5]}
+        onCreditsToggle={toggleCreditsVideo}
+        creditsActive={creditsActivated}
+      />
 
       {/* Soporte básico del proyector */}
       <group position={[0, 15, 8]}>
