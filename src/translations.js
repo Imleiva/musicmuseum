@@ -818,7 +818,6 @@ export const translations = {
       title: "🎮 Controls",
       drag: "Drag for 360° view",
       scroll: "Scroll to zoom in/out",
-      look: "Look up/down freely",
       posters: "Click posters for detailed info",
     },
 
