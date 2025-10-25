@@ -26,7 +26,7 @@
 
 .guide-toolbar-btn:hover,
 .guide-toolbar-btn:focus {
-  cursor: url("/images/pointers/hand.png"), pointer;
+  cursor: url("../../../public/images/pointers/hand.png"), pointer;
 }
 
 .guide-toolbar-btn:hover,

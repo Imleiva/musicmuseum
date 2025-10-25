@@ -81,7 +81,7 @@
 .museum-guide-bubble,
 .museum-guide-bubble:hover,
 .museum-guide-bubble:focus {
-  cursor: url("/images/pointers/hand.png"), pointer !important;
+  cursor: url("../../../public/images/pointers/hand.png"), pointer !important;
 }
 
 .museum-guide-bubble {
