@@ -324,8 +324,12 @@ canvas {
   text-shadow: 0 0 20px rgba(255, 68, 68, 0.6);
   letter-spacing: 1px;
   margin-bottom: 0.2rem;
-  line-height: 1.2;
-  word-spacing: -2px;
+  line-height: 1.3;
+  word-spacing: -1px;
+  /* Mejor distribución de palabras */
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  word-break: break-word;
 }
 
 .navigator-header p {
@@ -1373,6 +1377,29 @@ body.has-poster-modal .poster-modal * {
   .room-info p {
     font-size: 0.8rem;
   }
+
+  /* Ocultar información de sala en móvil para ahorrar espacio */
+  .room-info {
+    display: none;
+  }
+
+  /* Ocultar subtítulo en móvil */
+  .navigator-subtitle {
+    display: none;
+  }
+
+  /* Ocultar contenedor de controles en móvil */
+  .controls-help {
+    display: none;
+  }
+
+  /* Optimizar título para móvil */
+  .navigator-header h1 {
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    word-spacing: -1px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1429,9 +1456,27 @@ body.has-poster-modal .poster-modal * {
     gap: 8px;
   }
 
-  .room-info p {
-    font-size: 0.75rem;
-    margin: 0.2rem 0;
+  /* Ocultar información de sala en móviles muy pequeños */
+  .room-info {
+    display: none;
+  }
+
+  /* Ocultar subtítulo y controles en móviles pequeños */
+  .navigator-subtitle {
+    display: none;
+  }
+
+  .controls-help {
+    display: none;
+  }
+
+  /* Título más compacto en móviles pequeños */
+  .navigator-header h1 {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+    letter-spacing: 0.3px;
+    line-height: 1.1;
+    word-spacing: -1px;
   }
 }
 
