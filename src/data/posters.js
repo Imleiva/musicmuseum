@@ -4,11 +4,13 @@
  * • Fácil de mantener y expandir sin base de datos
  */
 
+import { getImagePath } from "../utils/assetPaths";
+
 export const posters = [
   {
     id: "baboon-show-001",
     bandKey: "thebaboonshow",
-    image: "/images/posters/BaboonShow.jpg",
+    image: getImagePath(getImagePath("/images/posters/BaboonShow.jpg")),
     title: "The Baboon Show - Live at Debaser",
     date: "2019-03-15",
     venue: "Debaser, Stockholm",
@@ -28,7 +30,7 @@ export const posters = [
   {
     id: "metallica-001",
     bandKey: "metallica",
-    image: "/images/posters/metallica.jpg",
+    image: getImagePath("/images/posters/metallica.jpg"),
     title: "Metallica - Master of Puppets Tour",
     date: "1986-09-20",
     venue: "Hammersmith Odeon, London",
@@ -47,7 +49,7 @@ export const posters = [
   {
     id: "iron-maiden-001",
     bandKey: "ironmaiden",
-    image: "/images/posters/iron-maiden.jpg",
+    image: getImagePath("/images/posters/iron-maiden.jpg"),
     title: "Iron Maiden - Powerslave World Tour",
     date: "1984-12-15",
     venue: "Long Beach Arena, California",
@@ -67,7 +69,7 @@ export const posters = [
   {
     id: "queen-001",
     bandKey: "queen",
-    image: "/images/posters/queen.jpg",
+    image: getImagePath("/images/posters/queen.jpg"),
     title: "Queen - A Night at the Opera Tour",
     date: "1975-11-28",
     venue: "Hammersmith Odeon, London",
@@ -87,7 +89,7 @@ export const posters = [
   {
     id: "nirvana-001",
     bandKey: "nirvana",
-    image: "/images/posters/nirvana.jpg",
+    image: getImagePath("/images/posters/nirvana.jpg"),
     title: "Nirvana - MTV Unplugged in New York",
     date: "1993-11-18",
     venue: "Sony Music Studios, New York",
@@ -108,7 +110,7 @@ export const posters = [
   {
     id: "pink-floyd-001",
     bandKey: "pinkfloyd",
-    image: "/images/posters/pink-floyd.jpg",
+    image: getImagePath("/images/posters/pink-floyd.jpg"),
     title: "Pink Floyd - The Wall Live",
     date: "1980-02-07",
     venue: "Nassau Coliseum, New York",
@@ -129,7 +131,7 @@ export const posters = [
   {
     id: "led-zeppelin-001",
     bandKey: "ledzeppelin",
-    image: "/images/posters/led-zeppelin.jpg",
+    image: getImagePath("/images/posters/led-zeppelin.jpg"),
     title: "Led Zeppelin - Stairway to Heaven Tour",
     date: "1971-11-20",
     venue: "Empire Pool, Wembley",
@@ -149,7 +151,7 @@ export const posters = [
   {
     id: "kiss-001",
     bandKey: "kiss",
-    image: "/images/posters/kiss.jpg",
+    image: getImagePath("/images/posters/kiss.jpg"),
     title: "KISS - Dynasty Tour",
     date: "1979-07-25",
     venue: "Madison Square Garden, New York",
@@ -169,7 +171,7 @@ export const posters = [
   {
     id: "black-sabbath-001",
     bandKey: "blacksabbath",
-    image: "/images/posters/black-sabbath.jpg",
+    image: getImagePath("/images/posters/black-sabbath.jpg"),
     title: "Black Sabbath - Paranoid Tour",
     date: "1970-10-31",
     venue: "Town Hall, Birmingham",
@@ -189,7 +191,7 @@ export const posters = [
   {
     id: "ramones-001",
     bandKey: "ramones",
-    image: "/images/posters/ramones.jpg",
+    image: getImagePath("/images/posters/ramones.jpg"),
     title: "Ramones - CBGB Opening Night",
     date: "1974-08-16",
     venue: "CBGB, New York",
@@ -209,7 +211,7 @@ export const posters = [
   {
     id: "the-clash-001",
     bandKey: "theclash",
-    image: "/images/posters/the-clash.jpg",
+    image: getImagePath("/images/posters/the-clash.jpg"),
     title: "The Clash - London Calling Tour",
     date: "1979-12-15",
     venue: "The Lyceum, London",

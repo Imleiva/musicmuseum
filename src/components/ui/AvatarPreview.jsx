@@ -18,7 +18,7 @@ const avatarImages = {
   metallica: getImagePath("/images/avatars/metallica.png"),
   gnr: getImagePath("/images/avatars/gnr.png"),
   bonjovi: getImagePath("/images/avatars/bonjovi.png"),
-  defleppard: getImagePath("/images/avatars/.png"),
+  defleppard: getImagePath("/images/avatars/defleppard.png"),
   poison: getImagePath("/images/avatars/poison.png"),
   motleycrue: getImagePath("/images/avatars/motleycrue.png"),
   alicecooper: getImagePath("/images/avatars/alicecooper.png"),

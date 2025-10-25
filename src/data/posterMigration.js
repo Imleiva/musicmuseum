@@ -6,6 +6,7 @@
  */
 
 import concerts from "./concerts.js";
+import { getImagePath } from "../utils/assetPaths";
 
 // Función para migrar concerts.js a formato de posters.js
 export const migrateToPostersFormat = () => {
@@ -14,10 +15,12 @@ export const migrateToPostersFormat = () => {
     bandKey: concert.band.toLowerCase().replace(/\s+/g, ""), // "Iron Maiden" -> "ironmaiden"
     image:
       concert.imageUrl ||
-      `/images/posters/${concert.band
-        .toLowerCase()
-        .replace(/\s+/g, "")
-        .replace(/^the/, "")}.jpg`,
+      getImagePath(
+        `/images/posters/${concert.band
+          .toLowerCase()
+          .replace(/\s+/g, "")
+          .replace(/^the/, "")}.jpg`
+      ),
     title: `${concert.band} - Live at ${concert.venue}`,
     date: concert.date,
     venue: concert.venue,
