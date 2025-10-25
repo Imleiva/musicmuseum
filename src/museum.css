@@ -45,9 +45,9 @@ textarea,
 
 /* Variables de cursor */
 :root {
-  --cursor-rock: url("/images/pointers/rockhand.png") 16 16, auto;
-  --cursor-hand: url("/images/pointers/hand.png") 10 10, pointer;
-  --cursor-eye: url("/images/pointers/cursorojo.png") 6 6, pointer;
+  --cursor-rock: url("../public/images/pointers/rockhand.png") 16 16, auto;
+  --cursor-hand: url("../public/images/pointers/hand.png") 10 10, pointer;
+  --cursor-eye: url("../public/images/pointers/cursorojo.png") 6 6, pointer;
 }
 
 /* 1. CURSOR BASE: rockhand.png en toda la aplicación por defecto */
@@ -316,7 +316,7 @@ canvas {
   color: #ff4444;
   box-shadow: 0 0 20px rgba(255, 68, 68, 0.4);
   transform: translateY(-2px);
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+  cursor: url("../public/images/pointers/hand.png") 10 10, pointer;
 }
 
 .room-btn.active {
@@ -367,7 +367,7 @@ canvas {
 
 /* Controls help */
 .controls-help {
-  cursor: url("/images/pointers/rockhand.png") 16 16, auto;
+  cursor: url("../public/images/pointers/rockhand.png") 16 16, auto;
   position: absolute;
   bottom: 20px;
   left: 20px;
@@ -531,7 +531,7 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
   background: linear-gradient(45deg, #ff6666, #ff4444);
   box-shadow: 0 4px 15px rgba(255, 68, 68, 0.4);
   transform: translateY(-2px);
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+  cursor: url("../public/images/pointers/hand.png") 10 10, pointer;
 }
 
 /* Poster modal */
@@ -649,14 +649,14 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
 
 /* Mostrar cursor de dedo (hand) al hacer hover sobre el thumb del scrollbar (WebKit/Chromium) */
 .poster-modal-inner::-webkit-scrollbar-thumb:hover {
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+  cursor: url("../public/images/pointers/hand.png") 10 10, pointer;
 }
 
 /* Fallback: cuando se hace hover en la zona derecha del modal, usar cursor pointer para indicar interactividad (mejora en Firefox) */
 .poster-modal,
 .poster-modal .poster-modal-inner {
   /* Usar el cursor 'rockhand' por defecto dentro del modal para mantener la estética */
-  cursor: url("/images/pointers/rockhand.png") 16 16, auto;
+  cursor: url("../public/images/pointers/rockhand.png") 16 16, auto;
 }
 
 /* Elementos interactivos dentro del modal deben mostrar el cursor de dedo estándar */
@@ -665,13 +665,13 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
 .poster-modal .carousel-btn,
 .poster-modal .poster-modal-close,
 .poster-modal .music-link {
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+  cursor: url("../public/images/pointers/hand.png") 10 10, pointer;
 }
 
 /* Clase temporal cuando el ratón está cerca del scrollbar: mostrar la mano even en Firefox */
 .poster-modal.scroll-near,
 .poster-modal.scroll-near .poster-modal-inner {
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+  cursor: url("../public/images/pointers/hand.png") 10 10, pointer;
 }
 
 @keyframes slideInScale {
@@ -699,7 +699,7 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
 .close-btn:hover {
   background: linear-gradient(135deg, #ff4444, #cc3333);
   box-shadow: 0 6px 20px rgba(255, 68, 68, 0.5);
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+  cursor: url("../public/images/pointers/hand.png") 10 10, pointer;
 }
 
 /* Image carousel styles */
@@ -756,7 +756,7 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
 .carousel-btn:hover {
   background: rgba(0, 0, 0, 0.9);
   transform: translateY(-50%) scale(1.1);
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+  cursor: url("../public/images/pointers/hand.png") 10 10, pointer;
 }
 
 .prev-btn {
@@ -789,7 +789,7 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
   color: #ff4444;
   box-shadow: 0 0 20px rgba(255, 68, 68, 0.4);
   transform: translateY(-2px);
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+  cursor: url("../public/images/pointers/hand.png") 10 10, pointer;
 }
 
 /* Scrollbar personalizado para el poster modal */
@@ -1057,7 +1057,7 @@ body.has-poster-modal .poster-modal * {
   border-color: #ffffff;
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 8px 25px rgba(29, 185, 84, 0.4);
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+  cursor: url("../public/images/pointers/hand.png") 10 10, pointer;
 }
 
 .music-link.youtube {
@@ -1070,7 +1070,7 @@ body.has-poster-modal .poster-modal * {
   border-color: #ffffff;
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 8px 25px rgba(255, 0, 0, 0.4);
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+  cursor: url("../public/images/pointers/hand.png") 10 10, pointer;
 }
 
 .platform-icon {
