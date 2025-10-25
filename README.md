@@ -8,11 +8,12 @@ An immersive 3D virtual museum experience dedicated to rock and metal concerts. 
 
 _Experience the 3D virtual museum directly in your browser!_
 
-<!-- Last deployment attempt: 2025-10-25 - Avatar logo paths fixed -->
+<!-- Last deployment attempt: 2025-10-25 - Mobile panels optimized -->
 
 ## 🌟 Features
 
 - **3D Immersive Experience** - Navigate through realistic virtual rooms with WebGL rendering
+- **Collapsible Mobile Interface** - Smart panels that auto-collapse on mobile for better UX
 - **Multi-Genre Themed Rooms** - Metal, Rock, and Punk dedicated spaces with custom lighting
 - **Interactive Concert Posters** - Hover and click for detailed information and setlists
 - **Video Projections** - Historical concert footage and museum credits display

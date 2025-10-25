@@ -48,7 +48,7 @@ export default function RockNavigator({
   };
 
   return (
-    <nav className={`rock-navigator ${isCollapsed ? 'collapsed' : 'expanded'}`}>
+    <nav className={`rock-navigator ${isCollapsed ? "collapsed" : "expanded"}`}>
       <div className="navigator-header">
         <div className="navigator-title-container">
           <h1>{t("navigator.title")}</h1>
@@ -56,9 +56,11 @@ export default function RockNavigator({
             className="navigator-toggle clickable"
             onClick={toggleCollapsed}
             title={isCollapsed ? "Expandir navegador" : "Contraer navegador"}
-            aria-label={isCollapsed ? "Expandir navegador" : "Contraer navegador"}
+            aria-label={
+              isCollapsed ? "Expandir navegador" : "Contraer navegador"
+            }
           >
-            {isCollapsed ? '▼' : '▲'}
+            {isCollapsed ? "▼" : "▲"}
           </button>
         </div>
         {!isCollapsed && <p>{t("navigator.subtitle")}</p>}

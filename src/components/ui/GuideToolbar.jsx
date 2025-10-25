@@ -18,7 +18,8 @@ export default function GuideToolbar({
   curiositiesEnabled = true,
 }) {
   const { t } = useTranslation();
-  const { showTooltip, hideTooltip } = useTooltipContext();  const icons = [
+  const { showTooltip, hideTooltip } = useTooltipContext();
+  const icons = [
     {
       key: "curiosities",
       label: t("toolbar.curiosities"),
