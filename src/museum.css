@@ -254,8 +254,8 @@ canvas {
   padding: 1rem;
   box-shadow: 0 10px 40px rgba(255, 68, 68, 0.4);
   animation: slideInLeft 0.8s ease-out;
-  max-width: 270px;
-  min-width: 240px;
+  max-width: 320px;
+  min-width: 280px;
   transform: translateZ(0);
   will-change: transform;
   transition: all 0.3s ease-in-out;
@@ -265,8 +265,8 @@ canvas {
 /* Estado contraído del navegador */
 .rock-navigator.collapsed {
   padding: 0.8rem;
-  min-width: 200px;
-  max-width: 220px;
+  min-width: 220px;
+  max-width: 250px;
 }
 
 /* Contenedor del título con botón toggle */
@@ -318,12 +318,14 @@ canvas {
 }
 
 .navigator-header h1 {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: #ff4444;
   text-shadow: 0 0 20px rgba(255, 68, 68, 0.6);
-  letter-spacing: 2px;
-  margin-bottom: 0.3rem;
+  letter-spacing: 1px;
+  margin-bottom: 0.2rem;
+  line-height: 1.2;
+  word-spacing: -2px;
 }
 
 .navigator-header p {
@@ -1346,8 +1348,10 @@ body.has-poster-modal .poster-modal * {
   }
 
   .navigator-header h1 {
-    font-size: 1.4rem;
-    letter-spacing: 1px;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+    word-spacing: -1px;
   }
 
   .navigator-header p {
@@ -1408,8 +1412,11 @@ body.has-poster-modal .poster-modal * {
   }
 
   .navigator-header h1 {
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin-bottom: 0.2rem;
+    letter-spacing: 0.3px;
+    line-height: 1.1;
+    word-spacing: -1px;
   }
 
   .navigator-header p {
