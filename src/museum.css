@@ -235,7 +235,55 @@ canvas {
   min-width: 240px;
   transform: translateZ(0);
   will-change: transform;
+  transition: all 0.3s ease-in-out;
   /* Cursor heredado del sistema global */
+}
+
+/* Estado contraído del navegador */
+.rock-navigator.collapsed {
+  padding: 0.8rem;
+  min-width: 200px;
+  max-width: 220px;
+}
+
+/* Contenedor del título con botón toggle */
+.navigator-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/* Botón para contraer/expandir el navegador */
+.navigator-toggle {
+  background: rgba(255, 68, 68, 0.2);
+  border: none;
+  color: #ff4444;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  transition: all 0.2s ease;
+  min-width: 24px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+.navigator-toggle:hover {
+  background: rgba(255, 68, 68, 0.4);
+  transform: scale(1.1);
+  cursor: url("../public/images/pointers/hand.png"), pointer;
+}
+
+/* Ajustes para el header contraído */
+.rock-navigator.collapsed .navigator-header {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 /* Header dentro del navegador - más compacto */
@@ -1243,20 +1291,60 @@ body.has-poster-modal .poster-modal * {
     max-width: 180px;
     padding: 10px 12px;
   }
-
+  
   .controls-help h4 {
     font-size: 0.8rem;
   }
-
+  
   .controls-help li {
     font-size: 0.75rem;
   }
-
+  
   .controls-help-toggle {
     padding: 2px 6px;
     font-size: 10px;
     min-width: 20px;
     height: 16px;
+  }
+
+  /* Navegador más compacto en móvil */
+  .rock-navigator {
+    top: 10px;
+    left: 10px;
+    padding: 0.8rem;
+    min-width: 200px;
+    max-width: 220px;
+  }
+
+  .rock-navigator.collapsed {
+    padding: 0.6rem;
+    min-width: 180px;
+    max-width: 200px;
+  }
+
+  .navigator-header h1 {
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+  }
+
+  .navigator-header p {
+    font-size: 0.7rem;
+  }
+
+  .navigator-toggle {
+    padding: 2px 6px;
+    font-size: 10px;
+    min-width: 20px;
+    height: 16px;
+  }
+
+  .room-btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .room-info p {
+    font-size: 0.8rem;
   }
 }
 
@@ -1267,18 +1355,53 @@ body.has-poster-modal .poster-modal * {
     max-width: 160px;
     padding: 8px 10px;
   }
-
+  
   .controls-help.collapsed {
     padding: 6px 8px;
   }
-
+  
   .controls-help h4 {
     font-size: 0.75rem;
   }
-
+  
   .controls-help li {
     font-size: 0.7rem;
     margin-bottom: 2px;
+  }
+
+  /* Navegador ultra compacto para pantallas pequeñas */
+  .rock-navigator {
+    top: 8px;
+    left: 8px;
+    padding: 0.6rem;
+    min-width: 170px;
+    max-width: 190px;
+  }
+
+  .rock-navigator.collapsed {
+    padding: 0.5rem;
+    min-width: 150px;
+    max-width: 170px;
+  }
+
+  .navigator-header h1 {
+    font-size: 1.2rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .navigator-header p {
+    font-size: 0.65rem;
+  }
+
+  .room-btn {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    gap: 8px;
+  }
+
+  .room-info p {
+    font-size: 0.75rem;
+    margin: 0.2rem 0;
   }
 }
 

@@ -9,7 +9,6 @@ export const translations = {
       title: "🎮 Controles",
       drag: "Arrastrar para vista 360°",
       scroll: "Desplazar para zoom +/-",
-      look: "Mirar arriba/abajo libremente",
       posters: "Hacer clic en posters para info detallada",
     },
 
