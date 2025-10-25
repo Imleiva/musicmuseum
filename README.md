@@ -8,6 +8,8 @@ An immersive 3D virtual museum experience dedicated to rock and metal concerts. 
 
 _Experience the 3D virtual museum directly in your browser!_
 
+<!-- Last deployment attempt: 2025-10-25 -->
+
 ## 🌟 Features
 
 - **3D Immersive Experience** - Navigate through realistic virtual rooms with WebGL rendering
