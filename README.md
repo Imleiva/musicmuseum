@@ -1,15 +1,25 @@
-# � Rock & Metal Museum
+# 🎸 Rock & Metal Museum
 
 An immersive 3D virtual museum experience dedicated to rock and metal concerts. Walk through different themed rooms, explore concert posters, watch historical footage, and listen to legendary performances.
 
+## 🌐 Live Demo
+
+**🚀 [Visit the Museum Live](https://imleiva.github.io/musicmuseum/)**
+
+_Experience the 3D virtual museum directly in your browser!_
+
 ## 🌟 Features
 
-- **3D Immersive Experience** - Navigate through realistic virtual rooms
-- **Multi-Genre Themed Rooms** - Metal, Rock, and Punk dedicated spaces
-- **Interactive Concert Posters** - Hover and click for detailed information
-- **Video Projections** - Historical concert footage display
-- **360° Navigation** - Full freedom to look around each room
+- **3D Immersive Experience** - Navigate through realistic virtual rooms with WebGL rendering
+- **Multi-Genre Themed Rooms** - Metal, Rock, and Punk dedicated spaces with custom lighting
+- **Interactive Concert Posters** - Hover and click for detailed information and setlists
+- **Video Projections** - Historical concert footage and museum credits display
+- **Interactive Credits Button** - 3D animated button to toggle museum credits video
+- **Avatar Customization** - Choose from legendary rock and metal artists as your guide
+- **Multilingual Support** - Available in multiple languages
+- **360° Navigation** - Full freedom to look around each room with smooth camera controls
 - **Responsive Design** - Works on desktop and mobile devices
+- **GitHub Pages Deployment** - Automatically deployed and always up-to-date
 
 ## � Getting Started
 
@@ -36,12 +46,16 @@ An immersive 3D virtual museum experience dedicated to rock and metal concerts. 
 
 [](http://localhost:5173)
 
-## 🎮 Controls
+## 🎮 Controls & Interaction
 
-- **Drag** - Rotate 360° view
-- **Scroll** - Zoom in/out
-- **Click** - Interact with elements
-- **Room Navigation** - Use top navigation bar
+- **Mouse Drag** - Rotate 360° view around the museum
+- **Mouse Scroll** - Zoom in/out for closer inspection
+- **Click Posters** - View detailed concert information and setlists
+- **Red Credits Button** - Toggle museum credits video on/off
+- **Avatar Selection** - Choose your rock/metal guide from the toolbar
+- **Room Navigation** - Use top navigation bar to switch between themed rooms
+- **Settings Panel** - Access language and customization options
+- **Curiosities Mode** - Toggle fun facts and trivia display
 
 ## 🛠️ Tech Stack
 
@@ -89,6 +103,16 @@ Each room supports different color schemes and atmospheres. Modify the theme in 
 
 ## 🚀 Deployment
 
+### GitHub Pages (Production)
+
+The app is automatically deployed to GitHub Pages at: **[https://imleiva.github.io/musicmuseum/](https://imleiva.github.io/musicmuseum/)**
+
+- **Auto-deployment** on every push to `main` branch
+- **Build process** via GitHub Actions
+- **Asset optimization** for production
+
+### Manual Deployment
+
 1. **Build for production**
 
    ```bash
@@ -96,6 +120,13 @@ Each room supports different color schemes and atmospheres. Modify the theme in 
    ```
 
 2. **Deploy the `dist` folder** to your web server
+
+   The build process optimizes assets and configures paths for GitHub Pages deployment.
+
+### Development vs Production
+
+- **Development**: `npm run dev` - Local server at `http://localhost:5173`
+- **Production**: Optimized build with dynamic asset paths for GitHub Pages
 
 ## 📱 Browser Support
 
@@ -114,6 +145,12 @@ WebGL 2.0 support required for optimal 3D performance.
 4. Push to the branch
 5. Open a Pull Request
 
+## 📝 License
+
+This project is open source and available under the MIT License.
+
 ---
 
-Enjoy exploring the Leiva'n Roll Hall Of Fame!🤘
+🎸 **Enjoy exploring the Leiva'n Roll Hall Of Fame!** 🤘
+
+_Experience legendary concerts in an immersive 3D environment at [imleiva.github.io/musicmuseum](https://imleiva.github.io/musicmuseum/)_
