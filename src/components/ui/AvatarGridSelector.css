@@ -445,6 +445,213 @@
   position: relative;
 }
 
+/* ===================================== */
+/* RESPONSIVE DESIGN - MOBILE FIRST */
+/* ===================================== */
+
+/* Mobile Layout (Portrait) - Avatar arriba, Grid abajo */
+@media (max-width: 768px) {
+  .avatar-grid-modal {
+    flex-direction: column;
+  }
+
+  /* Header más compacto en móvil */
+  .avatar-grid-selector-header {
+    padding: 16px 12px 8px 12px;
+    min-height: 60px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .avatar-grid-selector-header input[type="text"] {
+    width: 100%;
+    font-size: 14px;
+    height: 36px;
+  }
+
+  .avatar-grid-selector-header select {
+    width: calc(50% - 4px);
+    font-size: 14px;
+    height: 36px;
+  }
+
+  /* Switch de transiciones más compacto */
+  .transitions-switch-container {
+    width: 100%;
+    justify-content: center;
+    margin: 8px 0 0 0;
+  }
+
+  .transitions-switch-label {
+    font-size: 14px;
+    min-width: auto;
+  }
+
+  .transitions-switch {
+    width: 40px;
+    height: 22px;
+  }
+
+  .transitions-switch-slider:before {
+    height: 14px;
+    width: 14px;
+    left: 2px;
+    bottom: 2px;
+    font-size: 6px;
+  }
+
+  .transitions-switch input:checked + .transitions-switch-slider:before {
+    transform: translateX(18px);
+  }
+
+  /* Preview del avatar - ahora arriba y más compacto */
+  .avatar-grid-preview {
+    height: 35vh;
+    flex-shrink: 0;
+    padding: 12px;
+    border-bottom: 1px solid #333;
+  }
+
+  .avatar-preview-img {
+    width: 200px;
+    height: 200px;
+  }
+
+  .avatar-preview-name {
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+
+  .avatar-preview-meta {
+    font-size: 14px;
+  }
+
+  /* Grid section - ahora abajo con scroll */
+  .avatar-grid-left {
+    width: 100vw;
+    height: 65vh;
+    flex: 1;
+  }
+
+  /* Grid más compacto para móvil */
+  .avatar-grid-selector-grid {
+    padding: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 12px;
+  }
+
+  .avatar-grid-selector-item {
+    min-height: 85px;
+    min-width: 85px;
+    padding: 6px 2px 2px 2px;
+  }
+
+  .avatar-grid-selector-item img {
+    max-width: 70px;
+    max-height: 60px;
+    margin-bottom: 2px;
+  }
+
+  /* Footer más compacto */
+  .avatar-grid-selector-footer {
+    padding: 12px 16px;
+    background: #181818;
+    border-top: 1px solid #333;
+  }
+
+  .avatar-grid-selector-footer button {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+
+  .avatar-grid-selector-footer button:first-child {
+    padding: 10px 24px;
+    font-size: 16px;
+  }
+}
+
+/* Mobile Landscape - Avatar a la izquierda, Grid a la derecha */
+@media (max-width: 768px) and (orientation: landscape) {
+  .avatar-grid-modal {
+    flex-direction: row;
+  }
+
+  .avatar-grid-preview {
+    width: 40vw;
+    height: 100vh;
+    border-bottom: none;
+    border-right: 1px solid #333;
+  }
+
+  .avatar-grid-left {
+    width: 60vw;
+    height: 100vh;
+  }
+
+  .avatar-preview-img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .avatar-preview-name {
+    font-size: 16px;
+  }
+
+  .avatar-preview-meta {
+    font-size: 12px;
+  }
+
+  .avatar-grid-selector-grid {
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 8px;
+  }
+
+  .avatar-grid-selector-item {
+    min-height: 70px;
+    min-width: 70px;
+  }
+
+  .avatar-grid-selector-item img {
+    max-width: 55px;
+    max-height: 50px;
+  }
+}
+
+/* Tablet - Layout híbrido */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .avatar-grid-left {
+    width: 65vw;
+  }
+
+  .avatar-grid-selector-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 20px;
+  }
+
+  .avatar-grid-selector-item {
+    min-height: 100px;
+    min-width: 100px;
+  }
+
+  .avatar-grid-selector-item img {
+    max-width: 90px;
+    max-height: 80px;
+  }
+
+  .avatar-preview-img {
+    width: 280px;
+    height: 280px;
+  }
+
+  .avatar-preview-name {
+    font-size: 22px;
+  }
+
+  .avatar-preview-meta {
+    font-size: 16px;
+  }
+}
+
 /* Bloquear interacción durante transiciones */
 .avatar-grid-selector-grid.transitioning {
   pointer-events: none;
@@ -467,4 +674,46 @@
 .avatar-grid-selector-grid.transitioning .avatar-grid-selector-item {
   cursor: wait;
   filter: brightness(0.6);
+}
+
+/* Ajustes específicos para componentes móviles */
+@media (max-width: 768px) {
+  /* Placeholder más pequeño en móvil */
+  .avatar-preview-placeholder {
+    font-size: 16px;
+    padding: 20px;
+  }
+
+  /* Scrollbar más delgada en móvil */
+  .avatar-grid-left::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .avatar-grid-left::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    border: 1px solid #181818;
+  }
+
+  /* Transiciones más rápidas en móvil */
+  .avatar-grid-selector-item {
+    transition: box-shadow 0.15s, background 0.15s, transform 0.15s;
+  }
+
+  .avatar-grid-selector-item.selected,
+  .avatar-grid-selector-item:hover {
+    transform: scale(1.05);
+  }
+
+  /* Botones más touch-friendly */
+  .avatar-grid-selector-footer button {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+
+  /* Input más touch-friendly */
+  .avatar-grid-selector-header input[type="text"],
+  .avatar-grid-selector-header select {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
 }

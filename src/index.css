@@ -13,12 +13,17 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
+html, body, #root {
   margin: 0;
-  display: flex;
-  place-items: center;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #000000 !important;
+}
+
+body {
   min-width: 320px;
-  min-height: 100vh;
 }
 
 /* Ocultar cursor del teclado en toda la aplicación excepto inputs */
@@ -61,7 +66,8 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
+    /* Mantenemos fondo negro para preservar la experiencia 3D */
+    background-color: #000000;
   }
   a:hover {
     color: #747bff;

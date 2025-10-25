@@ -190,6 +190,29 @@ canvas {
   z-index: 1 !important;
 }
 
+/* Asegurar visibilidad del canvas en móvil */
+@media (max-width: 768px) {
+  canvas {
+    display: block !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 1 !important;
+    background: transparent !important;
+  }
+  
+  /* Asegurar que .app no interfiera en móvil */
+  .app {
+    position: relative !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+    background: transparent !important;
+  }
+}
+
 /* Animaciones */
 @keyframes slideInDown {
   from {

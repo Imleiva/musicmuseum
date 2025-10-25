@@ -17,6 +17,7 @@ import PosterModal from "./components/ui/PosterModal";
 import MuseumGuide from "./components/ui/MuseumGuide";
 import SettingsModal from "./components/ui/SettingsModal";
 import ControlsHelp from "./components/ui/ControlsHelp";
+import WebGLErrorFallback from "./components/ui/WebGLErrorFallback";
 import { TranslationProvider } from "./contexts/TranslationContext";
 import {
   TooltipProvider,
@@ -94,7 +95,8 @@ function App() {
   return (
     <TranslationProvider>
       <TooltipProvider>
-        <div className="app">
+        <WebGLErrorFallback>
+          <div className="app">
           <BlurBackground show={showBlur} />
           <RockNavigator
             currentRoom={currentRoom}
@@ -117,6 +119,14 @@ function App() {
               far: 1000,
             }}
             className="canvas-3d"
+            gl={{
+              powerPreference: "default",
+              antialias: false,
+              alpha: false,
+              preserveDrawingBuffer: false,
+              failIfMajorPerformanceCaveat: false
+            }}
+            dpr={window.devicePixelRatio > 2 ? 2 : window.devicePixelRatio}
           >
             <ambientLight intensity={0.4} color="#ffffff" />
             <directionalLight position={[2, 50, 1]} intensity={0.9} />
@@ -194,6 +204,7 @@ function App() {
           <TooltipContainer />
           <AutoTooltipManager currentRoom={currentRoom} />
         </div>
+        </WebGLErrorFallback>
       </TooltipProvider>
     </TranslationProvider>
   );

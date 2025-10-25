@@ -41,7 +41,6 @@ export default function ControlsHelp() {
         <ul>
           <li>{t("controls.drag")}</li>
           <li>{t("controls.scroll")}</li>
-          <li>{t("controls.look")}</li>
           <li>{t("controls.posters")}</li>
         </ul>
       )}
