@@ -139,47 +139,47 @@
 /* RESPONSIVE DESIGN - MOBILE OPTIMIZATION */
 /* ===================================== */
 
-/* Mobile Layout - Avatar arriba, burbujas abajo expandibles */
+/* Mobile Layout - Avatar y toolbar abajo, burbujas arriba */
 @media (max-width: 768px) {
   .museum-guide {
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
+    align-items: flex-end;
+    justify-content: flex-end;
   }
 
   .museum-guide-avatar-toolbar-container {
-    flex-direction: column;
-    align-items: center;
-    margin: 16px 16px 8px 16px;
-    gap: 8px;
-    width: calc(100vw - 32px);
+    flex-direction: row;
+    align-items: flex-end;
+    margin: 16px 20px 20px 16px;
+    gap: 12px;
+    width: auto;
   }
 
   .museum-guide-toolbar-container {
-    order: 1;
-    width: 100%;
+    order: 2;
+    width: auto;
     height: auto;
-    flex-direction: row;
-    justify-content: center;
-    margin-bottom: 8px;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin: 0;
   }
 
   .museum-guide-avatar-wrapper {
-    order: 2;
-    margin-bottom: 8px;
+    order: 1;
+    margin: 0;
   }
 
   .museum-guide-avatar {
-    width: 120px;
-    min-width: 120px;
+    width: 100px;
+    min-width: 100px;
     height: auto;
     margin: 0;
   }
 
-  /* Bubble reorganizada para móvil */
+  /* Bubble reorganizada para móvil - arriba del avatar */
   .museum-guide-avatar-bubble-container .museum-guide-bubble {
     position: fixed;
-    bottom: 16px;
+    bottom: 140px;
     left: 16px;
     right: 16px;
     width: calc(100vw - 32px);
@@ -207,18 +207,18 @@
   }
 }
 
-/* Mobile Landscape - Más compacto */
+/* Mobile Landscape - Avatar y toolbar abajo a la derecha */
 @media (max-width: 768px) and (orientation: landscape) {
   .museum-guide {
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-end;
-    justify-content: space-between;
+    justify-content: flex-end;
   }
 
   .museum-guide-avatar-toolbar-container {
     flex-direction: row;
     align-items: flex-end;
-    margin: 16px;
+    margin: 16px 20px 16px 16px;
     gap: 12px;
     width: auto;
   }
@@ -234,13 +234,13 @@
   }
 
   .museum-guide-avatar {
-    width: 100px;
-    min-width: 100px;
+    width: 80px;
+    min-width: 80px;
   }
 
   .museum-guide-avatar-bubble-container .museum-guide-bubble {
     position: fixed;
-    bottom: 16px;
+    bottom: 100px;
     left: 16px;
     right: 120px;
     width: auto;
