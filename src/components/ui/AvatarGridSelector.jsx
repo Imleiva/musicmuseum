@@ -105,7 +105,9 @@ export default function AvatarGridSelector({
                   <input
                     type="checkbox"
                     checked={localTransitionsEnabled}
-                    onChange={(e) => setLocalTransitionsEnabled(e.target.checked)}
+                    onChange={(e) =>
+                      setLocalTransitionsEnabled(e.target.checked)
+                    }
                   />
                   <span className="transitions-switch-slider"></span>
                 </label>

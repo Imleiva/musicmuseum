@@ -15,7 +15,7 @@ export default function GuideBubble({ text, title, onClick }) {
 
   const handleBubbleClick = (e) => {
     e.stopPropagation();
-    
+
     // Si el texto es largo, manejar el scroll interno
     if (text.length > CHARS_PER_VIEW) {
       const nextOffset = textOffset + CHARS_PER_VIEW;
@@ -35,22 +35,24 @@ export default function GuideBubble({ text, title, onClick }) {
     if (text.length <= CHARS_PER_VIEW) {
       return text;
     }
-    
+
     const endOffset = Math.min(textOffset + CHARS_PER_VIEW, text.length);
     let displayText = text.slice(textOffset, endOffset);
-    
+
     // Añadir puntos suspensivos si no estamos al final
     if (endOffset < text.length) {
       displayText += "...";
     }
-    
+
     return displayText;
   };
 
   return (
     <div
       ref={textRef}
-      className={`museum-guide-bubble clickable ${showScrollIndicator ? 'scrollable-text' : ''}`}
+      className={`museum-guide-bubble clickable ${
+        showScrollIndicator ? "scrollable-text" : ""
+      }`}
       title={showScrollIndicator ? "Haz clic para ver más texto" : title}
       onClick={handleBubbleClick}
     >

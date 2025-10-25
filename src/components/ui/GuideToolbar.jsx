@@ -63,25 +63,27 @@ export default function GuideToolbar({
     },
   ];
   return (
-    <div className={`guide-toolbar ${isCollapsed ? 'collapsed' : ''}`}>
+    <div className={`guide-toolbar ${isCollapsed ? "collapsed" : ""}`}>
       {/* Botón de toggle para móvil */}
-      <button 
+      <button
         className="guide-toolbar-toggle mobile-only"
         onClick={onToggleCollapse}
         title={isCollapsed ? "Mostrar herramientas" : "Ocultar herramientas"}
       >
-        <span className="toggle-icon">{isCollapsed ? '+' : '×'}</span>
+        <span className="toggle-icon">{isCollapsed ? "+" : "×"}</span>
       </button>
-      
+
       {/* Iconos del toolbar */}
-      <div className={`guide-toolbar-icons ${isCollapsed ? 'collapsed' : ''}`}>
+      <div className={`guide-toolbar-icons ${isCollapsed ? "collapsed" : ""}`}>
         {icons.map((item) => (
           <button
             key={item.key}
             className={`guide-toolbar-btn clickable${
               active === item.key ? " active" : ""
             }${
-              item.key === "curiosities" && !curiositiesEnabled ? " disabled" : ""
+              item.key === "curiosities" && !curiositiesEnabled
+                ? " disabled"
+                : ""
             }`}
             title={item.label}
             onClick={() => onSelect(item.key)}
