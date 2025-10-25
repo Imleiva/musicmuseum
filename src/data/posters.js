@@ -10,7 +10,7 @@ export const posters = [
   {
     id: "baboon-show-001",
     bandKey: "thebaboonshow",
-    image: getImagePath("/images/posters/BaboonShow.jpg")),
+    image: getImagePath("$1"),
     title: "The Baboon Show - Live at Debaser",
     date: "2019-03-15",
     venue: "Debaser, Stockholm",
@@ -30,7 +30,7 @@ export const posters = [
   {
     id: "metallica-001",
     bandKey: "metallica",
-    image: getImagePath("/images/posters/metallica.jpg"),
+    image: getImagePath("/images/posters/BaboonShow.jpg"),
     title: "Metallica - Master of Puppets Tour",
     date: "1986-09-20",
     venue: "Hammersmith Odeon, London",
