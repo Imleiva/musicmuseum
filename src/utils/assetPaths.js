@@ -40,4 +40,19 @@ export const getImagePath = (imagePath) => {
   return getAssetPath(cleanPath);
 };
 
+/**
+ * Alias específico para videos
+ */
+export const getVideoPath = (videoPath) => {
+  const cleanPath = videoPath.startsWith("/videos/")
+    ? videoPath.slice(1) // Remover el '/' inicial
+    : videoPath.startsWith("videos/")
+    ? videoPath
+    : videoPath.startsWith("/")
+    ? videoPath.slice(1) // Remover '/' inicial para cualquier path absoluto
+    : videoPath;
+
+  return getAssetPath(cleanPath);
+};
+
 export default getAssetPath;
