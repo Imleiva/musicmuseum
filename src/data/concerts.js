@@ -16,20 +16,10 @@ const concerts = [
     date: "2023-07-08",
     description:
       "Scorpions pusieron el festival patas arriba con sus clásicos y una puesta en escena espectacular. Rock alemán de alto voltaje.",
-    imageUrl: getImagePath(
-      getImagePath("/images/posters/Scorpions BRF/Scorpions BRF0_resultado.jpg")
-    ),
+    imageUrl: getImagePath("/images/posters/Scorpions BRF/Scorpions BRF0_resultado.jpg"),
     additionalImages: [
-      getImagePath(
-        getImagePath(
-          "/images/posters/Scorpions BRF/Scorpions BRF1_resultado.jpg"
-        )
-      ),
-      getImagePath(
-        getImagePath(
-          "/images/posters/Scorpions BRF/Scorpions BRF2_resultado.jpg"
-        )
-      ),
+      getImagePath("/images/posters/Scorpions BRF/Scorpions BRF1_resultado.jpg"),
+      getImagePath("/images/posters/Scorpions BRF/Scorpions BRF2_resultado.jpg"),
     ],
     position: [-15, 5, -23.5],
     genre: "metal",

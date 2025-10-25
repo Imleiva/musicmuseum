@@ -10,7 +10,7 @@ export const posters = [
   {
     id: "baboon-show-001",
     bandKey: "thebaboonshow",
-    image: getImagePath(getImagePath("/images/posters/BaboonShow.jpg")),
+    image: getImagePath("/images/posters/BaboonShow.jpg")),
     title: "The Baboon Show - Live at Debaser",
     date: "2019-03-15",
     venue: "Debaser, Stockholm",
