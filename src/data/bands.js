@@ -1,7 +1,11 @@
 import { getImagePath } from "../utils/assetPaths";
 
 export const bands = [
-  { key: "leiva", name: "Leiva", logo: getImagePath("/images/logos/leiva.png") },
+  {
+    key: "leiva",
+    name: "Leiva",
+    logo: getImagePath("/images/logos/leiva.png"),
+  },
   {
     key: "thewarning",
     name: "The Warning",

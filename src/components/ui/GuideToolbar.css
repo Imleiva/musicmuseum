@@ -9,6 +9,66 @@
   border-radius: 12px;
   padding: 10px 4px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Estado contraído */
+.guide-toolbar.collapsed {
+  gap: 0;
+  padding: 8px 4px;
+}
+
+/* Media query para móvil - toolbar más compacto */
+@media (max-width: 768px) {
+  .guide-toolbar {
+    gap: 8px;
+    padding: 6px 3px;
+    margin: 0 1px;
+  }
+
+  .guide-toolbar.collapsed {
+    gap: 0;
+    padding: 6px 3px;
+  }
+
+  .guide-toolbar-btn {
+    padding: 4px;
+  }
+
+  .guide-toolbar-toggle {
+    padding: 3px;
+    margin-bottom: 2px;
+  }
+}
+
+/* Botón de toggle para contraer/expandir */
+.guide-toolbar-toggle {
+  background: rgba(255, 68, 68, 0.15);
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  padding: 4px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.guide-toolbar-toggle:hover {
+  background: rgba(255, 68, 68, 0.25);
+  transform: scale(1.05);
+  cursor: url("../../../public/images/pointers/hand.png"), pointer;
+}
+
+.guide-toolbar-toggle img {
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+}
+
+.guide-toolbar-toggle:hover img {
+  opacity: 1;
 }
 
 .guide-toolbar-btn {
