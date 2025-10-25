@@ -11,14 +11,14 @@
   background: #e53935;
   color: #fff;
   border: none;
-  border-radius: 8px;
-  padding: 10px 28px;
-  font-size: 17px;
-  font-weight: 700;
-  margin-right: 12px;
+  border-radius: 6px;
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-right: 8px;
   cursor: url("../../../public/images/pointers/hand.png") 10 10, pointer;
   transition: background 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 12px #e5393533;
+  box-shadow: 0 2px 8px #e5393533;
 }
 .avatar-grid-selector-footer button:first-child:disabled {
   background: #a7a7a7;
@@ -32,13 +32,32 @@
 /* Header de filtros y búsqueda */
 .avatar-grid-selector-header {
   display: flex;
+  flex-direction: column;
   gap: 12px;
-  align-items: center;
-  padding: 24px 24px 12px 24px;
+  padding: 20px 24px 16px 24px;
   background: #181818;
   border-bottom: 1px solid #222;
   flex-shrink: 0;
-  min-height: 80px;
+  min-height: 90px;
+}
+
+/* Primera fila: Búsqueda y Animaciones */
+.header-row-1 {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Segunda fila: Selectores */
+.header-row-2 {
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
 .avatar-grid-selector-header input[type="text"],
@@ -76,23 +95,22 @@
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;
   align-items: center;
-  gap: 12px;
-  margin-left: 8px;
+  gap: 8px;
   flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .transitions-switch-label {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   color: #f1f1f1;
-  min-width: 80px;
 }
 
 .transitions-switch {
   position: relative;
   display: inline-block;
-  width: 50px;
-  height: 26px;
+  width: 44px;
+  height: 24px;
 }
 
 .transitions-switch input {
@@ -111,15 +129,15 @@
   background-color: #333;
   border: 2px solid #555;
   transition: all 0.3s ease;
-  border-radius: 26px;
+  border-radius: 24px;
   cursor: url("../../../public/images/pointers/hand.png") 10 10, pointer;
 }
 
 .transitions-switch-slider:before {
   position: absolute;
   content: "OFF";
-  height: 18px;
-  width: 18px;
+  height: 16px;
+  width: 16px;
   left: 3px;
   bottom: 2px;
   background-color: #888;
@@ -142,7 +160,7 @@
 }
 
 .transitions-switch input:checked + .transitions-switch-slider:before {
-  transform: translateX(22px);
+  transform: translateX(20px);
   background-color: #fff;
   content: "ON";
   color: transparent;
@@ -179,24 +197,29 @@
 .avatar-grid-left {
   overflow-y: auto;
   scrollbar-width: thin; /* Para navegadores compatibles */
-  scrollbar-color: #ab2724 #181818;
+  scrollbar-color: #e53935 #222;
   cursor: var(--cursor-hand) !important;
 }
 .avatar-grid-left::-webkit-scrollbar {
-  width: 10px;
-  background-color: #181818; /* Fondo negro */
+  width: 12px;
+  background-color: #222;
 }
 .avatar-grid-left::-webkit-scrollbar-track {
-  background-color: #181818; /* Fondo negro */
+  background-color: #222;
+  border-radius: 6px;
 }
 .avatar-grid-left::-webkit-scrollbar-thumb {
-  background-color: #e53935; /* Rojo */
-  border-radius: 8px;
-  border: 2px solid #181818; /* Borde negro */
+  background-color: #e53935;
+  border-radius: 6px;
+  border: 2px solid #222;
+  min-height: 40px;
 }
 .avatar-grid-left::-webkit-scrollbar-thumb:hover {
-  background-color: #b71c1c; /* Rojo más oscuro al pasar el mouse */
-  border: 2px solid #181818; /* Borde negro */
+  background-color: #d32f2f;
+  border: 2px solid #222;
+}
+.avatar-grid-left::-webkit-scrollbar-thumb:active {
+  background-color: #b71c1c;
 }
 /* Overlay para bloquear toda la pantalla */
 .avatar-grid-overlay {
@@ -370,12 +393,12 @@
   gap: 12px;
 }
 .avatar-grid-selector-footer button {
-  padding: 8px 18px;
+  padding: 6px 16px;
   border-radius: 6px;
   border: none;
   color: #fff;
-  font-weight: bold;
-  font-size: 1rem;
+  font-weight: 600;
+  font-size: 14px;
   cursor: url("../../../public/images/pointers/hand.png") 10 10, pointer;
   transition: background 0.2s;
 }
@@ -457,39 +480,37 @@
 
   /* Header más compacto en móvil */
   .avatar-grid-selector-header {
-    padding: 16px 12px 8px 12px;
-    min-height: 60px;
-    flex-wrap: wrap;
-    gap: 8px;
+    padding: 16px 12px 12px 12px;
+    min-height: 70px;
+    gap: 10px;
   }
 
-  .avatar-grid-selector-header input[type="text"] {
+  /* Primera fila en móvil: búsqueda arriba, animaciones abajo */
+  .header-row-1 {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .search-input {
     width: 100%;
     font-size: 14px;
     height: 36px;
   }
 
-  .avatar-grid-selector-header select {
-    width: calc(50% - 4px);
-    font-size: 14px;
-    height: 36px;
-  }
-
-  /* Switch de transiciones más compacto */
+  /* Switch de transiciones centrado */
   .transitions-switch-container {
-    width: 100%;
     justify-content: center;
-    margin: 8px 0 0 0;
+    align-self: center;
   }
 
   .transitions-switch-label {
-    font-size: 14px;
-    min-width: auto;
+    font-size: 13px;
   }
 
   .transitions-switch {
-    width: 40px;
-    height: 22px;
+    width: 38px;
+    height: 20px;
   }
 
   .transitions-switch-slider:before {
@@ -497,11 +518,21 @@
     width: 14px;
     left: 2px;
     bottom: 2px;
-    font-size: 6px;
   }
 
   .transitions-switch input:checked + .transitions-switch-slider:before {
-    transform: translateX(18px);
+    transform: translateX(16px);
+  }
+
+  /* Segunda fila en móvil: selectores */
+  .header-row-2 {
+    gap: 8px;
+  }
+
+  .header-row-2 select {
+    width: calc(50% - 4px);
+    font-size: 14px;
+    height: 36px;
   }
 
   /* Preview del avatar - ahora arriba y más grande */
@@ -560,13 +591,15 @@
   }
 
   .avatar-grid-selector-footer button {
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 8px 16px;
+    font-size: 14px;
+    min-height: 40px;
+    touch-action: manipulation;
   }
 
   .avatar-grid-selector-footer button:first-child {
-    padding: 10px 24px;
-    font-size: 16px;
+    padding: 8px 18px;
+    font-size: 14px;
   }
 }
 

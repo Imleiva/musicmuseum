@@ -89,53 +89,57 @@ export default function AvatarGridSelector({
       <div className="avatar-grid-modal">
         <div className="avatar-grid-left">
           <div className="avatar-grid-selector-header">
-            <input
-              type="text"
-              className="clickable"
-              placeholder={t("avatarGridSelector.searchPlaceholder")}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <select
-              className="clickable"
-              value={genre}
-              onChange={(e) => setGenre(e.target.value)}
-            >
-              <option value="" disabled>
-                {t("avatarGridSelector.genrePlaceholder")}
-              </option>
-              {localizedGenres.map((g) => (
-                <option key={g} value={g}>
-                  {g}
+            <div className="header-row-1">
+              <input
+                type="text"
+                className="clickable search-input"
+                placeholder={t("avatarGridSelector.searchPlaceholder")}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <div className="transitions-switch-container">
+                <span className="transitions-switch-label">
+                  Animaciones {t.transitionsToggle}
+                </span>
+                <label className="transitions-switch clickable">
+                  <input
+                    type="checkbox"
+                    checked={localTransitionsEnabled}
+                    onChange={(e) => setLocalTransitionsEnabled(e.target.checked)}
+                  />
+                  <span className="transitions-switch-slider"></span>
+                </label>
+              </div>
+            </div>
+            <div className="header-row-2">
+              <select
+                className="clickable"
+                value={genre}
+                onChange={(e) => setGenre(e.target.value)}
+              >
+                <option value="" disabled>
+                  {t("avatarGridSelector.genrePlaceholder")}
                 </option>
-              ))}
-            </select>
-            <select
-              className="clickable"
-              value={decade}
-              onChange={(e) => setDecade(e.target.value)}
-            >
-              <option value="" disabled>
-                {t("avatarGridSelector.decadePlaceholder")}
-              </option>
-              {localizedDecades.map((d) => (
-                <option key={d} value={d}>
-                  {d}
+                {localizedGenres.map((g) => (
+                  <option key={g} value={g}>
+                    {g}
+                  </option>
+                ))}
+              </select>
+              <select
+                className="clickable"
+                value={decade}
+                onChange={(e) => setDecade(e.target.value)}
+              >
+                <option value="" disabled>
+                  {t("avatarGridSelector.decadePlaceholder")}
                 </option>
-              ))}
-            </select>
-            <div className="transitions-switch-container">
-              <span className="transitions-switch-label">
-                Animaciones {t.transitionsToggle}
-              </span>
-              <label className="transitions-switch clickable">
-                <input
-                  type="checkbox"
-                  checked={localTransitionsEnabled}
-                  onChange={(e) => setLocalTransitionsEnabled(e.target.checked)}
-                />
-                <span className="transitions-switch-slider"></span>
-              </label>
+                {localizedDecades.map((d) => (
+                  <option key={d} value={d}>
+                    {d}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
           <PredictiveHoverEffect>
