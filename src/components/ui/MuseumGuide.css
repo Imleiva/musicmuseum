@@ -107,21 +107,32 @@
   letter-spacing: 0.2px;
   animation: guide-bubble-fadein 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: pre-line;
+  overflow: hidden; /* Eliminar scrollbar */
+  min-height: 50px;
+  max-height: none; /* Permitir altura dinámica */
 }
 
-/* Scrollbar para navegadores Webkit */
-.museum-guide-bubble::-webkit-scrollbar {
-  width: 8px;
-  background: rgba(40, 0, 0, 0.3);
-  border-radius: 8px;
+/* Indicador de scroll para textos largos */
+.museum-guide-bubble.scrollable-text {
+  padding-bottom: 20px; /* Espacio para el indicador */
 }
-.museum-guide-bubble::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #ff4444 60%, #a80000 100%);
-  border-radius: 8px;
-  border: 2px solid rgba(40, 0, 0, 0.5);
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8rem;
+  pointer-events: none;
 }
-.museum-guide-bubble::-webkit-scrollbar-thumb:hover {
-  background: #ff4444;
+
+.scroll-dots {
+  animation: pulse-dots 2s infinite;
+}
+
+@keyframes pulse-dots {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
 }
 
 @keyframes guide-bubble-fadein {
@@ -174,6 +185,13 @@
     min-width: 120px;
     height: auto;
     margin: 0;
+    transition: all 0.3s ease;
+  }
+
+  /* Avatar más grande cuando el toolbar está colapsado */
+  .museum-guide-avatar-wrapper.toolbar-collapsed .museum-guide-avatar {
+    width: 160px;
+    min-width: 160px;
   }
 
   /* Bubble reorganizada para móvil - lado izquierdo del avatar, más compacta */
@@ -185,9 +203,8 @@
     width: auto;
     max-width: calc(100vw - 166px);
     min-width: 170px;
-    max-height: 120px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    max-height: none; /* Permitir altura dinámica */
+    overflow: hidden; /* Sin scrollbar */
     text-align: left;
     font-size: 0.85rem;
     padding: 12px 14px;
@@ -195,29 +212,12 @@
     z-index: 15;
     box-shadow: 0 8px 32px rgba(255, 68, 68, 0.3);
     line-height: 1.4;
-    /* Propiedades de scroll optimizadas para móvil */
-    scroll-behavior: smooth;
-    /* Indicador visual de scroll */
-    background: linear-gradient(
-      135deg,
-      rgba(40, 0, 0, 0.92),
-      rgba(80, 20, 20, 0.92)
-    );
-    /* Gradiente sutil para indicar scroll disponible */
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      black 0%,
-      black 85%,
-      transparent 95%,
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to bottom,
-      black 0%,
-      black 85%,
-      transparent 95%,
-      transparent 100%
-    );
+  }
+
+  /* Bubble con toolbar colapsado - avatar más grande, bubble ajustada */
+  .museum-guide-avatar-wrapper.toolbar-collapsed + .museum-guide-avatar-bubble-container .museum-guide-bubble {
+    right: 50px; /* Menos espacio porque el toolbar está colapsado */
+    max-width: calc(100vw - 66px);
   }
 
   /* Reservar menos espacio en móvil */
@@ -273,14 +273,12 @@
     width: auto;
     max-width: calc(100vw - 136px);
     min-width: 150px;
-    max-height: 100px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    max-height: none; /* Permitir altura dinámica */
+    overflow: hidden; /* Sin scrollbar */
     text-align: left;
     font-size: 0.8rem;
     padding: 10px 12px;
     line-height: 1.3;
-    scroll-behavior: smooth;
   }
 }
 
@@ -339,38 +337,5 @@
   .museum-guide-avatar {
     padding: 8px;
     margin: -8px;
-  }
-
-  /* Better scrollbar for mobile */
-  .museum-guide-bubble::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .museum-guide-bubble::-webkit-scrollbar-thumb {
-    border: 1px solid rgba(40, 0, 0, 0.5);
-    border-radius: 4px;
-  }
-
-  .museum-guide-bubble::-webkit-scrollbar-track {
-    background: rgba(40, 0, 0, 0.2);
-    border-radius: 4px;
-  }
-
-  /* Indicador de scroll disponible */
-  .museum-guide-bubble::after {
-    content: "";
-    position: sticky;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 8px;
-    background: linear-gradient(
-      to top,
-      rgba(80, 20, 20, 0.9) 0%,
-      transparent 100%
-    );
-    pointer-events: none;
-    margin: 0 -14px -12px -14px;
-    border-radius: 0 0 12px 12px;
   }
 }

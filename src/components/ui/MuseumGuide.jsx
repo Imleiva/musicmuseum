@@ -28,6 +28,7 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
   const [bubbleIdx, setBubbleIdx] = useState(0);
   const [avatarBubbles, setAvatarBubbles] = useState({});
   const [currentGreeting, setCurrentGreeting] = useState({});
+  const [toolbarCollapsed, setToolbarCollapsed] = useState(false);
   const [settings, setSettings] = useState({
     avatarTransitions: true,
   });
@@ -171,6 +172,10 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
     }
   };
 
+  const handleToggleToolbar = () => {
+    setToolbarCollapsed(!toolbarCollapsed);
+  };
+
   // Función para generar bubbles con saludo aleatorio (solo para cambio de avatar)
   const generateAvatarBubbles = useCallback(
     (avatarKey) => {
@@ -261,7 +266,7 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
           <div
             className={`museum-guide-avatar-wrapper${
               activeTool !== "curiosities" ? " reserve-bubble-space" : ""
-            }`}
+            }${toolbarCollapsed ? " toolbar-collapsed" : ""}`}
             title="Maese Leiva"
           >
             <GuideAvatar
@@ -287,6 +292,8 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
             active={activeTool}
             onSelect={handleToolSelect}
             curiositiesEnabled={curiositiesEnabled}
+            isCollapsed={toolbarCollapsed}
+            onToggleCollapse={handleToggleToolbar}
           />
         </div>
       </div>

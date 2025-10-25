@@ -16,6 +16,8 @@ export default function GuideToolbar({
   active,
   onSelect,
   curiositiesEnabled = true,
+  isCollapsed = false,
+  onToggleCollapse,
 }) {
   const { t } = useTranslation();
   const { showTooltip, hideTooltip } = useTooltipContext();
@@ -61,45 +63,57 @@ export default function GuideToolbar({
     },
   ];
   return (
-    <div className="guide-toolbar">
-      {icons.map((item) => (
-        <button
-          key={item.key}
-          className={`guide-toolbar-btn clickable${
-            active === item.key ? " active" : ""
-          }${
-            item.key === "curiosities" && !curiositiesEnabled ? " disabled" : ""
-          }`}
-          title={item.label}
-          onClick={() => onSelect(item.key)}
-          onMouseEnter={() => {
-            let tooltipText = item.tooltipMessage;
+    <div className={`guide-toolbar ${isCollapsed ? 'collapsed' : ''}`}>
+      {/* Botón de toggle para móvil */}
+      <button 
+        className="guide-toolbar-toggle mobile-only"
+        onClick={onToggleCollapse}
+        title={isCollapsed ? "Mostrar herramientas" : "Ocultar herramientas"}
+      >
+        <span className="toggle-icon">{isCollapsed ? '+' : '×'}</span>
+      </button>
+      
+      {/* Iconos del toolbar */}
+      <div className={`guide-toolbar-icons ${isCollapsed ? 'collapsed' : ''}`}>
+        {icons.map((item) => (
+          <button
+            key={item.key}
+            className={`guide-toolbar-btn clickable${
+              active === item.key ? " active" : ""
+            }${
+              item.key === "curiosities" && !curiositiesEnabled ? " disabled" : ""
+            }`}
+            title={item.label}
+            onClick={() => onSelect(item.key)}
+            onMouseEnter={() => {
+              let tooltipText = item.tooltipMessage;
 
-            if (item.key === "curiosities") {
-              tooltipText = curiositiesEnabled
-                ? "Descubre datos curiosos sobre las bandas. Haz clic para desactivar"
-                : "Las curiosidades están desactivadas. Haz clic para activarlas";
-            } else if (item.key === "customize") {
-              tooltipText =
-                "Personaliza tu avatar de banda. Haz clic para abrir el selector";
-            } else if (item.key === "settings") {
-              tooltipText =
-                "Abre la configuración del museo. Haz clic para personalizar tu experiencia";
-            }
+              if (item.key === "curiosities") {
+                tooltipText = curiositiesEnabled
+                  ? "Descubre datos curiosos sobre las bandas. Haz clic para desactivar"
+                  : "Las curiosidades están desactivadas. Haz clic para activarlas";
+              } else if (item.key === "customize") {
+                tooltipText =
+                  "Personaliza tu avatar de banda. Haz clic para abrir el selector";
+              } else if (item.key === "settings") {
+                tooltipText =
+                  "Abre la configuración del museo. Haz clic para personalizar tu experiencia";
+              }
 
-            showTooltip(tooltipText, `🎸 ${item.label}`);
-          }}
-          onMouseLeave={() => {
-            hideTooltip();
-          }}
-        >
-          {item.icon}
-          {/* Línea de deshabilitado para curiosidades */}
-          {item.key === "curiosities" && !curiositiesEnabled && (
-            <div className="disabled-line"></div>
-          )}
-        </button>
-      ))}
+              showTooltip(tooltipText, `🎸 ${item.label}`);
+            }}
+            onMouseLeave={() => {
+              hideTooltip();
+            }}
+          >
+            {item.icon}
+            {/* Línea de deshabilitado para curiosidades */}
+            {item.key === "curiosities" && !curiositiesEnabled && (
+              <div className="disabled-line"></div>
+            )}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
