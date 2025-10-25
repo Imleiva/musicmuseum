@@ -16,7 +16,7 @@
   font-size: 17px;
   font-weight: 700;
   margin-right: 12px;
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+  cursor: url("../../../public/images/pointers/hand.png") 10 10, pointer;
   transition: background 0.2s, box-shadow 0.2s;
   box-shadow: 0 2px 12px #e5393533;
 }
@@ -53,7 +53,7 @@
   font-size: 16px;
   outline: none;
   transition: border 0.2s, box-shadow 0.2s;
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+  cursor: url("../../../public/images/pointers/hand.png") 10 10, pointer;
   box-shadow: 0 0 0 1px transparent;
   height: 40px;
   box-sizing: border-box;
@@ -112,7 +112,7 @@
   border: 2px solid #555;
   transition: all 0.3s ease;
   border-radius: 26px;
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+  cursor: url("../../../public/images/pointers/hand.png") 10 10, pointer;
 }
 
 .transitions-switch-slider:before {
@@ -335,7 +335,7 @@
   border-radius: 8px;
   padding: 8px 2px 4px 2px;
   text-align: center;
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+  cursor: url("../../../public/images/pointers/hand.png") 10 10, pointer;
   transition: box-shadow 0.1, background 0.2s;
   min-height: 130px;
   min-width: 130px;
@@ -376,7 +376,7 @@
   color: #fff;
   font-weight: bold;
   font-size: 1rem;
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+  cursor: url("../../../public/images/pointers/hand.png") 10 10, pointer;
   transition: background 0.2s;
 }
 .avatar-grid-selector-footer button:disabled {
