@@ -254,7 +254,7 @@ canvas {
   padding: 1rem;
   box-shadow: 0 10px 40px rgba(255, 68, 68, 0.4);
   animation: slideInLeft 0.8s ease-out;
-  max-width: 320px;
+  max-width: 340px;
   min-width: 280px;
   transform: translateZ(0);
   will-change: transform;
@@ -265,8 +265,8 @@ canvas {
 /* Estado contraído del navegador */
 .rock-navigator.collapsed {
   padding: 0.8rem;
-  min-width: 220px;
-  max-width: 250px;
+  min-width: 300px;
+  max-width: 300px;
 }
 
 /* Contenedor del título con botón toggle */

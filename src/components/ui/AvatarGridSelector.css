@@ -756,3 +756,52 @@
     touch-action: manipulation;
   }
 }
+
+/* Desktop Layout - Todo en una sola línea */
+@media (min-width: 1025px) {
+  /* Header en una sola fila para escritorio */
+  .avatar-grid-selector-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px 16px 24px;
+    min-height: 60px;
+  }
+
+  /* Ocultar las filas separadas en escritorio */
+  .header-row-1,
+  .header-row-2 {
+    display: contents; /* Los elementos fluyen directamente al contenedor padre */
+  }
+
+  /* Orden específico para cada elemento */
+  .search-input {
+    order: 1;
+    width: 280px;
+    flex: none;
+  }
+
+  /* Primer select (Género) */
+  .header-row-2 select:first-child {
+    order: 2;
+    width: 140px;
+  }
+
+  /* Segundo select (Época) */
+  .header-row-2 select:last-child {
+    order: 3;
+    width: 140px;
+  }
+
+  /* Switch de transiciones al final */
+  .transitions-switch-container {
+    order: 4;
+    margin-left: auto; /* Empuja hacia la derecha */
+    flex-shrink: 0;
+  }
+
+  .transitions-switch-label {
+    font-size: 14px;
+  }
+}
