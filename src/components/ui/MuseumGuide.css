@@ -167,7 +167,7 @@
     flex-direction: row;
     align-items: flex-end;
     margin: 16px 20px 20px 16px;
-    gap: 12px;
+    gap: 6px; /* Reducido de 12px a 6px para menos espacio */
     width: auto;
   }
 
@@ -186,28 +186,28 @@
   }
 
   .museum-guide-avatar {
-    width: 120px;
-    min-width: 120px;
+    width: 140px; /* Más grande por defecto en móvil */
+    min-width: 140px;
     height: auto;
     margin: 0;
     transition: all 0.3s ease;
   }
 
-  /* Avatar más grande cuando el toolbar está colapsado */
+  /* Avatar aún más grande cuando el toolbar está colapsado */
   .museum-guide-avatar-wrapper.toolbar-collapsed .museum-guide-avatar {
-    width: 160px;
-    min-width: 160px;
+    width: 180px; /* Aún más grande con toolbar colapsado */
+    min-width: 180px;
   }
 
-  /* Bubble reorganizada para móvil - lado izquierdo del avatar, más compacta */
+  /* Bubble reorganizada para móvil - más estrecha para dar espacio al avatar */
   .museum-guide-avatar-bubble-container .museum-guide-bubble {
     position: fixed;
     bottom: 20px;
     left: 16px;
-    right: 150px;
+    right: 180px; /* Más margen para avatar más grande */
     width: auto;
-    max-width: calc(100vw - 166px);
-    min-width: 170px;
+    max-width: calc(100vw - 220px); /* Más estrecha */
+    min-width: 140px; /* Más estrecha */
     max-height: none; /* Permitir altura dinámica */
     overflow: hidden; /* Sin scrollbar */
     text-align: left;
@@ -219,12 +219,12 @@
     line-height: 1.4;
   }
 
-  /* Bubble con toolbar colapsado - avatar más grande, bubble ajustada */
+  /* Bubble con toolbar colapsado - aún más estrecha */
   .museum-guide-avatar-wrapper.toolbar-collapsed
     + .museum-guide-avatar-bubble-container
     .museum-guide-bubble {
-    right: 50px; /* Menos espacio porque el toolbar está colapsado */
-    max-width: calc(100vw - 66px);
+    right: 200px; /* Aún más margen para avatar grande */
+    max-width: calc(100vw - 240px); /* Aún más estrecha */
   }
 
   /* Reservar menos espacio en móvil */

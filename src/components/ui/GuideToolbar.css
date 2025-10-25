@@ -52,7 +52,7 @@
     padding: 6px 2px;
   }
 
-  /* Botón de toggle en móvil */
+  /* Botón de toggle en móvil - círculo simple */
   .guide-toolbar-toggle {
     display: flex;
     align-items: center;
