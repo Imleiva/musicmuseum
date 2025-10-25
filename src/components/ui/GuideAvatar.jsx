@@ -5,8 +5,7 @@ export default function GuideAvatar({ src, alt, className, onClick }) {
     <img
       src={src}
       alt={alt}
-      className={className}
-      style={{ cursor: "pointer" }}
+      className={`${className ? className : ""} clickable`}
       onClick={onClick}
     />
   );

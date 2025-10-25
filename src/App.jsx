@@ -5,8 +5,8 @@
  * • Integración de posters interactivos y reproductor de audio
  * • Guía virtual con avatares y configuración global
  */
-import { Canvas, useFrame } from "@react-three/fiber";
-import { useState, useRef, useEffect } from "react";
+import { Canvas } from "@react-three/fiber";
+import { useState, useRef, useEffect, useMemo } from "react";
 import BlurBackground from "./components/ui/BlurBackground";
 import { OrbitControls, ContactShadows } from "@react-three/drei";
 import VenueRoom from "./components/3d/VenueRoom";
@@ -38,11 +38,14 @@ function App() {
     [200, 1.7, 21],
   ];
 
-  const controlTargets = [
-    [0, 1.7, -2],
-    [100, 1.7, -2],
-    [200, 1.7, -2],
-  ];
+  const controlTargets = useMemo(
+    () => [
+      [0, 1.7, -2],
+      [100, 1.7, -2],
+      [200, 1.7, -2],
+    ],
+    []
+  );
 
   const roomGenres = ["metal", "rock", "punk"];
 
@@ -58,34 +61,33 @@ function App() {
   const lastRoom = useRef(currentRoom);
   const [shouldResetCamera, setShouldResetCamera] = useState(true);
   const controlsRef = useRef();
-  const [pickRotationDirection, setPickRotationDirection] = useState(1);
+  // Direcciones fijas para cada sala - eliminando dependencia del ControlsWatcher
+  const roomRotationDirections = [1, -1, 1]; // Metal: horario, Rock: antihorario, Punk: horario
+
   useEffect(() => {
     if (lastRoom.current !== currentRoom) {
       setShouldResetCamera(true);
       lastRoom.current = currentRoom;
+
+      // Estabilizar los controles después del cambio de sala
+      if (controlsRef.current) {
+        controlsRef.current.enabled = false;
+        // Resetear valores internos de damping
+        controlsRef.current.target.copy(controlTargets[currentRoom]);
+
+        setTimeout(() => {
+          if (controlsRef.current) {
+            controlsRef.current.enabled = true;
+            controlsRef.current.update();
+            // Forzar reset del estado interno del damping
+            // controlsRef.current.reset(); // Comentado temporalmente
+          }
+        }, 200); // Aumentar el timeout para mejor estabilización
+      }
     } else {
       setShouldResetCamera(false);
     }
-  }, [currentRoom]);
-
-  // Small component inside the Canvas to watch controls azimuth and update pick rotation
-  function ControlsWatcher() {
-    const lastAz = useRef(0);
-    useFrame(() => {
-      const controls = controlsRef.current;
-      if (controls && typeof controls.getAzimuthalAngle === "function") {
-        const az = controls.getAzimuthalAngle();
-        const delta = az - (lastAz.current || az);
-        lastAz.current = az;
-        // If user is actively dragging (delta significant), set direction opposite to camera movement
-        if (Math.abs(delta) > 1e-4) {
-          const dir = delta > 0 ? -1 : 1; // camera moved positive -> pick should be -1
-          if (dir !== pickRotationDirection) setPickRotationDirection(dir);
-        }
-      }
-    });
-    return null;
-  }
+  }, [currentRoom, controlTargets]);
 
   const initialCameraPosition = cameraPositions[currentRoom];
 
@@ -129,7 +131,7 @@ function App() {
               }
               theme={roomGenres[currentRoom]}
               shouldResetCamera={shouldResetCamera}
-              rotationDirection={pickRotationDirection}
+              rotationDirection={roomRotationDirections[currentRoom]}
             />
 
             {currentRoomConcerts.map((concert) => (
@@ -171,13 +173,12 @@ function App() {
               maxAzimuthAngle={Infinity}
               target={controlTargets[currentRoom]}
               enableDamping={true}
-              dampingFactor={0.08}
-              rotateSpeed={0.8}
-              zoomSpeed={1.5}
+              dampingFactor={0.1}
+              rotateSpeed={0.4}
+              zoomSpeed={0.8}
               autoRotate={false}
               makeDefault
             />
-            <ControlsWatcher />
           </Canvas>
 
           <MuseumGuide

@@ -5,7 +5,7 @@
  * • Ajustes de calidad de imagen y tooltips
  * • Guarda configuración en localStorage
  */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "../../hooks/useTranslation";
 import "./SettingsModal.css";
 
@@ -87,15 +87,41 @@ export default function SettingsModal({ isOpen, onClose }) {
     setHasUnsavedChanges(true);
   };
 
-  const handleClose = () => {
-    onClose();
-  };
+  const doClose = useCallback(() => {
+    if (onClose) onClose();
+  }, [onClose]);
+
+  const handleClose = useCallback(() => {
+    // If there are unsaved changes, ask for confirmation before closing
+    if (hasUnsavedChanges) {
+      const ok = window.confirm(
+        t("settings.discardConfirm") ||
+          "You have unsaved changes. Discard and close?"
+      );
+      if (ok) doClose();
+    } else {
+      doClose();
+    }
+  }, [hasUnsavedChanges, doClose, t]);
 
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
       handleClose();
     }
   };
+
+  // Close on Escape key, with same confirmation logic
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (ev) => {
+      if (ev.key === "Escape" || ev.key === "Esc") {
+        ev.preventDefault();
+        handleClose();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isOpen, handleClose]);
 
   if (!isOpen) return null;
 

@@ -13,12 +13,15 @@ import React, {
   useCallback,
 } from "react";
 import { useFrame } from "@react-three/fiber";
+import { Html } from "@react-three/drei";
 import { VideoTexture } from "three";
+import CreditsButton from "./CreditsButton";
 
 const VideoProjection = React.memo(function VideoProjection({
   videoUrl,
   genre,
   onVideoError,
+  onVideoLoaded,
 }) {
   const videoRef = useRef();
   const [videoTexture, setVideoTexture] = useState(null);
@@ -58,6 +61,15 @@ const VideoProjection = React.memo(function VideoProjection({
 
         setVideoTexture(texture);
 
+        // Notificar duración real del video si está disponible
+        if (onVideoLoaded && video.duration && !isNaN(video.duration)) {
+          const realDuration = Math.round(video.duration * 1000); // Convertir a ms
+          console.log(
+            `📺 Video loaded: ${videoUrl} - Duration: ${realDuration}ms`
+          );
+          onVideoLoaded(realDuration);
+        }
+
         video.play().catch((e) => {
           console.warn(`⚠️ Autoplay prevented: ${e.message}`);
         });
@@ -88,7 +100,7 @@ const VideoProjection = React.memo(function VideoProjection({
         video.load();
       }
     };
-  }, [videoUrl, genre, onVideoError]);
+  }, [videoUrl, genre, onVideoError, onVideoLoaded]);
 
   // Cleanup de textura cuando se desmonte el componente
   useEffect(() => {
@@ -135,51 +147,121 @@ const VideoProjection = React.memo(function VideoProjection({
   );
 });
 
-const allVideos = [
-  "/videos/video1.mp4",
-  "/videos/video2.mp4",
-  "/videos/video3.mp4",
+// Videos con sus duraciones específicas (en milisegundos)
+const videoPlaylist = [
+  {
+    url: "https://cdn.pixabay.com/video/2015/11/07/1275-145116912_medium.mp4",
+    duration: 30000, // 30 segundos - Rotting Christ concert
+    name: "Rock Concert",
+  },
+  {
+    url: "https://cdn.pixabay.com/video/2020/07/24/45444-443133750_large.mp4",
+    duration: 25000, // 25 segundos - Drums
+    name: "Drums Performance",
+  },
+  {
+    url: "/videos/creditos.mp4",
+    duration: 60000, // 60 segundos - Video de créditos (tiempo generoso)
+    name: "Museum Credits",
+  },
 ];
 
 const testVideoMapping = {
-  metal:
-    "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-  rock: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-  punk: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+  metal: "https://cdn.pixabay.com/video/2015/11/07/1275-145116912_medium.mp4", // Rotting Christ rock concert
+  rock: "https://cdn.pixabay.com/video/2015/11/07/1275-145116912_medium.mp4", // Rotting Christ rock concert
+  punk: "https://cdn.pixabay.com/video/2020/07/24/45444-443133750_large.mp4", // Drums music instrument
 };
 
 export default function Projector({ position, genre = "metal" }) {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-  const [fallbackToTest, setFallbackToTest] = useState(false);
+  const [fallbackToTest, setFallbackToTest] = useState(true); // Empezar con playlist directamente
+  const [currentVideoDuration, setCurrentVideoDuration] = useState(30000); // Duración por defecto
+  const [creditsActivated, setCreditsActivated] = useState(false);
 
   const lightRef = useRef();
   const lensRef = useRef();
 
-  const videoUrl = useMemo(() => {
-    const url = fallbackToTest
-      ? testVideoMapping[genre] || testVideoMapping.metal
-      : allVideos[currentVideoIndex] || allVideos[0];
-
-    return url;
-  }, [currentVideoIndex, fallbackToTest, genre]);
-
-  const handleVideoError = useCallback(() => {
-    if (!fallbackToTest) {
-      setFallbackToTest(true);
-    }
-  }, [fallbackToTest]);
-
+  // Debug log para verificar que el componente se monta
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentVideoIndex((prevIndex) => {
-        const newIndex = (prevIndex + 1) % allVideos.length;
-        return newIndex;
-      });
-    }, 15000);
-    return () => clearInterval(interval);
+    console.log(
+      `🎬 Projector component mounted at position:`,
+      position,
+      `genre: ${genre}`
+    );
+  }, [position, genre]);
+
+  // Función para alternar el video de créditos
+  const toggleCreditsVideo = useCallback((shouldActivate) => {
+    if (shouldActivate) {
+      console.log("🎬 Activating credits video!");
+      setCreditsActivated(true);
+      // Ir directamente al video de créditos (índice 2 en la playlist)
+      setCurrentVideoIndex(2);
+      setFallbackToTest(true);
+      setCurrentVideoDuration(videoPlaylist[2].duration);
+    } else {
+      console.log("🔄 Deactivating credits - returning to normal rotation");
+      setCreditsActivated(false);
+      // Volver al primer video de la playlist para reiniciar la rotación
+      setCurrentVideoIndex(0);
+      setFallbackToTest(true);
+      setCurrentVideoDuration(videoPlaylist[0].duration);
+    }
   }, []);
 
-  const animationFrame = useRef(0);
+  const videoUrl = useMemo(() => {
+    if (creditsActivated) {
+      // Si se activaron los créditos, mostrar solo el video de créditos
+      return videoPlaylist[2].url; // Video de créditos
+    }
+
+    if (fallbackToTest) {
+      // Usar la playlist con videos reales
+      const currentVideo = videoPlaylist[currentVideoIndex] || videoPlaylist[0];
+      setCurrentVideoDuration(currentVideo.duration);
+      return currentVideo.url;
+    }
+
+    // Fallback al testVideoMapping si hay error
+    return testVideoMapping[genre] || testVideoMapping.metal;
+  }, [currentVideoIndex, fallbackToTest, genre, creditsActivated]);
+
+  const handleVideoError = useCallback(() => {
+    console.warn(`⚠️ Video error, using genre fallback for ${genre}`);
+    setFallbackToTest(false); // Solo cambiar a mapping si hay error
+  }, [genre]);
+
+  // Callback para actualizar duración cuando el video se carga
+  const handleVideoLoaded = useCallback(
+    (realDuration) => {
+      if (fallbackToTest && realDuration > 5000) {
+        // Solo si es mayor a 5 segundos
+        setCurrentVideoDuration(realDuration);
+        console.log(`⏱️ Updated video duration to: ${realDuration}ms`);
+      }
+    },
+    [fallbackToTest]
+  );
+
+  // Sistema de rotación inteligente con duraciones dinámicas
+  useEffect(() => {
+    if (!fallbackToTest || creditsActivated) return; // No rotar si estamos en fallback o créditos activados
+
+    const interval = setInterval(() => {
+      setCurrentVideoIndex((prevIndex) => {
+        const newIndex = (prevIndex + 1) % videoPlaylist.length;
+        console.log(
+          `🎬 Switching to video: ${videoPlaylist[newIndex]?.name || "Unknown"}`
+        );
+        return newIndex;
+      });
+    }, currentVideoDuration);
+
+    return () => clearInterval(interval);
+  }, [currentVideoDuration, fallbackToTest, creditsActivated]);
+
+  const animationFrame = useRef();
+
   useFrame((state) => {
     animationFrame.current++;
     const time = state.clock.elapsedTime;
@@ -194,7 +276,6 @@ export default function Projector({ position, genre = "metal" }) {
       lensRef.current.material.emissiveIntensity = lensGlow;
     }
   });
-
   return (
     <group position={position}>
       <group position={[0, 15, 8]}>
@@ -293,9 +374,17 @@ export default function Projector({ position, genre = "metal" }) {
             videoUrl={videoUrl}
             genre={`video-${currentVideoIndex + 1}`}
             onVideoError={handleVideoError}
+            onVideoLoaded={handleVideoLoaded}
           />
         </mesh>
       </group>
+
+      {/* Botón para alternar video de créditos */}
+      <CreditsButton
+        position={[0, -5, 25.5]}
+        onCreditsToggle={toggleCreditsVideo}
+        creditsActive={creditsActivated}
+      />
 
       {/* Soporte básico del proyector */}
       <group position={[0, 15, 8]}>

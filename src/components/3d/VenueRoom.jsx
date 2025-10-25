@@ -205,24 +205,32 @@ export default function VenueRoom({
   const { camera } = useThree();
   useEffect(() => {
     if (shouldResetCamera) {
-      // Ajustar la posición y rotación de la cámara relativa a la sala SOLO si se pide
-      const [offsetX, offsetY, offsetZ] = position;
-      camera.position.set(
-        -10.838843178101142 + offsetX,
-        3.976157067401239 + offsetY,
-        -12.116253632894397 + offsetZ
-      );
-      camera.rotation.set(
-        -2.9202782112420023,
-        -0.80754105141237,
-        -2.98042022870276,
-        "XYZ"
-      );
+      // Usar un timeout para permitir que los controles se estabilicen primero
+      const timeoutId = setTimeout(() => {
+        const [offsetX, offsetY, offsetZ] = position;
+        camera.position.set(
+          -10.838843178101142 + offsetX,
+          3.976157067401239 + offsetY,
+          -12.116253632894397 + offsetZ
+        );
+        camera.rotation.set(
+          -2.9202782112420023,
+          -0.80754105141237,
+          -2.98042022870276,
+          "XYZ"
+        );
+        // Forzar actualización de la matriz de la cámara
+        camera.updateMatrixWorld();
+      }, 100);
+
+      return () => clearTimeout(timeoutId);
     }
   }, [camera, position, shouldResetCamera]);
 
   return (
     <group position={position} scale={[1, heightScale, 1]}>
+      {/* Floor with wood texture */}
+      <FloorWithTexture theme={theme} />
       {/* Rodapié en las cuatro paredes, color igual al suelo */}
       {/* Pared norte (atrás) */}
       <mesh position={[0, -3.6, -29.7]}>

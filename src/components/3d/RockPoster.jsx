@@ -7,9 +7,8 @@
  */
 import { useState, useRef, useCallback, useEffect, Suspense } from "react";
 import { Html } from "@react-three/drei";
-import { useFrame, useLoader } from "@react-three/fiber";
-import { TextureLoader } from "three";
-import cursorOjoUrl from "/images/pointers/cursorojo.png";
+import { useLoader, useFrame } from "@react-three/fiber";
+import { TextureLoader, ClampToEdgeWrapping, LinearFilter } from "three";
 
 // Componente para manejar texturas de imágenes - optimizado para formato 1:1 (cuadradas)
 function PosterTexture({ imageUrl }) {
@@ -17,12 +16,12 @@ function PosterTexture({ imageUrl }) {
 
   useEffect(() => {
     if (texture) {
-      // Configurar textura para imágenes cuadradas 1:1
+      // Configurar textura para imágenes cuadradas 1:1 - usando constantes correctas
       texture.flipY = true;
-      texture.wrapS = texture.wrapT = 1001; // ClampToEdgeWrapping
+      texture.wrapS = texture.wrapT = ClampToEdgeWrapping;
       texture.generateMipmaps = false;
-      texture.minFilter = 1008; // LinearFilter
-      texture.magFilter = 1008; // LinearFilter
+      texture.minFilter = LinearFilter;
+      texture.magFilter = LinearFilter;
       texture.needsUpdate = true;
     }
   }, [texture, imageUrl]);
@@ -52,22 +51,31 @@ export default function RockPoster({ concert, onSelect }) {
 
   // Asegurar cursor rock hand en canvas
   useEffect(() => {
+    // Usar clases en body en lugar de estilos inline para mayor consistencia
     const canvas = document.querySelector("canvas");
     if (canvas) {
-      // Sólo establecer el cursor por defecto para posters.
-      // Evitamos añadir listeners globales por cada póster (pueden acumularse y causar
-      // comportamiento errático en el arrastre). Si hace falta control de arrastre,
-      // debe centralizarse en un solo lugar (p. ej. en App o un hook compartido).
-      canvas.style.cursor = "url('/images/pointers/rockhand.png') 16 16, auto";
+      document.body.classList.add("cursor-rock");
+
+      const handleMouseDown = () => {
+        document.body.classList.add("cursor-rock");
+      };
+
+      const handleMouseUp = () => {
+        document.body.classList.add("cursor-rock");
+      };
+
+      canvas.addEventListener("mousedown", handleMouseDown);
+      document.addEventListener("mouseup", handleMouseUp);
+      canvas.addEventListener("mouseleave", handleMouseUp);
 
       return () => {
-        // Restaurar cursor al desmontar
-        try {
-          canvas.style.cursor = "";
-          document.body.style.cursor = "";
-        } catch (e) {
-          /* ignore */
-        }
+        canvas.removeEventListener("mousedown", handleMouseDown);
+        document.removeEventListener("mouseup", handleMouseUp);
+        canvas.removeEventListener("mouseleave", handleMouseUp);
+        // Limpiar clases al desmontar
+        document.body.classList.remove("cursor-rock");
+        document.body.classList.remove("cursor-hand");
+        document.body.classList.remove("cursor-eye");
       };
     }
   }, []);
@@ -97,12 +105,10 @@ export default function RockPoster({ concert, onSelect }) {
     event.stopPropagation();
     setHovered(true);
 
-    // Aplicar cursor de ojo al canvas y al body (más pequeño)
-    const canvas = document.querySelector("canvas");
-    const cursorStyle = `url('${cursorOjoUrl}') 6 6, pointer`;
-
-    if (canvas) canvas.style.cursor = cursorStyle;
-    document.body.style.cursor = cursorStyle;
+    // Aplicar cursor de ojo usando clase en body
+    document.body.classList.add("cursor-eye");
+    document.body.classList.remove("cursor-rock");
+    document.body.classList.remove("cursor-hand");
 
     // Limpiar timeout anterior
     if (hoverTimeoutRef.current) {
@@ -114,12 +120,10 @@ export default function RockPoster({ concert, onSelect }) {
     event.stopPropagation();
     setHovered(false);
 
-    // Restaurar cursor rock hand explícitamente
-    const canvas = document.querySelector("canvas");
-    if (canvas)
-      canvas.style.cursor = "url('/images/pointers/rockhand.png') 16 16, auto";
-    document.body.style.cursor =
-      "url('/images/pointers/rockhand.png') 16 16, auto";
+    // Restaurar cursor rock hand explícitamente usando clases
+    document.body.classList.remove("cursor-eye");
+    document.body.classList.remove("cursor-hand");
+    document.body.classList.add("cursor-rock");
   }, []);
 
   const handleClick = useCallback(
@@ -228,22 +232,28 @@ export default function RockPoster({ concert, onSelect }) {
         />
       </mesh>
 
-      {/* Bisel interior del marco más estrecho */}
-      <mesh position={[0, 0, -0.01]} castShadow>
-        <boxGeometry args={[frameWidth - 0.15, frameHeight - 0.15, 0.02]} />
-        <meshStandardMaterial color="#666666" metalness={0.8} roughness={0.2} />
+      {/* Bisel interior del marco - posicionado para evitar z-fighting */}
+      <mesh position={[0, 0, -0.02]} castShadow>
+        <boxGeometry args={[frameWidth - 0.15, frameHeight - 0.15, 0.01]} />
+        <meshStandardMaterial
+          color="#2a2a2a"
+          metalness={0.6}
+          roughness={0.4}
+          emissive="#1a1a1a"
+          emissiveIntensity={0.02}
+        />
       </mesh>
 
-      {/* Póster del concierto - dimensiones adaptativas, opaco y bloquea la luz */}
+      {/* Póster del concierto - ajustado para cubrir completamente el bisel */}
       <mesh
-        position={[0, 0, 0.02]}
+        position={[0, 0, 0.01]}
         castShadow
         receiveShadow
         onPointerOver={handlePointerOver}
         onPointerOut={handlePointerOut}
         onClick={handleClick}
       >
-        <planeGeometry args={[posterWidth, posterHeight]} />
+        <planeGeometry args={[frameWidth - 0.14, frameHeight - 0.14]} />
         {hasImage ? (
           <Suspense
             fallback={<FallbackMaterial color={getUnifiedPosterColor()} />}
@@ -255,18 +265,14 @@ export default function RockPoster({ concert, onSelect }) {
         )}
       </mesh>
 
-      {/* Cristal protector con reflejo suave - reducido para evitar reflejos excesivos */}
-      <mesh position={[0, 0, 0.03]}>
-        <planeGeometry args={[posterWidth, posterHeight]} />
-        <meshPhysicalMaterial
+      {/* Cristal protector simplificado - ajustado al tamaño del poster */}
+      <mesh position={[0, 0, 0.02]}>
+        <planeGeometry args={[frameWidth - 0.14, frameHeight - 0.14]} />
+        <meshBasicMaterial
           transparent
-          opacity={0.08}
-          roughness={0.05}
-          metalness={0.0}
-          reflectivity={0.1}
-          envMapIntensity={0.4}
-          clearcoat={0.6}
-          clearcoatRoughness={0.1}
+          opacity={0.03}
+          color="#ffffff"
+          blending={1}
         />
       </mesh>
 
