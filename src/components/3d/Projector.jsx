@@ -14,6 +14,7 @@ import React, {
 } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
+import { getImagePath } from "../../utils/assetPaths";
 import { VideoTexture } from "three";
 import CreditsButton from "./CreditsButton";
 
@@ -160,7 +161,7 @@ const videoPlaylist = [
     name: "Drums Performance",
   },
   {
-    url: "/videos/creditos.mp4",
+    url: getImagePath("/videos/creditos.mp4"),
     duration: 60000, // 60 segundos - Video de créditos (tiempo generoso)
     name: "Museum Credits",
   },

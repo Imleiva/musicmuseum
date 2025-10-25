@@ -7,6 +7,7 @@
  */
 import React, { useState, useEffect } from "react";
 import "./ThunderstormTransition.css";
+import { getImagePath } from "../../../utils/assetPaths";
 
 const ThunderstormTransition = ({
   isActive,
@@ -98,7 +99,7 @@ const ThunderstormTransition = ({
 
       {isTransitioning && (
         <video
-          src="/images/thunderstorm.mp4"
+          src={getImagePath("/images/thunderstorm.mp4")}
           autoPlay
           muted
           playsInline

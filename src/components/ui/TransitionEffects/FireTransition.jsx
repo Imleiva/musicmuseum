@@ -7,6 +7,7 @@
  */
 import React, { useState, useEffect } from "react";
 import "./FireTransition.css";
+import { getImagePath } from "../../../utils/assetPaths";
 
 const FireTransition = ({
   isActive,
@@ -98,7 +99,7 @@ const FireTransition = ({
 
       {isTransitioning && (
         <video
-          src="/images/fuego1.mp4"
+          src={getImagePath("/images/fuego1.mp4")}
           autoPlay
           muted
           playsInline

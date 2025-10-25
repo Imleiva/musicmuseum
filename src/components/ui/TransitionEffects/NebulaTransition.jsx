@@ -7,6 +7,7 @@
  */
 import React, { useState, useEffect } from "react";
 import "./NebulaTransition.css";
+import { getImagePath } from "../../../utils/assetPaths";
 
 const NebulaTransition = ({
   isActive,
@@ -98,7 +99,7 @@ const NebulaTransition = ({
 
       {isTransitioning && (
         <video
-          src="/images/humorojo.mp4"
+          src={getImagePath("/images/humorojo.mp4")}
           autoPlay
           muted
           playsInline

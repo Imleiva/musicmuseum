@@ -7,6 +7,7 @@
  */
 import React, { useState, useEffect } from "react";
 import "./EnergyTransition.css";
+import { getImagePath } from "../../../utils/assetPaths";
 
 const EnergyTransition = ({
   isActive,
@@ -103,7 +104,7 @@ const EnergyTransition = ({
 
       {isTransitioning && (
         <video
-          src="/images/energy.mp4"
+          src={getImagePath("/images/energy.mp4")}
           autoPlay
           muted
           playsInline

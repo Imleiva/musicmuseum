@@ -7,6 +7,7 @@
  */
 import React, { useState, useEffect } from "react";
 import "./SmokeTransition.css";
+import { getImagePath } from "../../../utils/assetPaths";
 
 const SmokeTransition = ({
   isActive,
@@ -98,7 +99,7 @@ const SmokeTransition = ({
 
       {isTransitioning && (
         <video
-          src="/images/humo1.mp4"
+          src={getImagePath("/images/humo1.mp4")}
           autoPlay
           muted
           playsInline
