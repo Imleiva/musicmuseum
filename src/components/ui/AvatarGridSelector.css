@@ -485,37 +485,43 @@
     gap: 10px;
   }
 
-  /* Primera fila en móvil: búsqueda arriba, animaciones abajo */
+  /* Primera fila en móvil: búsqueda y animaciones en la misma línea */
   .header-row-1 {
-    flex-direction: column;
-    gap: 10px;
-    align-items: stretch;
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
   }
 
   .search-input {
-    width: 100%;
+    width: 50%;
+    flex: none;
     font-size: 14px;
     height: 36px;
   }
 
-  /* Switch de transiciones centrado */
+  /* Switch de transiciones al lado de la búsqueda */
   .transitions-switch-container {
-    justify-content: center;
+    flex: 1;
+    justify-content: flex-end;
     align-self: center;
   }
 
   .transitions-switch-label {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .transitions-switch {
-    width: 38px;
-    height: 20px;
+    width: 36px;
+    height: 18px;
+  }
+
+  .transitions-switch-slider {
+    border-radius: 18px;
   }
 
   .transitions-switch-slider:before {
-    height: 14px;
-    width: 14px;
+    height: 12px;
+    width: 12px;
     left: 2px;
     bottom: 2px;
   }
