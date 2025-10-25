@@ -8,7 +8,7 @@ An immersive 3D virtual museum experience dedicated to rock and metal concerts. 
 
 _Experience the 3D virtual museum directly in your browser!_
 
-<!-- Last deployment attempt: 2025-10-25 -->
+<!-- Last deployment attempt: 2025-10-25 - Avatar logo paths fixed -->
 
 ## 🌟 Features
 
