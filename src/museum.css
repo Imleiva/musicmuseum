@@ -202,7 +202,7 @@ canvas {
     z-index: 1 !important;
     background: transparent !important;
   }
-  
+
   /* Asegurar que .app no interfiera en móvil */
   .app {
     position: relative !important;

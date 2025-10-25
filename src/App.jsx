@@ -97,113 +97,113 @@ function App() {
       <TooltipProvider>
         <WebGLErrorFallback>
           <div className="app">
-          <BlurBackground show={showBlur} />
-          <RockNavigator
-            currentRoom={currentRoom}
-            onRoomChange={setCurrentRoom}
-            totalRooms={3}
-          />
-
-          <ControlsHelp />
-
-          <PosterModal
-            concert={selectedConcert}
-            onClose={() => setSelectedConcert(null)}
-          />
-
-          <Canvas
-            camera={{
-              position: initialCameraPosition,
-              fov: 40,
-              near: 0.3,
-              far: 1000,
-            }}
-            className="canvas-3d"
-            gl={{
-              powerPreference: "default",
-              antialias: false,
-              alpha: false,
-              preserveDrawingBuffer: false,
-              failIfMajorPerformanceCaveat: false
-            }}
-            dpr={window.devicePixelRatio > 2 ? 2 : window.devicePixelRatio}
-          >
-            <ambientLight intensity={0.4} color="#ffffff" />
-            <directionalLight position={[2, 50, 1]} intensity={0.9} />
-
-            <VenueRoom
-              position={
-                currentRoom === 0
-                  ? [0, 0, 0]
-                  : currentRoom === 1
-                  ? [100, 0, 0]
-                  : [200, 0, 0]
-              }
-              theme={roomGenres[currentRoom]}
-              shouldResetCamera={shouldResetCamera}
-              rotationDirection={roomRotationDirections[currentRoom]}
+            <BlurBackground show={showBlur} />
+            <RockNavigator
+              currentRoom={currentRoom}
+              onRoomChange={setCurrentRoom}
+              totalRooms={3}
             />
 
-            {currentRoomConcerts.map((concert) => (
-              <RockPoster
-                key={concert.id}
-                concert={concert}
-                onSelect={setSelectedConcert}
+            <ControlsHelp />
+
+            <PosterModal
+              concert={selectedConcert}
+              onClose={() => setSelectedConcert(null)}
+            />
+
+            <Canvas
+              camera={{
+                position: initialCameraPosition,
+                fov: 40,
+                near: 0.3,
+                far: 1000,
+              }}
+              className="canvas-3d"
+              gl={{
+                powerPreference: "default",
+                antialias: false,
+                alpha: false,
+                preserveDrawingBuffer: false,
+                failIfMajorPerformanceCaveat: false,
+              }}
+              dpr={window.devicePixelRatio > 2 ? 2 : window.devicePixelRatio}
+            >
+              <ambientLight intensity={0.4} color="#ffffff" />
+              <directionalLight position={[2, 50, 1]} intensity={0.9} />
+
+              <VenueRoom
+                position={
+                  currentRoom === 0
+                    ? [0, 0, 0]
+                    : currentRoom === 1
+                    ? [100, 0, 0]
+                    : [200, 0, 0]
+                }
+                theme={roomGenres[currentRoom]}
+                shouldResetCamera={shouldResetCamera}
+                rotationDirection={roomRotationDirections[currentRoom]}
               />
-            ))}
 
-            {currentRoom === 0 && (
-              <Projector position={[0, 0, 0]} genre="metal" />
-            )}
-            {currentRoom === 1 && (
-              <Projector position={[100, 0, 0]} genre="rock" />
-            )}
-            {currentRoom === 2 && (
-              <Projector position={[200, 0, 0]} genre="punk" />
-            )}
+              {currentRoomConcerts.map((concert) => (
+                <RockPoster
+                  key={concert.id}
+                  concert={concert}
+                  onSelect={setSelectedConcert}
+                />
+              ))}
 
-            <ContactShadows
-              position={[0, -3.99, 0]}
-              opacity={0.3}
-              scale={50}
-              blur={2}
-              far={4}
+              {currentRoom === 0 && (
+                <Projector position={[0, 0, 0]} genre="metal" />
+              )}
+              {currentRoom === 1 && (
+                <Projector position={[100, 0, 0]} genre="rock" />
+              )}
+              {currentRoom === 2 && (
+                <Projector position={[200, 0, 0]} genre="punk" />
+              )}
+
+              <ContactShadows
+                position={[0, -3.99, 0]}
+                opacity={0.3}
+                scale={50}
+                blur={2}
+                far={4}
+              />
+
+              <OrbitControls
+                ref={controlsRef}
+                enablePan={false}
+                enableZoom={true}
+                enableRotate={true}
+                maxPolarAngle={Math.PI * 0.5}
+                minPolarAngle={Math.PI * 0.02}
+                minDistance={2}
+                maxDistance={21.5}
+                minAzimuthAngle={-Infinity}
+                maxAzimuthAngle={Infinity}
+                target={controlTargets[currentRoom]}
+                enableDamping={true}
+                dampingFactor={0.1}
+                rotateSpeed={0.4}
+                zoomSpeed={0.8}
+                autoRotate={false}
+                makeDefault
+              />
+            </Canvas>
+
+            <MuseumGuide
+              onOverlay={handleGuideOverlay}
+              onOpenSettings={handleOpenSettings}
             />
 
-            <OrbitControls
-              ref={controlsRef}
-              enablePan={false}
-              enableZoom={true}
-              enableRotate={true}
-              maxPolarAngle={Math.PI * 0.5}
-              minPolarAngle={Math.PI * 0.02}
-              minDistance={2}
-              maxDistance={21.5}
-              minAzimuthAngle={-Infinity}
-              maxAzimuthAngle={Infinity}
-              target={controlTargets[currentRoom]}
-              enableDamping={true}
-              dampingFactor={0.1}
-              rotateSpeed={0.4}
-              zoomSpeed={0.8}
-              autoRotate={false}
-              makeDefault
+            <SettingsModal
+              isOpen={showSettingsModal}
+              onClose={handleCloseSettings}
             />
-          </Canvas>
 
-          <MuseumGuide
-            onOverlay={handleGuideOverlay}
-            onOpenSettings={handleOpenSettings}
-          />
-
-          <SettingsModal
-            isOpen={showSettingsModal}
-            onClose={handleCloseSettings}
-          />
-
-          <TooltipContainer />
-          <AutoTooltipManager currentRoom={currentRoom} />
-        </div>
+            <TooltipContainer />
+            <AutoTooltipManager currentRoom={currentRoom} />
+          </div>
         </WebGLErrorFallback>
       </TooltipProvider>
     </TranslationProvider>

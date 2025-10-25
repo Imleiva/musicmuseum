@@ -504,17 +504,17 @@
     transform: translateX(18px);
   }
 
-  /* Preview del avatar - ahora arriba y más compacto */
+  /* Preview del avatar - ahora arriba y más grande */
   .avatar-grid-preview {
-    height: 35vh;
+    height: 40vh;
     flex-shrink: 0;
-    padding: 12px;
+    padding: 16px;
     border-bottom: 1px solid #333;
   }
 
   .avatar-preview-img {
-    width: 200px;
-    height: 200px;
+    width: 280px;
+    height: 280px;
   }
 
   .avatar-preview-name {
@@ -589,12 +589,12 @@
   }
 
   .avatar-preview-img {
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
   }
 
   .avatar-preview-name {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .avatar-preview-meta {
@@ -639,8 +639,8 @@
   }
 
   .avatar-preview-img {
-    width: 280px;
-    height: 280px;
+    width: 350px;
+    height: 350px;
   }
 
   .avatar-preview-name {
