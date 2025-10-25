@@ -9,6 +9,7 @@ import React from "react";
 import "./GuideToolbar.css";
 import { useTranslation } from "../../hooks/useTranslation";
 import { useTooltipContext, TooltipMessages } from "../tooltips";
+import { getImagePath } from "../../utils/assetPaths";
 
 export default function GuideToolbar({
   active,
@@ -25,7 +26,7 @@ export default function GuideToolbar({
       tooltipMessage: TooltipMessages.controls.curiosities,
       icon: (
         <img
-          src="/images/icons/curiosidades.png"
+          src={getImagePath("/images/icons/curiosidades.png")}
           alt={t("toolbar.curiosities")}
           width={28}
           height={28}
@@ -38,7 +39,7 @@ export default function GuideToolbar({
       tooltipMessage: TooltipMessages.controls.customize,
       icon: (
         <img
-          src="/images/icons/customavatar.png"
+          src={getImagePath("/images/icons/customavatar.png")}
           alt={t("toolbar.customize")}
           width={28}
           height={28}
@@ -51,7 +52,7 @@ export default function GuideToolbar({
       tooltipMessage: TooltipMessages.controls.settings,
       icon: (
         <img
-          src="/images/icons/settings.png"
+          src={getImagePath("/images/icons/settings.png")}
           alt={t("toolbar.settings")}
           width={28}
           height={28}

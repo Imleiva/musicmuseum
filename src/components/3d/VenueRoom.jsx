@@ -5,6 +5,8 @@
  * • Iluminación ambiental adaptada al tema de cada sala
  */
 
+import { getImagePath } from "../../utils/assetPaths";
+
 function lightenColor(hex, percent) {
   var r = parseInt(hex.slice(1, 3), 16);
   var g = parseInt(hex.slice(3, 5), 16);
@@ -19,7 +21,10 @@ function lightenColor(hex, percent) {
 
 const CeilingBeamsAndLEDs = () => {
   // Cargar textura de madera
-  const woodTexture = useLoader(TextureLoader, "/images/wood.jpg");
+  const woodTexture = useLoader(
+    TextureLoader,
+    getImagePath("/images/wood.jpg")
+  );
   woodTexture.wrapS = RepeatWrapping;
   woodTexture.wrapT = RepeatWrapping;
   woodTexture.repeat.set(2, 8); // Más repeticiones para que la textura sea más visible
@@ -69,7 +74,10 @@ import { MeshReflectorMaterial } from "@react-three/drei";
 
 // Componente para el suelo con textura wood.jpg
 function FloorWithTexture({ theme }) {
-  const floorTexture = useLoader(TextureLoader, "/images/wood.jpg");
+  const floorTexture = useLoader(
+    TextureLoader,
+    getImagePath("/images/wood.jpg")
+  );
 
   // Configuración para que la textura se vea realista y elegante
   floorTexture.wrapS = RepeatWrapping;

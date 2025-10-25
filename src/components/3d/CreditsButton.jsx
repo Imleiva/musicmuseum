@@ -8,6 +8,7 @@
 import React, { useState, useRef, useCallback } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useTooltipContext } from "../tooltips/useTooltipContext";
+import { getImagePath } from "../../utils/assetPaths";
 
 export default function CreditsButton({
   position = [0, 0, 0],
@@ -114,7 +115,7 @@ export default function CreditsButton({
           // Aplicar cursor con !important para evitar solapamientos
           document.body.style.setProperty(
             "cursor",
-            "url('/images/pointers/hand.png'), pointer",
+            `url('${getImagePath("/images/pointers/hand.png")}'), pointer`,
             "important"
           );
           // También en el canvas específicamente
@@ -122,7 +123,7 @@ export default function CreditsButton({
           if (canvas) {
             canvas.style.setProperty(
               "cursor",
-              "url('/images/pointers/hand.png'), pointer",
+              `url('${getImagePath("/images/pointers/hand.png")}'), pointer`,
               "important"
             );
           }
