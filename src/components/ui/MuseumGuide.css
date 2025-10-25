@@ -187,6 +187,7 @@
     min-width: 180px;
     max-height: 120px;
     overflow-y: auto;
+    overflow-x: hidden;
     text-align: left;
     font-size: 0.85rem;
     padding: 12px 14px;
@@ -194,6 +195,8 @@
     z-index: 15;
     box-shadow: 0 8px 32px rgba(255, 68, 68, 0.3);
     line-height: 1.4;
+    /* Propiedades de scroll optimizadas para móvil */
+    scroll-behavior: smooth;
     /* Indicador visual de scroll */
     background: linear-gradient(
       135deg,
@@ -270,10 +273,12 @@
     min-width: 160px;
     max-height: 100px;
     overflow-y: auto;
+    overflow-x: hidden;
     text-align: left;
     font-size: 0.8rem;
     padding: 10px 12px;
     line-height: 1.3;
+    scroll-behavior: smooth;
   }
 }
 
@@ -321,7 +326,7 @@
   }
 }
 
-/* Touch-friendly improvements */
+  /* Touch-friendly improvements */
 @media (max-width: 768px) {
   .museum-guide-avatar,
   .museum-guide-bubble {
@@ -347,5 +352,22 @@
   .museum-guide-bubble::-webkit-scrollbar-track {
     background: rgba(40, 0, 0, 0.2);
     border-radius: 4px;
+  }
+
+  /* Indicador de scroll disponible */
+  .museum-guide-bubble::after {
+    content: "";
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: linear-gradient(to top, 
+      rgba(80, 20, 20, 0.9) 0%, 
+      transparent 100%
+    );
+    pointer-events: none;
+    margin: 0 -14px -12px -14px;
+    border-radius: 0 0 12px 12px;
   }
 }
