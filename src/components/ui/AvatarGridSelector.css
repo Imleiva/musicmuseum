@@ -887,4 +887,32 @@
   .transitions-switch-label {
     font-size: 14px;
   }
+
+  /* Footer normal en desktop - NO fijo */
+  .avatar-grid-selector-footer {
+    position: static !important; /* No fixed */
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    padding: 12px 16px !important; /* Padding original */
+    background: transparent !important; /* Sin background especial */
+    border-top: none !important; /* Sin border */
+    z-index: auto !important;
+    box-shadow: none !important; /* Sin sombra */
+    justify-content: flex-end !important; /* Alineación original */
+    gap: 12px !important; /* Gap original */
+  }
+
+  /* Botones originales en desktop */
+  .avatar-grid-selector-footer button {
+    padding: 6px 16px !important; /* Tamaño original */
+    font-size: 14px !important; /* Tamaño original */
+    min-height: initial !important; /* Sin altura mínima */
+    min-width: initial !important; /* Sin ancho mínimo */
+  }
+
+  /* Modal sin padding bottom en desktop */
+  .avatar-grid-modal {
+    padding-bottom: 0 !important;
+  }
 }
