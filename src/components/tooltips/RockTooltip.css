@@ -180,20 +180,54 @@
   }
 }
 
-@media (max-width: 480px) {
+/* Mobile: alinear tooltips con header del museo */
+@media (max-width: 768px) {
   .rock-tooltip-container {
-    top: 10px;
-    right: 10px;
-    max-width: 300px;
-    min-width: 160px;
+    top: 70px; /* Debajo del título "Leiva'n Roll Hall of Fame" */
+    left: 20px; /* Alineado a la izquierda con el header */
+    right: auto; /* Quitar posicionamiento desde la derecha */
+    max-width: calc(100vw - 120px); /* Dejar espacio para toolbar derecha */
+    min-width: 250px;
+    z-index: 150; /* Debajo de la toolbar pero encima del contenido */
   }
 
   .rock-tooltip {
-    font-size: 0.82rem;
-    padding: 10px 12px;
+    font-size: 0.9rem;
+    padding: 12px 16px;
+    border-radius: 8px;
+    /* Más compacto para móvil */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 68, 68, 0.08);
   }
 
   .rock-tooltip-title {
-    font-size: 0.86rem;
+    font-size: 0.94rem;
+    margin-bottom: 6px;
+  }
+
+  .rock-tooltip-text {
+    font-size: 0.88rem;
+    line-height: 1.4;
+  }
+}
+
+@media (max-width: 480px) {
+  .rock-tooltip-container {
+    top: 65px; /* Ajuste fino para pantallas muy pequeñas */
+    left: 15px;
+    max-width: calc(100vw - 100px);
+    min-width: 200px;
+  }
+
+  .rock-tooltip {
+    font-size: 0.85rem;
+    padding: 10px 14px;
+  }
+
+  .rock-tooltip-title {
+    font-size: 0.9rem;
+  }
+
+  .rock-tooltip-text {
+    font-size: 0.82rem;
   }
 }
