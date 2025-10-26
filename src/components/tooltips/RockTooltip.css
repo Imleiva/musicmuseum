@@ -184,11 +184,11 @@
 @media (max-width: 768px) {
   .rock-tooltip-container {
     top: 22px; /* Alineado con el header del navegador */
-    left: 50%; /* Centrado horizontalmente */
-    transform: translateX(-50%); /* Centrar perfectamente */
-    right: auto; /* Quitar posicionamiento desde la derecha */
-    max-width: 280px; /* Ancho óptimo para el espacio disponible */
-    min-width: 220px;
+    left: 20px; /* Margen izquierdo fijo para evitar que se salga */
+    right: 20px; /* Margen derecho fijo para evitar que se salga */
+    transform: none; /* Sin transform para evitar desbordamiento */
+    max-width: none; /* Sin límite máximo, usa left/right */
+    min-width: 200px;
     z-index: 150; /* Debajo de la toolbar pero encima del contenido */
   }
 
