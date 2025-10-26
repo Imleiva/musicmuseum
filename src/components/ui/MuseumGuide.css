@@ -185,7 +185,7 @@
     align-items: flex-end;
     justify-content: flex-end; /* Avatar a la derecha, opuesto a las burbujas */
     margin: 0; /* Sin márgenes para aprovechar todo el espacio */
-    padding: 16px 20px 20px 16px; /* Padding interno para espaciado */
+    padding: 16px 30px 20px 16px; /* Más padding derecho (30px) para separar del borde */
     gap: 12px; /* Espacio entre burbuja y avatar */
     width: auto;
     height: auto;
@@ -199,8 +199,8 @@
   }
 
   .museum-guide-avatar {
-    width: 160px; /* Tamaño optimizado para mejor distribución */
-    min-width: 160px; /* Tamaño fijo */
+    width: 200px; /* Avatar más grande para mejor visibilidad */
+    min-width: 200px; /* Tamaño fijo más grande */
     height: auto;
     margin: 0;
     transition: none; /* Sin transiciones para evitar movimientos */
@@ -208,15 +208,17 @@
 
   /* Avatar NO cambia de tamaño cuando el toolbar está colapsado */
   .museum-guide-avatar-wrapper.toolbar-collapsed .museum-guide-avatar {
-    width: 160px; /* Mismo tamaño siempre */
-    min-width: 160px; /* Mismo tamaño siempre */
+    width: 200px; /* Mismo tamaño siempre - más grande */
+    min-width: 200px; /* Mismo tamaño siempre - más grande */
   }
 
   /* Bubble reposicionada para ocupar el espacio libre */
   .museum-guide-avatar-bubble-container {
     order: 1; /* Burbuja a la izquierda */
     flex: 1; /* Ocupar el espacio disponible */
-    max-width: calc(100vw - 200px); /* Dejar espacio para avatar + padding */
+    max-width: calc(
+      100vw - 260px
+    ); /* Dejar espacio para avatar más grande + padding */
     margin-right: 12px; /* Separación de la burbuja del avatar */
   }
 
