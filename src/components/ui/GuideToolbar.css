@@ -84,14 +84,9 @@
     margin: 0;
     position: relative;
     overflow: hidden;
-    background: rgba(
-      30,
-      0,
-      0,
-      0.25
-    ); /* Más transparente en la parte superior */
+    background: none; /* Sin fondo en móvil para eliminar la sombra */
     border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); /* Sombra más visible */
+    box-shadow: none; /* Sin sombra en móvil */
   }
 
   .guide-toolbar-btn {

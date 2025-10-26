@@ -203,7 +203,7 @@
 
   .museum-guide-avatar {
     width: 100%; /* Ocupar todo el ancho del wrapper */
-    max-width: 220px; /* Límite máximo para pantallas muy anchas */
+    max-width: 240px; /* Límite máximo para pantallas muy anchas */
     min-width: 160px; /* Tamaño mínimo */
     height: auto;
     margin: 0;
