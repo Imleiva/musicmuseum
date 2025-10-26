@@ -181,12 +181,12 @@
     bottom: 0; /* Pegado al fondo */
     left: 0;
     right: 0;
-    flex-direction: column; /* Cambiar a columna para separar elementos */
-    align-items: stretch; /* Ocupar todo el ancho */
-    justify-content: flex-end; /* Elementos al fondo */
+    flex-direction: row; /* Mantener horizontal: burbuja izquierda, avatar derecha */
+    align-items: flex-end; /* Alineados al fondo */
+    justify-content: space-between; /* Separar burbuja y avatar en extremos */
     margin: 0; /* Sin márgenes para aprovechar todo el espacio */
     padding: 16px 20px 20px 16px; /* Padding normal */
-    gap: 0; /* Sin gap */
+    gap: 12px; /* Pequeño gap entre elementos */
     width: auto;
     height: auto;
     z-index: 20; /* Encima del contenido 3D */
@@ -197,16 +197,14 @@
     order: 1; /* Burbuja primero */
     position: relative;
     width: 55%; /* Burbuja ocupa 55% del ancho */
-    align-self: flex-start; /* Alineada a la izquierda */
-    margin-bottom: 8px; /* Pequeña separación del avatar */
+    flex-shrink: 1; /* Puede reducirse si es necesario */
   }
 
   .museum-guide-avatar-wrapper {
     order: 2; /* Avatar segundo */
     margin: 0;
     flex-shrink: 0; /* No comprimir el avatar */
-    width: 45%; /* Avatar ocupa 45% del ancho */
-    align-self: flex-end; /* Alineado a la derecha */
+    width: 40%; /* Avatar ocupa 40% para dejar más espacio a burbuja */
     display: flex;
     justify-content: flex-end; /* Alinear avatar a la derecha dentro de su espacio */
   }
