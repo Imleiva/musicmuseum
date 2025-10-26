@@ -183,7 +183,7 @@
     right: 0;
     flex-direction: row; /* Mantener horizontal para avatar y burbujas */
     align-items: flex-end;
-    justify-content: space-between; /* Distribuir espacio entre burbuja y avatar */
+    justify-content: flex-end; /* Avatar a la derecha, opuesto a las burbujas */
     margin: 0; /* Sin márgenes para aprovechar todo el espacio */
     padding: 16px 20px 20px 16px; /* Padding interno para espaciado */
     gap: 12px; /* Espacio entre burbuja y avatar */
@@ -217,6 +217,7 @@
     order: 1; /* Burbuja a la izquierda */
     flex: 1; /* Ocupar el espacio disponible */
     max-width: calc(100vw - 200px); /* Dejar espacio para avatar + padding */
+    margin-right: 12px; /* Separación de la burbuja del avatar */
   }
 
   .museum-guide-avatar-bubble-container .museum-guide-bubble {
