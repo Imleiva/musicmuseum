@@ -196,11 +196,15 @@
     order: 2; /* Avatar a la derecha */
     margin: 0;
     flex-shrink: 0; /* No comprimir el avatar */
+    width: 45%; /* Avatar ocupa casi la mitad del ancho */
+    display: flex;
+    justify-content: flex-end; /* Alinear avatar a la derecha dentro de su espacio */
   }
 
   .museum-guide-avatar {
-    width: 180px; /* Tamaño equilibrado */
-    min-width: 180px; /* Tamaño fijo */
+    width: 100%; /* Ocupar todo el ancho del wrapper */
+    max-width: 220px; /* Límite máximo para pantallas muy anchas */
+    min-width: 160px; /* Tamaño mínimo */
     height: auto;
     margin: 0;
     transition: none; /* Sin transiciones para evitar movimientos */
@@ -208,15 +212,16 @@
 
   /* Avatar NO cambia de tamaño cuando el toolbar está colapsado */
   .museum-guide-avatar-wrapper.toolbar-collapsed .museum-guide-avatar {
-    width: 180px; /* Mismo tamaño siempre */
-    min-width: 180px; /* Mismo tamaño siempre */
+    width: 100%; /* Mismo comportamiento siempre */
+    max-width: 220px;
+    min-width: 160px;
   }
 
   /* Bubble reposicionada para ocupar el espacio libre */
   .museum-guide-avatar-bubble-container {
     order: 1; /* Burbuja a la izquierda */
-    flex: 1; /* Ocupar el espacio disponible */
-    max-width: calc(100vw - 220px); /* Dejar espacio para avatar + padding */
+    width: 55%; /* Burbuja ocupa poco más de la mitad */
+    max-width: none; /* Sin límite máximo */
     margin-right: 0; /* Sin margen, space-between se encarga */
   }
 
