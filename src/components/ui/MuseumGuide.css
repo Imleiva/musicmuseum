@@ -183,22 +183,24 @@
     right: 0;
     flex-direction: row; /* Mantener horizontal para avatar y burbujas */
     align-items: flex-end;
-    justify-content: flex-end;
-    margin: 0 20px 20px 16px; /* Solo margen inferior */
-    gap: 0; /* Sin gap ya que el toolbar está separado */
+    justify-content: space-between; /* Distribuir espacio entre burbuja y avatar */
+    margin: 0; /* Sin márgenes para aprovechar todo el espacio */
+    padding: 16px 20px 20px 16px; /* Padding interno para espaciado */
+    gap: 12px; /* Espacio entre burbuja y avatar */
     width: auto;
     height: auto;
     z-index: 20; /* Encima del contenido 3D */
   }
 
   .museum-guide-avatar-wrapper {
-    order: 1;
+    order: 2; /* Avatar a la derecha */
     margin: 0;
+    flex-shrink: 0; /* No comprimir el avatar */
   }
 
   .museum-guide-avatar {
-    width: 180px; /* Más grande en móvil */
-    min-width: 180px; /* Tamaño fijo */
+    width: 160px; /* Tamaño optimizado para mejor distribución */
+    min-width: 160px; /* Tamaño fijo */
     height: auto;
     margin: 0;
     transition: none; /* Sin transiciones para evitar movimientos */
@@ -206,18 +208,24 @@
 
   /* Avatar NO cambia de tamaño cuando el toolbar está colapsado */
   .museum-guide-avatar-wrapper.toolbar-collapsed .museum-guide-avatar {
-    width: 180px; /* Mismo tamaño siempre */
-    min-width: 180px; /* Mismo tamaño siempre */
+    width: 160px; /* Mismo tamaño siempre */
+    min-width: 160px; /* Mismo tamaño siempre */
   }
 
-  /* Bubble reorganizada para móvil - más espacio sin toolbar al lado */
+  /* Bubble reposicionada para ocupar el espacio libre */
+  .museum-guide-avatar-bubble-container {
+    order: 1; /* Burbuja a la izquierda */
+    flex: 1; /* Ocupar el espacio disponible */
+    max-width: calc(100vw - 200px); /* Dejar espacio para avatar + padding */
+  }
+
   .museum-guide-avatar-bubble-container .museum-guide-bubble {
-    position: fixed;
-    bottom: 20px;
-    left: 16px;
-    right: 200px; /* Espacio solo para avatar de 180px + márgenes */
-    width: auto;
-    max-width: calc(100vw - 240px);
+    position: relative; /* Cambiar a relativo dentro del container */
+    bottom: auto;
+    left: auto;
+    right: auto;
+    width: 100%; /* Ocupar todo el ancho del container */
+    max-width: none;
     min-width: 140px;
     max-height: none; /* Permitir altura dinámica */
     overflow: hidden; /* Sin scrollbar */
@@ -228,14 +236,6 @@
     z-index: 15;
     box-shadow: 0 8px 32px rgba(255, 68, 68, 0.3);
     line-height: 1.4;
-  }
-
-  /* Bubble igual para toolbar colapsado - sin cambios ya que está arriba */
-  .museum-guide-avatar-wrapper.toolbar-collapsed
-    + .museum-guide-avatar-bubble-container
-    .museum-guide-bubble {
-    right: 200px; /* Mismo espacio - solo avatar */
-    max-width: calc(100vw - 240px); /* Mismo tamaño */
   }
 
   /* Reservar menos espacio en móvil */
