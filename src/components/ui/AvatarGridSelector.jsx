@@ -192,24 +192,24 @@ export default function AvatarGridSelector({
               </div>
             </PredictiveHoverEffect>
           </div>
-        </div>
-        <div className="avatar-grid-selector-footer">
-          <button
-            className="clickable"
-            disabled={!preview}
-            onClick={() => {
-              if (preview) {
-                console.log("Seleccionado:", preview);
-                onAvatarSelect(preview);
-                onClose();
-              }
-            }}
-          >
-            {t("avatarGridSelector.ok")}
-          </button>
-          <button className="clickable" onClick={onClose}>
-            {t("avatarGridSelector.cancel")}
-          </button>
+          <div className="avatar-grid-selector-footer">
+            <button
+              className="clickable"
+              disabled={!preview}
+              onClick={() => {
+                if (preview) {
+                  console.log("Seleccionado:", preview);
+                  onAvatarSelect(preview);
+                  onClose();
+                }
+              }}
+            >
+              {t("avatarGridSelector.ok")}
+            </button>
+            <button className="clickable" onClick={onClose}>
+              {t("avatarGridSelector.cancel")}
+            </button>
+          </div>
         </div>
         <div className="avatar-grid-preview">
           {preview ? (

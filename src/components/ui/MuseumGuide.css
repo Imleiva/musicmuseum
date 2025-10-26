@@ -173,9 +173,9 @@
     margin: 0;
   }
 
-  /* Container del avatar reposicionado */
+  /* Container del avatar - mantener layout horizontal con burbujas */
   .museum-guide-avatar-toolbar-container {
-    flex-direction: column; /* Cambiar a columna */
+    flex-direction: row; /* Mantener horizontal para avatar y burbujas */
     align-items: flex-end;
     justify-content: flex-end;
     margin: 16px 20px 20px 16px;

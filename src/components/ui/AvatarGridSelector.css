@@ -888,19 +888,20 @@
     font-size: 14px;
   }
 
-  /* Footer normal en desktop - NO fijo */
+  /* Footer normal en desktop - NO fijo, dentro del avatar-grid-left */
   .avatar-grid-selector-footer {
     position: static !important; /* No fixed */
     bottom: auto !important;
     left: auto !important;
     right: auto !important;
-    padding: 12px 16px !important; /* Padding original */
+    padding: 12px 24px !important; /* Padding original dentro del contenedor */
     background: transparent !important; /* Sin background especial */
     border-top: none !important; /* Sin border */
     z-index: auto !important;
     box-shadow: none !important; /* Sin sombra */
-    justify-content: flex-end !important; /* Alineación original */
+    justify-content: flex-end !important; /* Alineación original a la derecha */
     gap: 12px !important; /* Gap original */
+    margin-top: 8px !important; /* Menos separación del grid */
   }
 
   /* Botones originales en desktop */
