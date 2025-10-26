@@ -243,6 +243,26 @@
   }
 }
 
+/* Desktop - Toolbar al lado del avatar, siempre visible */
+@media (min-width: 769px) {
+  /* Resetear posicionamiento del toolbar para desktop */
+  .museum-guide-toolbar-container {
+    position: static !important; /* No fixed */
+    order: initial !important; /* Orden normal */
+    top: auto !important;
+    right: auto !important;
+    z-index: auto !important;
+  }
+
+  /* Container normal en desktop */
+  .museum-guide-avatar-toolbar-container {
+    flex-direction: row !important; /* Lado a lado */
+    align-items: flex-end !important;
+    justify-content: flex-end !important;
+    gap: 12px !important; /* Espacio entre avatar y toolbar */
+  }
+}
+
 /* Mobile Landscape - Avatar y toolbar abajo a la derecha */
 @media (max-width: 768px) and (orientation: landscape) {
   .museum-guide {

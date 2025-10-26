@@ -110,6 +110,30 @@
   }
 }
 
+/* Desktop - Iconos siempre visibles, sin toggle */
+@media (min-width: 769px) {
+  /* Ocultar botón toggle en desktop */
+  .guide-toolbar-toggle {
+    display: none !important;
+  }
+
+  /* Iconos siempre visibles en desktop */
+  .guide-toolbar-icons {
+    opacity: 1 !important;
+    pointer-events: all !important;
+  }
+
+  .guide-toolbar-icons .guide-toolbar-btn {
+    opacity: 1 !important;
+    pointer-events: all !important;
+  }
+
+  /* Toolbar siempre expandido en desktop */
+  .guide-toolbar.collapsed {
+    background: rgba(30, 0, 0, 0.18); /* Mismo background que expandido */
+  }
+}
+
 @media (max-width: 480px) {
   .guide-toolbar {
     gap: 6px;
