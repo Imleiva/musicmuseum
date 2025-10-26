@@ -33,12 +33,6 @@ export default function RockNavigator({
 
   const roomNames = [t("rooms.metal"), t("rooms.rock"), t("rooms.punk")];
 
-  const roomDescriptions = [
-    t("navigator.descriptions.metal"),
-    t("navigator.descriptions.rock"),
-    t("navigator.descriptions.punk"),
-  ];
-
   const roomTypes = ["metal", "rock", "punk"];
 
   const getTooltipMessage = (roomIndex) => {
@@ -67,35 +61,25 @@ export default function RockNavigator({
       </div>
 
       {!isCollapsed && (
-        <>
-          <div className="room-buttons">
-            {Array.from({ length: totalRooms }, (_, index) => (
-              <button
-                key={index}
-                className={`room-btn ${currentRoom === index ? "active" : ""}`}
-                onClick={() => onRoomChange(index)}
-                onMouseEnter={() => {
-                  const message = getTooltipMessage(index);
-                  const title = `🎸 ${roomNames[index]}`;
-                  showTooltip(message, title);
-                }}
-                onMouseLeave={() => {
-                  hideTooltip();
-                }}
-              >
-                {roomNames[index] || `Room ${index + 1}`}
-              </button>
-            ))}
-          </div>
-
-          <div className="room-info">
-            <p className="current-room">{roomNames[currentRoom]}</p>
-            <p className="room-description">{roomDescriptions[currentRoom]}</p>
-            <p className="room-counter">
-              {currentRoom + 1} / {totalRooms}
-            </p>
-          </div>
-        </>
+        <div className="room-buttons">
+          {Array.from({ length: totalRooms }, (_, index) => (
+            <button
+              key={index}
+              className={`room-btn ${currentRoom === index ? "active" : ""}`}
+              onClick={() => onRoomChange(index)}
+              onMouseEnter={() => {
+                const message = getTooltipMessage(index);
+                const title = `🎸 ${roomNames[index]}`;
+                showTooltip(message, title);
+              }}
+              onMouseLeave={() => {
+                hideTooltip();
+              }}
+            >
+              {roomNames[index] || `Room ${index + 1}`}
+            </button>
+          ))}
+        </div>
       )}
     </nav>
   );
