@@ -274,7 +274,7 @@ canvas {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 10 0%;
 }
 
 /* Botón para contraer/expandir el navegador */
@@ -1383,6 +1383,11 @@ body.has-poster-modal .poster-modal * {
     display: none;
   }
 
+  /* Ocultar subtítulo en móvil */
+  .navigator-subtitle {
+    display: none;
+  }
+
   /* Ocultar contenedor de controles en móvil */
   .controls-help {
     display: none;
@@ -1472,6 +1477,24 @@ body.has-poster-modal .poster-modal * {
     letter-spacing: 0.3px;
     line-height: 1.1;
     word-spacing: -1px;
+  }
+}
+
+/* ===================================== */
+/* DESKTOP OPTIMIZATIONS */
+/* ===================================== */
+
+/* Desktop Layout - Título en una sola línea */
+@media (min-width: 1025px) {
+  .navigator-header h1 {
+    white-space: nowrap; /* Evitar saltos de línea */
+    overflow: hidden; /* Ocultar desbordamiento si es necesario */
+    text-overflow: ellipsis; /* Mostrar ... si el texto es muy largo */
+    word-break: normal; /* Resetear word-break */
+    -webkit-hyphens: none; /* Desactivar guiones en Safari */
+    hyphens: none; /* Desactivar guiones */
+    font-size: 1.6rem; /* Ligeramente más grande en desktop */
+    letter-spacing: 1.2px; /* Más espaciado para mejor legibilidad */
   }
 }
 
