@@ -150,29 +150,36 @@
 /* RESPONSIVE DESIGN - MOBILE OPTIMIZATION */
 /* ===================================== */
 
-/* Mobile Layout - Avatar y toolbar abajo, burbujas arriba */
+/* Mobile Layout - Toolbar arriba, Avatar y burbujas abajo */
 @media (max-width: 768px) {
   .museum-guide {
     flex-direction: column;
     align-items: flex-end;
-    justify-content: flex-end;
+    justify-content: space-between; /* Distribuir contenido */
   }
 
-  .museum-guide-avatar-toolbar-container {
-    flex-direction: row;
-    align-items: flex-end;
-    margin: 16px 20px 20px 16px;
-    gap: 6px; /* Reducido de 12px a 6px para menos espacio */
-    width: auto;
-  }
-
+  /* Toolbar en la parte superior */
   .museum-guide-toolbar-container {
-    order: 2;
+    order: -1; /* Forzar que vaya primero */
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
     width: auto;
     height: auto;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: flex-start;
     margin: 0;
+  }
+
+  /* Container del avatar reposicionado */
+  .museum-guide-avatar-toolbar-container {
+    flex-direction: column; /* Cambiar a columna */
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin: 16px 20px 20px 16px;
+    gap: 0; /* Sin gap ya que el toolbar está separado */
+    width: auto;
   }
 
   .museum-guide-avatar-wrapper {
@@ -194,14 +201,14 @@
     min-width: 180px; /* Mismo tamaño siempre */
   }
 
-  /* Bubble reorganizada para móvil - ajustada al avatar fijo de 180px */
+  /* Bubble reorganizada para móvil - más espacio sin toolbar al lado */
   .museum-guide-avatar-bubble-container .museum-guide-bubble {
     position: fixed;
     bottom: 20px;
     left: 16px;
-    right: 200px; /* Espacio fijo para avatar de 180px + márgenes */
+    right: 200px; /* Espacio solo para avatar de 180px + márgenes */
     width: auto;
-    max-width: calc(100vw - 240px); /* Ajustado al tamaño fijo */
+    max-width: calc(100vw - 240px);
     min-width: 140px;
     max-height: none; /* Permitir altura dinámica */
     overflow: hidden; /* Sin scrollbar */
@@ -214,12 +221,12 @@
     line-height: 1.4;
   }
 
-  /* Bubble igual para toolbar colapsado - sin cambios */
+  /* Bubble igual para toolbar colapsado - sin cambios ya que está arriba */
   .museum-guide-avatar-wrapper.toolbar-collapsed
     + .museum-guide-avatar-bubble-container
     .museum-guide-bubble {
-    right: 200px; /* Mismo espacio siempre */
-    max-width: calc(100vw - 240px); /* Mismo tamaño siempre */
+    right: 200px; /* Mismo espacio - solo avatar */
+    max-width: calc(100vw - 240px); /* Mismo tamaño */
   }
 
   /* Reservar menos espacio en móvil */
