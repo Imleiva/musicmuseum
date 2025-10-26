@@ -28,7 +28,7 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
   const [bubbleIdx, setBubbleIdx] = useState(0);
   const [avatarBubbles, setAvatarBubbles] = useState({});
   const [currentGreeting, setCurrentGreeting] = useState({});
-  const [toolbarCollapsed, setToolbarCollapsed] = useState(false);
+  const [toolbarCollapsed, setToolbarCollapsed] = useState(true); // Iniciar colapsado
   const [settings, setSettings] = useState({
     avatarTransitions: true,
   });

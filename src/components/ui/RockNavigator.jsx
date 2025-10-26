@@ -63,9 +63,7 @@ export default function RockNavigator({
             {isCollapsed ? "▼" : "▲"}
           </button>
         </div>
-        {!isCollapsed && (
-          <p className="navigator-subtitle">{t("navigator.subtitle")}</p>
-        )}
+        {!isCollapsed && <p className="navigator-subtitle"></p>}
       </div>
 
       {!isCollapsed && (

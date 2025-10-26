@@ -22,7 +22,6 @@ export const translations = {
     // Navegador
     navigator: {
       title: "Leiva'n Roll Hall of Fame",
-      subtitle: "Experiencia de Recuerdos de Conciertos",
       descriptions: {
         metal: "Heavy Metal, Thrash, Death Metal",
         rock: "Classic Rock, Hard Rock, Progressive",
@@ -831,7 +830,6 @@ export const translations = {
     // Navigator
     navigator: {
       title: "Leiva'n Roll Hall of Fame",
-      subtitle: "Concert Memory Experience",
       descriptions: {
         metal: "Heavy Metal, Thrash, Death Metal",
         rock: "Classic Rock, Hard Rock, Progressive",
