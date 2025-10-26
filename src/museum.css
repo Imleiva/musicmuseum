@@ -1488,13 +1488,25 @@ body.has-poster-modal .poster-modal * {
 @media (min-width: 1025px) {
   .navigator-header h1 {
     white-space: nowrap; /* Evitar saltos de línea */
-    overflow: hidden; /* Ocultar desbordamiento si es necesario */
-    text-overflow: ellipsis; /* Mostrar ... si el texto es muy largo */
     word-break: normal; /* Resetear word-break */
     -webkit-hyphens: none; /* Desactivar guiones en Safari */
     hyphens: none; /* Desactivar guiones */
     font-size: 1.6rem; /* Ligeramente más grande en desktop */
     letter-spacing: 1.2px; /* Más espaciado para mejor legibilidad */
+    width: max-content; /* Ajustar ancho al contenido */
+    max-width: none; /* Remover limitación de ancho máximo */
+  }
+
+  /* Asegurar que el contenedor padre también se ajuste */
+  .navigator-header {
+    width: max-content; /* Ajustar ancho al contenido */
+    max-width: none; /* Remover limitación de ancho máximo */
+    min-width: 0; /* Permitir que se ajuste libremente */
+  }
+
+  .navigator-title-container {
+    width: max-content; /* Ajustar ancho al contenido */
+    max-width: none; /* Remover limitación de ancho máximo */
   }
 }
 
