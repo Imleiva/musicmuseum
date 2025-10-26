@@ -200,25 +200,61 @@
   scrollbar-color: #e53935 #222;
   cursor: var(--cursor-hand) !important;
 }
+
 .avatar-grid-left::-webkit-scrollbar {
   width: 12px;
   background-color: #222;
 }
+
 .avatar-grid-left::-webkit-scrollbar-track {
   background-color: #222;
   border-radius: 6px;
 }
+
 .avatar-grid-left::-webkit-scrollbar-thumb {
   background-color: #e53935;
   border-radius: 6px;
   border: 2px solid #222;
   min-height: 40px;
 }
+
 .avatar-grid-left::-webkit-scrollbar-thumb:hover {
   background-color: #d32f2f;
   border: 2px solid #222;
 }
+
 .avatar-grid-left::-webkit-scrollbar-thumb:active {
+  background-color: #b71c1c;
+}
+
+/* Scrollbar para el contenido del grid en móvil */
+.avatar-grid-content {
+  scrollbar-width: thin;
+  scrollbar-color: #e53935 #222;
+}
+
+.avatar-grid-content::-webkit-scrollbar {
+  width: 8px;
+  background-color: #222;
+}
+
+.avatar-grid-content::-webkit-scrollbar-track {
+  background-color: #222;
+  border-radius: 6px;
+}
+
+.avatar-grid-content::-webkit-scrollbar-thumb {
+  background-color: #e53935;
+  border-radius: 6px;
+  border: 1px solid #222;
+  min-height: 30px;
+}
+
+.avatar-grid-content::-webkit-scrollbar-thumb:hover {
+  background-color: #d32f2f;
+}
+
+.avatar-grid-content::-webkit-scrollbar-thumb:active {
   background-color: #b71c1c;
 }
 /* Overlay para bloquear toda la pantalla */
@@ -472,10 +508,12 @@
 /* RESPONSIVE DESIGN - MOBILE FIRST */
 /* ===================================== */
 
-/* Mobile Layout (Portrait) - Avatar arriba, Grid abajo */
+/* Mobile Layout (Portrait) - Avatar arriba, Grid en medio, Botones abajo */
 @media (max-width: 768px) {
   .avatar-grid-modal {
     flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
   }
 
   /* Header más compacto en móvil */
@@ -483,6 +521,7 @@
     padding: 16px 12px 12px 12px;
     min-height: 70px;
     gap: 10px;
+    flex-shrink: 0;
   }
 
   /* Primera fila en móvil: búsqueda y animaciones en la misma línea */
@@ -541,17 +580,17 @@
     height: 36px;
   }
 
-  /* Preview del avatar - ahora arriba y más grande */
+  /* Preview del avatar - más compacto pero prominente */
   .avatar-grid-preview {
-    height: 40vh;
+    height: 35vh;
     flex-shrink: 0;
-    padding: 16px;
+    padding: 12px;
     border-bottom: 1px solid #333;
   }
 
   .avatar-preview-img {
-    width: 280px;
-    height: 280px;
+    width: 260px;
+    height: 260px;
   }
 
   .avatar-preview-name {
@@ -563,11 +602,20 @@
     font-size: 14px;
   }
 
-  /* Grid section - ahora abajo con scroll */
+  /* Grid section - área principal con más espacio */
   .avatar-grid-left {
     width: 100vw;
-    height: 65vh;
+    display: flex;
+    flex-direction: column;
     flex: 1;
+    min-height: 0; /* Permite que flex funcione correctamente */
+  }
+
+  /* Contenedor del grid que puede hacer scroll */
+  .avatar-grid-content {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
   }
 
   /* Grid más compacto para móvil */
@@ -589,30 +637,48 @@
     margin-bottom: 2px;
   }
 
-  /* Footer más compacto */
+  /* Footer fijo en la parte inferior de la pantalla */
   .avatar-grid-selector-footer {
-    padding: 12px 16px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
     background: #181818;
-    border-top: 1px solid #333;
+    border-top: 2px solid #333;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
   }
 
   .avatar-grid-selector-footer button {
-    padding: 8px 16px;
-    font-size: 14px;
-    min-height: 40px;
+    padding: 12px 24px;
+    font-size: 16px;
+    min-height: 48px;
+    min-width: 120px;
     touch-action: manipulation;
+    border-radius: 8px;
+    font-weight: 600;
   }
 
   .avatar-grid-selector-footer button:first-child {
-    padding: 8px 18px;
-    font-size: 14px;
+    padding: 12px 24px;
+    font-size: 16px;
+  }
+
+  /* Agregar padding bottom al modal para que el contenido no quede tapado por el footer */
+  .avatar-grid-modal {
+    padding-bottom: 80px;
   }
 }
 
-/* Mobile Landscape - Avatar a la izquierda, Grid a la derecha */
+/* Mobile Landscape - Avatar a la izquierda, Grid a la derecha, Botones fijos */
 @media (max-width: 768px) and (orientation: landscape) {
   .avatar-grid-modal {
     flex-direction: row;
+    padding-bottom: 80px; /* Espacio para botones fijos */
   }
 
   .avatar-grid-preview {
@@ -633,7 +699,7 @@
   }
 
   .avatar-preview-name {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .avatar-preview-meta {
@@ -653,6 +719,23 @@
   .avatar-grid-selector-item img {
     max-width: 55px;
     max-height: 50px;
+  }
+
+  /* Footer sigue fijo en landscape */
+  .avatar-grid-selector-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    padding: 12px 16px;
+  }
+
+  .avatar-grid-selector-footer button {
+    padding: 8px 20px;
+    font-size: 14px;
+    min-height: 36px;
+    min-width: 100px;
   }
 }
 
@@ -723,12 +806,12 @@
     padding: 20px;
   }
 
-  /* Scrollbar más delgada en móvil */
-  .avatar-grid-left::-webkit-scrollbar {
+  /* Scrollbar más delgada en móvil para el contenido del grid */
+  .avatar-grid-content::-webkit-scrollbar {
     width: 6px;
   }
 
-  .avatar-grid-left::-webkit-scrollbar-thumb {
+  .avatar-grid-content::-webkit-scrollbar-thumb {
     border-radius: 6px;
     border: 1px solid #181818;
   }

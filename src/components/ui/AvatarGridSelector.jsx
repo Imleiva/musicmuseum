@@ -144,70 +144,72 @@ export default function AvatarGridSelector({
               </select>
             </div>
           </div>
-          <PredictiveHoverEffect>
-            <div
-              className={`avatar-grid-selector-grid ${
-                smokeActive ? "transitioning" : ""
-              }`}
-            >
-              {filtered.map((item) => (
-                <div
-                  key={item.key}
-                  className={
-                    "avatar-grid-selector-item clickable" +
-                    (preview === item.key ? " selected" : "")
-                  }
-                  onClick={() => {
-                    // Bloquear interacciones durante la transición
-                    if (smokeActive) return;
-
-                    if (preview !== item.key) {
-                      setPreview(item.key);
-
-                      if (localTransitionsEnabled) {
-                        // Con transiciones
-                        if (!preview) {
-                          setDisplayAvatar(item.key);
-                          setSmokeActive(true);
-                        } else {
-                          setNextPrev(item.key);
-                          setSmokeActive(true);
-                        }
-                      } else {
-                        // Sin transiciones: cambio inmediato
-                        setDisplayAvatar(item.key);
-                        setSmokeActive(false); // Asegurar que no hay animación
-                      }
+          <div className="avatar-grid-content">
+            <PredictiveHoverEffect>
+              <div
+                className={`avatar-grid-selector-grid ${
+                  smokeActive ? "transitioning" : ""
+                }`}
+              >
+                {filtered.map((item) => (
+                  <div
+                    key={item.key}
+                    className={
+                      "avatar-grid-selector-item clickable" +
+                      (preview === item.key ? " selected" : "")
                     }
-                  }}
-                >
-                  <img
-                    src={item.logo}
-                    alt={item.name}
-                    className="avatar-grid-logo"
-                  />
-                </div>
-              ))}
-            </div>
-          </PredictiveHoverEffect>
-          <div className="avatar-grid-selector-footer">
-            <button
-              className="clickable"
-              disabled={!preview}
-              onClick={() => {
-                if (preview) {
-                  console.log("Seleccionado:", preview);
-                  onAvatarSelect(preview);
-                  onClose();
-                }
-              }}
-            >
-              {t("avatarGridSelector.ok")}
-            </button>
-            <button className="clickable" onClick={onClose}>
-              {t("avatarGridSelector.cancel")}
-            </button>
+                    onClick={() => {
+                      // Bloquear interacciones durante la transición
+                      if (smokeActive) return;
+
+                      if (preview !== item.key) {
+                        setPreview(item.key);
+
+                        if (localTransitionsEnabled) {
+                          // Con transiciones
+                          if (!preview) {
+                            setDisplayAvatar(item.key);
+                            setSmokeActive(true);
+                          } else {
+                            setNextPrev(item.key);
+                            setSmokeActive(true);
+                          }
+                        } else {
+                          // Sin transiciones: cambio inmediato
+                          setDisplayAvatar(item.key);
+                          setSmokeActive(false); // Asegurar que no hay animación
+                        }
+                      }
+                    }}
+                  >
+                    <img
+                      src={item.logo}
+                      alt={item.name}
+                      className="avatar-grid-logo"
+                    />
+                  </div>
+                ))}
+              </div>
+            </PredictiveHoverEffect>
           </div>
+        </div>
+        <div className="avatar-grid-selector-footer">
+          <button
+            className="clickable"
+            disabled={!preview}
+            onClick={() => {
+              if (preview) {
+                console.log("Seleccionado:", preview);
+                onAvatarSelect(preview);
+                onClose();
+              }
+            }}
+          >
+            {t("avatarGridSelector.ok")}
+          </button>
+          <button className="clickable" onClick={onClose}>
+            {t("avatarGridSelector.cancel")}
+          </button>
         </div>
         <div className="avatar-grid-preview">
           {preview ? (
