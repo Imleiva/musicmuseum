@@ -11,6 +11,8 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease-in-out;
   position: relative;
+  min-width: 48px; /* Ancho mínimo para mantener consistencia */
+  width: auto;
 }
 
 .guide-toolbar-icons {
@@ -49,27 +51,25 @@
   line-height: 1;
 }
 
-/* Toolbar colapsado - funciona en todas las pantallas */
+/* Toolbar colapsado - mantiene el mismo ancho */
 .guide-toolbar.collapsed {
-  width: 32px;
+  /* NO cambiar width - mantener el ancho original */
   background: rgba(30, 0, 0, 0.25);
-  border-radius: 16px 0 0 16px;
-  padding: 6px 2px;
+  border-radius: 12px; /* Mantener border-radius consistente */
+  /* padding se mantiene igual */
 }
 
-/* Iconos colapsados - funciona en todas las pantallas */
+/* Iconos colapsados - mantienen el espacio pero se ocultan */
 .guide-toolbar-icons.collapsed {
-  max-height: 0;
   opacity: 0;
-  transform: translateX(10px);
-  gap: 0;
+  pointer-events: none; /* Evitar interacción */
+  /* NO cambiar height ni transform para mantener el espacio */
 }
 
 .guide-toolbar-icons.collapsed .guide-toolbar-btn {
-  transform: scale(0);
   opacity: 0;
-  margin: 0;
-  padding: 0;
+  pointer-events: none;
+  /* NO cambiar scale ni margin para mantener el espacio */
 }
 
 .mobile-only {
