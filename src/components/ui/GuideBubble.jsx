@@ -6,7 +6,7 @@ export default function GuideBubble({ text, title, onClick }) {
   const textRef = useRef(null);
   const CHARS_PER_VIEW = 120; // Caracteres aproximados que se muestran por vista en móvil
 
-  // Detectar si es móvil
+  // Detectar si es móvil (solo dispositivos muy pequeños)
   useEffect(() => {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth <= 768);

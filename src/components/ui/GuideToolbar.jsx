@@ -64,9 +64,9 @@ export default function GuideToolbar({
   ];
   return (
     <div className={`guide-toolbar ${isCollapsed ? "collapsed" : ""}`}>
-      {/* Botón de toggle para móvil */}
+      {/* Botón de toggle para todas las pantallas */}
       <button
-        className="guide-toolbar-toggle mobile-only"
+        className="guide-toolbar-toggle"
         onClick={onToggleCollapse}
         title={isCollapsed ? "Mostrar herramientas" : "Ocultar herramientas"}
       >
