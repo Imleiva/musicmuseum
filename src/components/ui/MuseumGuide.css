@@ -174,29 +174,39 @@
     margin: 0;
   }
 
-  /* Container del avatar - FORZAR posición inferior */
+  /* Container del avatar - REESTRUCTURADO para móvil */
   .museum-guide-avatar-toolbar-container {
     order: 2; /* Después de la toolbar */
     position: fixed; /* Posición fija en la parte inferior */
     bottom: 0; /* Pegado al fondo */
     left: 0;
     right: 0;
-    flex-direction: row; /* Mantener horizontal para avatar y burbujas */
-    align-items: flex-end;
-    justify-content: space-between; /* Distribuir: burbuja izquierda, avatar derecha */
+    flex-direction: column; /* Cambiar a columna para separar elementos */
+    align-items: stretch; /* Ocupar todo el ancho */
+    justify-content: flex-end; /* Elementos al fondo */
     margin: 0; /* Sin márgenes para aprovechar todo el espacio */
     padding: 16px 20px 20px 16px; /* Padding normal */
-    gap: 0; /* Sin gap, que space-between los separe */
+    gap: 0; /* Sin gap */
     width: auto;
     height: auto;
     z-index: 20; /* Encima del contenido 3D */
   }
 
+  /* Contenedor de burbuja - separado del avatar */
+  .museum-guide-avatar-bubble-container {
+    order: 1; /* Burbuja primero */
+    position: relative;
+    width: 55%; /* Burbuja ocupa 55% del ancho */
+    align-self: flex-start; /* Alineada a la izquierda */
+    margin-bottom: 8px; /* Pequeña separación del avatar */
+  }
+
   .museum-guide-avatar-wrapper {
-    order: 2; /* Avatar a la derecha */
+    order: 2; /* Avatar segundo */
     margin: 0;
     flex-shrink: 0; /* No comprimir el avatar */
-    width: 45%; /* Avatar ocupa casi la mitad del ancho */
+    width: 45%; /* Avatar ocupa 45% del ancho */
+    align-self: flex-end; /* Alineado a la derecha */
     display: flex;
     justify-content: flex-end; /* Alinear avatar a la derecha dentro de su espacio */
   }
@@ -218,13 +228,6 @@
   }
 
   /* Bubble reposicionada para ocupar el espacio libre */
-  .museum-guide-avatar-bubble-container {
-    order: 1; /* Burbuja a la izquierda */
-    width: 55%; /* Burbuja ocupa poco más de la mitad */
-    max-width: none; /* Sin límite máximo */
-    margin-right: 0; /* Sin margen, space-between se encarga */
-  }
-
   .museum-guide-avatar-bubble-container .museum-guide-bubble {
     position: relative; /* Cambiar a relativo dentro del container */
     bottom: auto;
