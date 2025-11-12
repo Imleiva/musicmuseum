@@ -18,13 +18,12 @@ export default function RockNavigator({
   const { t } = useTranslation();
   const { showTooltip, hideTooltip } = useTooltipContext();
 
-  // Estado para controlar si el navigator está contraído
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  // Estado para controlar si el navigator está contraído - iniciar cerrado por defecto
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
-  // Detectar si es móvil y contraer por defecto
+  // Mantener cerrado por defecto en todas las resoluciones
   useEffect(() => {
-    const isMobile = window.innerWidth <= 768;
-    setIsCollapsed(isMobile);
+    setIsCollapsed(true);
   }, []);
 
   const toggleCollapsed = () => {
@@ -69,7 +68,7 @@ export default function RockNavigator({
               onClick={() => onRoomChange(index)}
               onMouseEnter={() => {
                 const message = getTooltipMessage(index);
-                const title = `🎸 ${roomNames[index]}`;
+                const title = roomNames[index]; // Removed guitar emoji 🎸
                 showTooltip(message, title);
               }}
               onMouseLeave={() => {
