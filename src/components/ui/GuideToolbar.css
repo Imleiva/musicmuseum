@@ -76,37 +76,23 @@
   display: none;
 }
 
-/* Media query para móvil - ajustes específicos móviles */
+/* Media query para móvil - OCULTAR COMPLETAMENTE */
 @media (max-width: 768px) {
   .guide-toolbar {
-    gap: 8px;
-    padding: 8px 6px; /* Más compacto para la parte superior */
-    margin: 0;
-    position: relative;
-    overflow: hidden;
-    background: none !important; /* Sin fondo en móvil para eliminar la sombra */
-    border-radius: 12px;
-    box-shadow: none !important; /* Sin sombra en móvil */
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
   }
 
-  .guide-toolbar-btn {
-    padding: 4px;
-    transition: all 0.2s ease;
-  }
-
-  .guide-toolbar-btn img {
-    width: 24px !important;
-    height: 24px !important;
-  }
-
-  /* Toggle button más pequeño en móvil */
-  .guide-toolbar-toggle {
-    width: 24px;
-    height: 24px;
-  }
-
-  .toggle-icon {
-    font-size: 14px;
+  .guide-toolbar-btn,
+  .guide-toolbar-toggle,
+  .guide-toolbar-icons,
+  .museum-guide-toolbar-container {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
   }
 }
 
