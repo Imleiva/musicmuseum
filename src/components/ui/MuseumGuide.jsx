@@ -87,6 +87,7 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
   }, [activeTool, showBubbles]);
 
   const handleToolSelect = (tool) => {
+    console.log("[MuseumGuide] handleToolSelect:", tool);
     if (tool === "settings") {
       onOpenSettings();
     } else if (tool === "curiosities") {
@@ -105,6 +106,9 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
         setShowBubbles(false);
       }
     }
+    setTimeout(() => {
+      console.log("[MuseumGuide] activeTool:", activeTool);
+    }, 200);
   };
 
   const handleAvatarSelectorClose = () => {
@@ -298,13 +302,15 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
         </div>
       </div>
       <AvatarGridSelector
-        isOpen={activeTool === "customize"}
+        isOpen={activeTool === "customize" && typeof window !== "undefined"}
         onAvatarSelect={(key) => {
           handleAvatarChange(key);
+          console.log("[MuseumGuide] Avatar seleccionado:", key);
         }}
         onClose={handleAvatarSelectorClose}
         currentAvatar={avatar}
         transitionsEnabled={settings.avatarTransitions}
+        debugActiveTool={activeTool}
       />
     </div>
   );
