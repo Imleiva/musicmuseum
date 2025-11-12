@@ -26,17 +26,27 @@ import {
 } from "./components/tooltips";
 
 import concertData from "./data/concerts";
+import MobileDrawerMenu from "./components/ui/MobileDrawerMenu";
+
+import AvatarGridSelector from "./components/ui/AvatarGridSelector.jsx";
 
 function App() {
   const [currentRoom, setCurrentRoom] = useState(0);
   const [selectedConcert, setSelectedConcert] = useState(null);
   const [showBlur, setShowBlur] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [showAvatarGrid, setShowAvatarGrid] = useState(false);
+  const [currentAvatar, setCurrentAvatar] = useState("leiva");
+  const [showAvatarGridDesktop, setShowAvatarGridDesktop] = useState(false);
+
+  // Detectar si es móvil para ajustar posición de cámara
+  const isMobileDevice = window.innerWidth <= 768;
+  const cameraZ = isMobileDevice ? 25 : 21; // Más lejos en mobile para ver mejor
 
   const cameraPositions = [
-    [0, 1.7, 21],
-    [100, 1.7, 21],
-    [200, 1.7, 21],
+    [0, 1.7, cameraZ],
+    [100, 1.7, cameraZ],
+    [200, 1.7, cameraZ],
   ];
 
   const controlTargets = useMemo(
@@ -92,17 +102,46 @@ function App() {
 
   const initialCameraPosition = cameraPositions[currentRoom];
 
+  // Detectar si es móvil
+  const isMobile = window.innerWidth <= 768;
+
   return (
     <TranslationProvider>
       <TooltipProvider>
         <WebGLErrorFallback>
           <div className="app">
             <BlurBackground show={showBlur} />
-            <RockNavigator
-              currentRoom={currentRoom}
-              onRoomChange={setCurrentRoom}
-              totalRooms={3}
-            />
+            {isMobile && (
+              <MobileDrawerMenu
+                onNavigate={(section) => {
+                  if (section === "metal") setCurrentRoom(0);
+                  if (section === "rock") setCurrentRoom(1);
+                  if (section === "punk") setCurrentRoom(2);
+                  if (section === "settings") setShowSettingsModal(true);
+                  if (section === "avatar") setShowAvatarGrid(true);
+                }}
+              />
+            )}
+            {/* AvatarGridSelector modal for avatar selection */}
+            {showAvatarGrid && (
+              <AvatarGridSelector
+                isOpen={showAvatarGrid}
+                onAvatarSelect={(avatarKey) => {
+                  setCurrentAvatar(avatarKey);
+                  setShowAvatarGrid(false);
+                }}
+                onClose={() => setShowAvatarGrid(false)}
+                currentAvatar={currentAvatar}
+                transitionsEnabled={true}
+              />
+            )}
+            {!isMobile && (
+              <RockNavigator
+                currentRoom={currentRoom}
+                onRoomChange={setCurrentRoom}
+                totalRooms={3}
+              />
+            )}
 
             <ControlsHelp />
 
@@ -114,7 +153,7 @@ function App() {
             <Canvas
               camera={{
                 position: initialCameraPosition,
-                fov: 40,
+                fov: isMobile ? 50 : 40, // FOV más amplio en mobile
                 near: 0.3,
                 far: 1000,
               }}
@@ -194,7 +233,23 @@ function App() {
             <MuseumGuide
               onOverlay={handleGuideOverlay}
               onOpenSettings={handleOpenSettings}
+              onCustomizeAvatar={() => setShowAvatarGridDesktop(true)}
+              currentAvatar={currentAvatar}
             />
+
+            {/* Show AvatarGridSelector on desktop when customizing avatar */}
+            {!isMobile && showAvatarGridDesktop && (
+              <AvatarGridSelector
+                isOpen={showAvatarGridDesktop}
+                onAvatarSelect={(avatarKey) => {
+                  setCurrentAvatar(avatarKey);
+                  setShowAvatarGridDesktop(false);
+                }}
+                onClose={() => setShowAvatarGridDesktop(false)}
+                currentAvatar={currentAvatar}
+                transitionsEnabled={true}
+              />
+            )}
 
             <SettingsModal
               isOpen={showSettingsModal}
