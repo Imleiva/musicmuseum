@@ -37,14 +37,33 @@ export default function AvatarGridSelector({
   }, [transitionsEnabled]);
 
   // Generar listas localizadas de géneros y décadas
-  const localizedGenres = [
-    t("avatarGridSelector.allGenres"),
-    ...Array.from(new Set(bands.map((b) => b.genre))),
-  ];
+  const genreSet = Array.from(new Set(bands.map((b) => b.genre))).filter(
+    (g) =>
+      g &&
+      g.toLowerCase() !== "genero" &&
+      g !== t("avatarGridSelector.allGenres")
+  );
+  const localizedGenres = [t("avatarGridSelector.allGenres"), ...genreSet];
 
+  const decadeSet = Array.from(
+    new Set([...avatars, ...bands].map((b) => b.decade))
+  ).filter(
+    (d) =>
+      d &&
+      d !== "-" &&
+      d.toLowerCase() !== "epoca" &&
+      d !== t("avatarGridSelector.allDecades")
+  );
+  const sortedDecades = decadeSet.sort((a, b) => {
+    // Ordenar por década numérica si es posible, si no, por orden alfabético
+    const numA = parseInt(a);
+    const numB = parseInt(b);
+    if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+    return a.localeCompare(b);
+  });
   const localizedDecades = [
     t("avatarGridSelector.allDecades"),
-    ...Array.from(new Set([...avatars, ...bands].map((b) => b.decade))),
+    ...sortedDecades,
   ];
   const [preview, setPreview] = useState(currentAvatar || "leiva");
   const [nextPrev, setNextPrev] = useState(null);
@@ -89,7 +108,7 @@ export default function AvatarGridSelector({
       <div className="avatar-grid-modal">
         <div className="avatar-grid-left">
           <div className="avatar-grid-selector-header">
-            <div className="header-row-1">
+            <div className="header-row-2">
               <input
                 type="text"
                 className="clickable search-input"
@@ -97,23 +116,6 @@ export default function AvatarGridSelector({
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <div className="transitions-switch-container">
-                <span className="transitions-switch-label">
-                  Animaciones {t.transitionsToggle}
-                </span>
-                <label className="transitions-switch clickable">
-                  <input
-                    type="checkbox"
-                    checked={localTransitionsEnabled}
-                    onChange={(e) =>
-                      setLocalTransitionsEnabled(e.target.checked)
-                    }
-                  />
-                  <span className="transitions-switch-slider"></span>
-                </label>
-              </div>
-            </div>
-            <div className="header-row-2">
               <select
                 className="clickable"
                 value={genre}
@@ -142,6 +144,21 @@ export default function AvatarGridSelector({
                   </option>
                 ))}
               </select>
+              <div className="transitions-switch-container">
+                <span className="transitions-switch-label">
+                  Animaciones {t.transitionsToggle}
+                </span>
+                <label className="transitions-switch clickable">
+                  <input
+                    type="checkbox"
+                    checked={localTransitionsEnabled}
+                    onChange={(e) =>
+                      setLocalTransitionsEnabled(e.target.checked)
+                    }
+                  />
+                  <span className="transitions-switch-slider"></span>
+                </label>
+              </div>
             </div>
           </div>
           <div className="avatar-grid-content">
@@ -193,8 +210,21 @@ export default function AvatarGridSelector({
             </PredictiveHoverEffect>
           </div>
           <div className="avatar-grid-selector-footer">
+            {/* Switch de animaciones primero en footer para mobile */}
+            <div className="footer-transitions-switch">
+              <span className="footer-transitions-label">Animaciones</span>
+              <label className="transitions-switch clickable">
+                <input
+                  type="checkbox"
+                  checked={localTransitionsEnabled}
+                  onChange={(e) => setLocalTransitionsEnabled(e.target.checked)}
+                />
+                <span className="transitions-switch-slider"></span>
+              </label>
+            </div>
+
             <button
-              className="clickable"
+              className="clickable footer-ok-btn"
               disabled={!preview}
               onClick={() => {
                 if (preview) {
@@ -204,10 +234,11 @@ export default function AvatarGridSelector({
                 }
               }}
             >
-              {t("avatarGridSelector.ok")}
+              OK
             </button>
-            <button className="clickable" onClick={onClose}>
-              {t("avatarGridSelector.cancel")}
+
+            <button className="clickable footer-cancel-btn" onClick={onClose}>
+              <span className="cancel-icon">←</span>
             </button>
           </div>
         </div>

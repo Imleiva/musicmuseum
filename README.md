@@ -1,16 +1,16 @@
-# 🎸 Rock & Metal Museum
+# Rock & Metal Museum
 
 An immersive 3D virtual museum experience dedicated to rock and metal concerts. Walk through different themed rooms, explore concert posters, watch historical footage, and listen to legendary performances.
 
-## 🌐 Live Demo
+## Live Demo
 
-**🚀 [Visit the Museum Live](https://imleiva.github.io/musicmuseum/)**
+**[Visit the Museum Live](https://imleiva.github.io/musicmuseum/)**
 
 _Experience the 3D virtual museum directly in your browser!_
 
 <!-- Last deployment attempt: 2025-10-25 - Mobile panels optimized -->
 
-## 🌟 Features
+## Features
 
 - **3D Immersive Experience** - Navigate through realistic virtual rooms with WebGL rendering
 - **Collapsible Mobile Interface** - Smart panels that auto-collapse on mobile for better UX
@@ -24,7 +24,7 @@ _Experience the 3D virtual museum directly in your browser!_
 - **Responsive Design** - Works on desktop and mobile devices
 - **GitHub Pages Deployment** - Automatically deployed and always up-to-date
 
-## � Getting Started
+## Getting Started
 
 1. **Clone the repository**
 
@@ -49,7 +49,7 @@ _Experience the 3D virtual museum directly in your browser!_
 
 [](http://localhost:5173)
 
-## 🎮 Controls & Interaction
+## Controls & Interaction
 
 - **Mouse Drag** - Rotate 360° view around the museum
 - **Mouse Scroll** - Zoom in/out for closer inspection
@@ -60,14 +60,14 @@ _Experience the 3D virtual museum directly in your browser!_
 - **Settings Panel** - Access language and customization options
 - **Curiosities Mode** - Toggle fun facts and trivia display
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **React 18** - UI Framework
 - **React Three Fiber** - 3D Rendering
 - **@react-three/drei** - 3D Utilities
 - **Vite** - Build Tool & Dev Server
 
-## 📁 Project Structure
+## Project Structure
 
 src/
 ├── components/
@@ -81,7 +81,7 @@ src/
 ├── data/ # Concert information
 │ └── concerts.js
 └── assets/ # Media resources
-🎨 Customization
+Customization
 
 ### Adding New Concerts
 
@@ -104,7 +104,7 @@ Edit `src/data/concerts.js` to add new concert information:
 
 Each room supports different color schemes and atmospheres. Modify the theme in `VenueRoom.jsx` component.
 
-## 🚀 Deployment
+## Deployment
 
 ### GitHub Pages (Production)
 
@@ -140,7 +140,7 @@ The app is automatically deployed to GitHub Pages at: **[https://imleiva.github.
 
 WebGL 2.0 support required for optimal 3D performance.
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create your feature branch
@@ -148,12 +148,12 @@ WebGL 2.0 support required for optimal 3D performance.
 4. Push to the branch
 5. Open a Pull Request
 
-## 📝 License
+## License
 
 This project is open source and available under the MIT License.
 
 ---
 
-🎸 **Enjoy exploring the Leiva'n Roll Hall Of Fame!** 🤘
+**Enjoy exploring the Leiva'n Roll Hall Of Fame!** 🤘
 
 _Experience legendary concerts in an immersive 3D environment at [imleiva.github.io/musicmuseum](https://imleiva.github.io/musicmuseum/)_

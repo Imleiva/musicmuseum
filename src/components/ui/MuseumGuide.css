@@ -15,7 +15,9 @@
 /* Bubble fijo en la esquina inferior izquierda del contenedor */
 .museum-guide-avatar-bubble-container .museum-guide-bubble {
   position: fixed;
-  right: 45%; /* Más separado del avatar */
+  right: calc(
+    280px + 50px + 50px
+  ); /* Ancho avatar (280px) + margen derecho del avatar (50px) + separación bubble (50px) */
   bottom: 30px;
   z-index: 10;
 }
@@ -196,7 +198,6 @@
   .museum-guide-avatar-bubble-container {
     order: 1; /* Burbuja primero */
     position: relative;
-    width: 55%; /* Burbuja ocupa 55% del ancho */
     flex-shrink: 1; /* Puede reducirse si es necesario */
   }
 
@@ -204,9 +205,25 @@
     order: 2; /* Avatar segundo */
     margin: 0;
     flex-shrink: 0; /* No comprimir el avatar */
-    width: 40%; /* Avatar ocupa 40% para dejar más espacio a burbuja */
+    width: 30%; /* Avatar ocupa 30% para dejar más espacio a burbuja */
     display: flex;
     justify-content: flex-end; /* Alinear avatar a la derecha dentro de su espacio */
+    padding-left: 10px; /* Gap entre avatar y burbuja */
+  }
+
+  .museum-guide-avatar {
+    width: 100%; /* Ocupar todo el ancho del wrapper */
+    max-width: 240px !important; /* Fijar tamaño grande siempre */
+    min-width: 160px;
+    height: auto;
+    margin: 0;
+    transition: none;
+  }
+
+  .museum-guide-avatar-wrapper.toolbar-collapsed .museum-guide-avatar {
+    width: 100%;
+    max-width: 240px !important;
+    min-width: 160px;
   }
 
   .museum-guide-avatar {
@@ -340,7 +357,9 @@
 /* Desktop - Layout original optimizado */
 @media (min-width: 1025px) {
   .museum-guide-avatar-bubble-container .museum-guide-bubble {
-    right: 20%;
+    right: calc(
+      280px + 50px + 50px
+    ); /* Avatar (280px) + margen derecho (50px) + separación (50px) */
     bottom: 30px;
   }
 }

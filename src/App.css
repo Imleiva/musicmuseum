@@ -515,12 +515,6 @@ body {
     padding: 1rem;
   }
 
-  /* .poster-modal {
-    margin: 1rem;
-    padding: 1.5rem;
-    max-height: 85vh;
-  } */
-
   .room-buttons {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -542,11 +536,6 @@ body {
   .museum-header p {
     font-size: 0.8rem;
   }
-
-  /* .poster-modal {
-    margin: 0.5rem;
-    padding: 1rem;
-  } */
 }
 
 /* ===================================== */

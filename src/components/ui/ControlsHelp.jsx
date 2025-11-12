@@ -11,13 +11,12 @@ import { useTranslation } from "../../hooks/useTranslation";
 export default function ControlsHelp() {
   const { t } = useTranslation();
 
-  // Estado para controlar si el panel está contraído
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  // Estado para controlar si el panel está contraído - iniciar cerrado siempre
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
-  // Detectar si es móvil y contraer por defecto
+  // Mantener cerrado por defecto en todas las resoluciones
   useEffect(() => {
-    const isMobile = window.innerWidth <= 768;
-    setIsCollapsed(isMobile);
+    setIsCollapsed(true);
   }, []);
 
   const toggleCollapsed = () => {

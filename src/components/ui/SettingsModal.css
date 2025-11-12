@@ -332,6 +332,10 @@ input:checked + .rock-slider:before {
     padding: 16px 20px 12px;
   }
 
+  .settings-modal-title {
+    font-size: 1.6rem;
+  }
+
   .settings-modal-content {
     padding: 16px 20px;
   }
@@ -341,37 +345,71 @@ input:checked + .rock-slider:before {
   }
 
   .settings-modal-actions {
-    flex-direction: column;
-    gap: 12px;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
   }
 
   .settings-main-actions {
-    width: 100%;
-    justify-content: space-between;
+    flex: 1;
+    display: flex;
+    gap: 10px;
+    min-width: 100%;
   }
 
   .settings-group-title {
-    font-size: 1rem;
+    font-size: 1.2rem;
+  }
+
+  .settings-option {
+    padding: 14px 0;
+  }
+
+  /* Solo las opciones con toggle-buttons se vuelven columna */
+  .settings-option:has(.toggle-buttons) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  /* Las opciones con rock-switch mantienen el layout horizontal */
+  .settings-option:has(.rock-switch) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .settings-label {
-    font-size: 0.9rem;
+    font-size: 1.05rem;
+  }
+
+  /* Label ocupa todo el ancho solo en opciones con toggle-buttons */
+  .settings-option:has(.toggle-buttons) .settings-label {
+    width: 100%;
   }
 
   .toggle-btn {
-    padding: 6px 10px;
-    font-size: 0.8rem;
+    padding: 10px 14px;
+    font-size: 1rem;
+    flex: 1;
   }
 
   .toggle-buttons {
-    gap: 6px;
+    gap: 8px;
+    width: 100%;
+    display: flex;
   }
 
-  .settings-reset-btn,
+  .settings-reset-btn {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1rem;
+  }
+
   .settings-cancel-btn,
   .settings-save-btn {
     flex: 1;
-    padding: 8px 12px;
-    font-size: 0.8rem;
+    padding: 12px 16px;
+    font-size: 1rem;
   }
 }

@@ -37,13 +37,21 @@ const VideoProjection = React.memo(function VideoProjection({
     const video = document.createElement("video");
     video.src = videoUrl;
     video.crossOrigin = "anonymous";
-    video.loop = true;
+    // No hacer loop si es el video de créditos
+    const isCreditsVideo = videoUrl.includes("creditos.mp4");
+    video.loop = !isCreditsVideo;
     video.muted = true;
     video.playsInline = true;
     video.autoplay = true;
     video.preload = "auto";
-    video.width = 512;
-    video.height = 288;
+    // Reduce video size for mobile
+    if (window.innerWidth < 600) {
+      video.width = 340;
+      video.height = 190;
+    } else {
+      video.width = 512;
+      video.height = 288;
+    }
 
     const handleLoadedData = () => {
       setVideoLoaded(true);
@@ -250,7 +258,8 @@ export default function Projector({ position, genre = "metal" }) {
 
     const interval = setInterval(() => {
       setCurrentVideoIndex((prevIndex) => {
-        const newIndex = (prevIndex + 1) % videoPlaylist.length;
+        // Solo rotar entre los 2 primeros videos (0 y 1), excluyendo créditos (2)
+        const newIndex = prevIndex === 0 ? 1 : 0;
         console.log(
           `🎬 Switching to video: ${videoPlaylist[newIndex]?.name || "Unknown"}`
         );

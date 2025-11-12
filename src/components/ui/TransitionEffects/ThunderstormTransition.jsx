@@ -115,9 +115,13 @@ const ThunderstormTransition = ({
                 : 0,
             transition: "opacity 0.8s ease-in-out",
             maskImage:
-              "radial-gradient(ellipse at center, black 50%, transparent 80%)",
+              window.innerWidth <= 768
+                ? "radial-gradient(ellipse 120% 100% at center, black 60%, transparent 95%)"
+                : "radial-gradient(ellipse at center, black 50%, transparent 80%)",
             WebkitMaskImage:
-              "radial-gradient(ellipse at center, black 50%, transparent 80%)",
+              window.innerWidth <= 768
+                ? "radial-gradient(ellipse 120% 100% at center, black 60%, transparent 95%)"
+                : "radial-gradient(ellipse at center, black 50%, transparent 80%)",
           }}
           onLoadedData={() => console.log("Thunderstorm video loaded")}
           onTimeUpdate={handleTimeUpdate}
