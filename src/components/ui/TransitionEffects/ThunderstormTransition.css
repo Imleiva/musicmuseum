@@ -27,3 +27,19 @@
   z-index: 1;
   pointer-events: none;
 }
+
+/* Asegurar que en mobile el video ocupe todo el ancho */
+@media (max-width: 768px) {
+  .thunderstorm-video {
+    width: 100vw !important;
+    height: 100%;
+    left: 0;
+    right: 0;
+    object-fit: cover;
+  }
+
+  .thunderstorm-transition-container {
+    width: 120vw;
+    max-width: 120vw;
+  }
+}
