@@ -42,14 +42,14 @@
 
 .poster-modal {
   position: fixed !important;
-  top: 50% !important;
+  top: 5vh !important;
   left: 50% !important;
-  transform: translate(-50%, -50%) !important;
+  transform: translateX(-50%) !important;
   width: 92vw !important;
   max-width: 720px !important;
   min-width: 260px !important;
   min-height: 320px !important;
-  max-height: 85vh !important;
+  max-height: 90vh !important;
   background: rgba(24, 24, 24, 0.85) !important;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 0 2px #ff4444 !important;
   border-radius: 18px !important;
@@ -64,8 +64,6 @@
   margin: auto !important;
   pointer-events: all !important;
   isolation: isolate !important;
-  align-items: center !important;
-  justify-content: center !important;
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }

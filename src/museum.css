@@ -721,37 +721,7 @@ div[style*="position: absolute"] div[style*="transform-style: preserve-3d"] {
   cursor: url("../public/images/pointers/hand.png") 10 10, pointer;
 }
 
-/* Poster modal */
-
-/* MODAL POSTER UNIFICADO Y CENTRADO */
-.poster-modal {
-  position: fixed !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) translateZ(999999px) !important;
-  z-index: 2147483647 !important;
-  background: linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 0.95),
-    rgba(40, 0, 0, 0.9)
-  ) !important;
-  border: 2px solid #ff4444 !important;
-  border-radius: 20px !important;
-  padding: 2rem !important;
-  max-width: 500px !important;
-  width: 90vw !important;
-  max-height: 85vh !important;
-  overflow: hidden !important;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 68, 68, 0.3) !important;
-  animation: slideInScale 0.4s ease-out !important;
-  margin: auto !important;
-  pointer-events: all !important;
-  isolation: isolate !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
+/* Poster modal styles moved to PosterModal.css */
 
 /* Poster Modal Overlay - Máxima prioridad visual */
 .poster-modal-overlay {
@@ -1047,12 +1017,7 @@ div[data-r3f]:not(.poster-modal-overlay *) {
   z-index: 2147483647 !important;
 }
 
-/* El poster modal también debe estar aislado */
-.poster-modal {
-  contain: layout style paint;
-  will-change: transform;
-  transform: translate3d(0, 0, 1px) !important;
-}
+/* Poster modal styles moved to PosterModal.css */
 
 /* Estilos específicos del poster modal */
 .poster-modal-header {
