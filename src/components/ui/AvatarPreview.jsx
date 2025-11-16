@@ -70,7 +70,12 @@ export default function AvatarPreview({ avatarKey }) {
     const band = bands.find((b) => b.key === avatarKey);
     if (band?.logo) {
       return (
-        <img src={band.logo} alt={band.name} className="avatar-preview-img" />
+        <img
+          src={band.logo}
+          alt={band.name}
+          className="avatar-preview-img"
+          loading="lazy"
+        />
       );
     }
     return null;
@@ -108,6 +113,7 @@ export default function AvatarPreview({ avatarKey }) {
       src={src}
       alt={avatarKey}
       className={className}
+      loading="lazy"
       onError={() => setHasError(true)}
     />
   );

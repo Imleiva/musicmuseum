@@ -234,6 +234,7 @@ export default function PosterModal({ concert, onClose }) {
                     src={images[currentImageIndex]}
                     alt={`${concert.band} - Image ${currentImageIndex + 1}`}
                     className="concert-image"
+                    loading="lazy"
                     onError={(e) => {
                       e.target.style.display = "none";
                     }}
