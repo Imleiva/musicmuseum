@@ -100,7 +100,7 @@ export default function RockPoster({ concert, onSelect }) {
     return "#3a3a3a"; // Gris oscuro neutro que combina bien con el ambiente del museo
   };
 
-  // Efecto de hover con cursor de ojo
+  // Efecto de hover con cursor de ojo - mejorado para móvil
   const handlePointerOver = useCallback((event) => {
     event.stopPropagation();
     setHovered(true);
@@ -118,12 +118,16 @@ export default function RockPoster({ concert, onSelect }) {
 
   const handlePointerOut = useCallback((event) => {
     event.stopPropagation();
-    setHovered(false);
 
-    // Restaurar cursor rock hand explícitamente usando clases
-    document.body.classList.remove("cursor-eye");
-    document.body.classList.remove("cursor-hand");
-    document.body.classList.add("cursor-rock");
+    // Usar timeout para evitar parpadeos en móvil
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHovered(false);
+
+      // Restaurar cursor rock hand explícitamente usando clases
+      document.body.classList.remove("cursor-eye");
+      document.body.classList.remove("cursor-hand");
+      document.body.classList.add("cursor-rock");
+    }, 50);
   }, []);
 
   const handleClick = useCallback(
@@ -245,14 +249,7 @@ export default function RockPoster({ concert, onSelect }) {
       </mesh>
 
       {/* Póster del concierto - ajustado para cubrir completamente el bisel */}
-      <mesh
-        position={[0, 0, 0.01]}
-        castShadow
-        receiveShadow
-        onPointerOver={handlePointerOver}
-        onPointerOut={handlePointerOut}
-        onClick={handleClick}
-      >
+      <mesh position={[0, 0, 0.01]} castShadow receiveShadow>
         <planeGeometry args={[frameWidth - 0.14, frameHeight - 0.14]} />
         {hasImage ? (
           <Suspense
@@ -263,6 +260,17 @@ export default function RockPoster({ concert, onSelect }) {
         ) : (
           <FallbackMaterial color={getUnifiedPosterColor()} />
         )}
+      </mesh>
+
+      {/* Área de detección invisible más grande para mejor hover (especialmente en móvil) */}
+      <mesh
+        position={[0, 0, 0.03]}
+        onPointerOver={handlePointerOver}
+        onPointerOut={handlePointerOut}
+        onClick={handleClick}
+      >
+        <planeGeometry args={[frameWidth + 0.5, frameHeight + 0.5]} />
+        <meshBasicMaterial transparent opacity={0} />
       </mesh>
 
       {/* Cristal protector simplificado - ajustado al tamaño del poster */}
