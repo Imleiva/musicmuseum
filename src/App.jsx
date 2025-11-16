@@ -119,6 +119,11 @@ function App() {
                 far: 1000,
               }}
               className="canvas-3d"
+              raycaster={{
+                params: {
+                  Mesh: { threshold: 0.5 }, // Increase detection threshold for better mobile performance
+                },
+              }}
               gl={{
                 powerPreference: "default",
                 antialias: false,
