@@ -126,8 +126,10 @@ body.cursor-hand.cursor-rock
   cursor: var(--cursor-hand) !important;
 }
 
+/* CURSOR EYE - MÁXIMA PRIORIDAD en posters */
 body.cursor-eye,
-body.cursor-eye *:not(button):not(a):not(.clickable) {
+body.cursor-eye *:not(button):not(a):not(.clickable),
+body.cursor-eye canvas {
   cursor: var(--cursor-eye) !important;
 }
 

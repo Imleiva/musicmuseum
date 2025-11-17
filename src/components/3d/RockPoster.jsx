@@ -100,34 +100,57 @@ export default function RockPoster({ concert, onSelect }) {
     return "#3a3a3a"; // Gris oscuro neutro que combina bien con el ambiente del museo
   };
 
-  // Efecto de hover con cursor de ojo - mejorado para móvil
+  // Efecto de hover con cursor de ojo - mejorado para movimientos rápidos
   const handlePointerOver = useCallback((event) => {
     event.stopPropagation();
-    setHovered(true);
 
-    // Aplicar cursor de ojo usando clase en body
-    document.body.classList.add("cursor-eye");
-    document.body.classList.remove("cursor-rock");
-    document.body.classList.remove("cursor-hand");
-
-    // Limpiar timeout anterior
+    // Cancelar cualquier timeout pendiente inmediatamente
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
     }
+
+    setHovered(true);
+
+    // Aplicar cursor de ojo de forma síncrona (sin delay)
+    requestAnimationFrame(() => {
+      document.body.classList.add("cursor-eye");
+      document.body.classList.remove("cursor-rock");
+      document.body.classList.remove("cursor-hand");
+
+      // Forzar también en el canvas directamente para mayor consistencia
+      const canvas = document.querySelector("canvas");
+      if (canvas) {
+        canvas.style.cursor = "var(--cursor-eye)";
+      }
+    });
   }, []);
 
   const handlePointerOut = useCallback((event) => {
     event.stopPropagation();
 
-    // Usar timeout para evitar parpadeos en móvil
+    // Limpiar timeout anterior si existe
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+
+    // Timeout muy corto para evitar parpadeos pero responder rápido
     hoverTimeoutRef.current = setTimeout(() => {
       setHovered(false);
 
-      // Restaurar cursor rock hand explícitamente usando clases
-      document.body.classList.remove("cursor-eye");
-      document.body.classList.remove("cursor-hand");
-      document.body.classList.add("cursor-rock");
-    }, 50);
+      // Restaurar cursor rock hand usando requestAnimationFrame para sincronización
+      requestAnimationFrame(() => {
+        document.body.classList.remove("cursor-eye");
+        document.body.classList.remove("cursor-hand");
+        document.body.classList.add("cursor-rock");
+
+        // Forzar también en el canvas directamente
+        const canvas = document.querySelector("canvas");
+        if (canvas) {
+          canvas.style.cursor = "var(--cursor-rock)";
+        }
+      });
+    }, 30); // Reducido de 50ms a 30ms para mejor respuesta
   }, []);
 
   const handleClick = useCallback(
@@ -269,7 +292,7 @@ export default function RockPoster({ concert, onSelect }) {
         onPointerOut={handlePointerOut}
         onClick={handleClick}
       >
-        <planeGeometry args={[frameWidth + 0.5, frameHeight + 0.5]} />
+        <planeGeometry args={[frameWidth + 1.5, frameHeight + 1.5]} />
         <meshBasicMaterial transparent opacity={0} />
       </mesh>
 
