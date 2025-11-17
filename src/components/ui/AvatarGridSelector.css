@@ -11,17 +11,17 @@
   background: #e53935;
   color: #fff;
   border: none;
-  border-radius: 8px;
-  padding: 10px 28px;
-  font-size: 17px;
-  font-weight: 700;
-  margin-right: 12px;
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+  border-radius: 6px;
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-right: 8px;
+  cursor: var(--cursor-hand) !important;
   transition: background 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 12px #e5393533;
+  box-shadow: 0 2px 8px #e5393533;
 }
 .avatar-grid-selector-footer button:first-child:disabled {
-  background: #a7a7a7;
+  background: #e53935;
   color: #eee;
   cursor: not-allowed;
   box-shadow: none;
@@ -32,13 +32,32 @@
 /* Header de filtros y búsqueda */
 .avatar-grid-selector-header {
   display: flex;
+  flex-direction: column;
   gap: 12px;
-  align-items: center;
-  padding: 24px 24px 12px 24px;
+  padding: 20px 24px 16px 24px;
   background: #181818;
   border-bottom: 1px solid #222;
   flex-shrink: 0;
-  min-height: 80px;
+  min-height: 90px;
+}
+
+/* Primera fila: Búsqueda y Animaciones */
+.header-row-1 {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Segunda fila: Selectores */
+.header-row-2 {
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
 .avatar-grid-selector-header input[type="text"],
@@ -53,7 +72,7 @@
   font-size: 16px;
   outline: none;
   transition: border 0.2s, box-shadow 0.2s;
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+  cursor: var(--cursor-hand) !important;
   box-shadow: 0 0 0 1px transparent;
   height: 40px;
   box-sizing: border-box;
@@ -76,23 +95,22 @@
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;
   align-items: center;
-  gap: 12px;
-  margin-left: 8px;
+  gap: 8px;
   flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .transitions-switch-label {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   color: #f1f1f1;
-  min-width: 80px;
 }
 
 .transitions-switch {
   position: relative;
   display: inline-block;
-  width: 50px;
-  height: 26px;
+  width: 44px;
+  height: 24px;
 }
 
 .transitions-switch input {
@@ -111,15 +129,15 @@
   background-color: #333;
   border: 2px solid #555;
   transition: all 0.3s ease;
-  border-radius: 26px;
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+  border-radius: 24px;
+  cursor: var(--cursor-hand) !important;
 }
 
 .transitions-switch-slider:before {
   position: absolute;
   content: "OFF";
-  height: 18px;
-  width: 18px;
+  height: 16px;
+  width: 16px;
   left: 3px;
   bottom: 2px;
   background-color: #888;
@@ -142,7 +160,7 @@
 }
 
 .transitions-switch input:checked + .transitions-switch-slider:before {
-  transform: translateX(22px);
+  transform: translateX(20px);
   background-color: #fff;
   content: "ON";
   color: transparent;
@@ -164,6 +182,35 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 34px 30px;
+  cursor: var(--cursor-hand) !important;
+}
+
+/* Items del grid de avatares */
+.avatar-grid-selector-item {
+  background: #232323a9;
+  border-radius: 8px;
+  padding: 8px 2px 4px 2px;
+  text-align: center;
+  cursor: var(--cursor-hand) !important;
+  transition: box-shadow 0.1s, background 0.2s, transform 0.2s;
+  min-height: 130px;
+  min-width: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-grid-selector-item.selected {
+  box-shadow: 0 2px 12px #a41d1d6f;
+  transform: scale(1.01);
+  background-color: #7a28277a;
+}
+
+.avatar-grid-selector-item:hover {
+  box-shadow: 0 1px 12px #b422225f;
+  transform: scale(1.02);
+  background-color: #7a292793;
 }
 
 .avatar-grid-logo {
@@ -171,30 +218,73 @@
   max-height: 160px;
   object-fit: contain;
   display: block;
-  margin: 0 auto;
+  margin: 0 auto 4px auto;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.753));
 }
 
 /* Scrollbar personalizado para la columna izquierda */
 .avatar-grid-left {
   overflow-y: auto;
   scrollbar-width: thin; /* Para navegadores compatibles */
-  scrollbar-color: #ab2724 #181818;
+  scrollbar-color: #e53935 #222;
+  cursor: var(--cursor-hand) !important;
 }
+
 .avatar-grid-left::-webkit-scrollbar {
-  width: 10px;
-  background-color: #181818; /* Fondo negro */
+  width: 12px;
+  background-color: #222;
 }
+
 .avatar-grid-left::-webkit-scrollbar-track {
-  background-color: #181818; /* Fondo negro */
+  background-color: #222;
+  border-radius: 6px;
 }
+
 .avatar-grid-left::-webkit-scrollbar-thumb {
-  background-color: #e53935; /* Rojo */
-  border-radius: 8px;
-  border: 2px solid #181818; /* Borde negro */
+  background-color: #e53935;
+  border-radius: 6px;
+  border: 2px solid #222;
+  min-height: 40px;
 }
+
 .avatar-grid-left::-webkit-scrollbar-thumb:hover {
-  background-color: #b71c1c; /* Rojo más oscuro al pasar el mouse */
-  border: 2px solid #181818; /* Borde negro */
+  background-color: #d32f2f;
+  border: 2px solid #222;
+}
+
+.avatar-grid-left::-webkit-scrollbar-thumb:active {
+  background-color: #b71c1c;
+}
+
+/* Scrollbar para el contenido del grid en móvil */
+.avatar-grid-content {
+  scrollbar-width: thin;
+  scrollbar-color: #e53935 #222;
+}
+
+.avatar-grid-content::-webkit-scrollbar {
+  width: 8px;
+  background-color: #222;
+}
+
+.avatar-grid-content::-webkit-scrollbar-track {
+  background-color: #222;
+  border-radius: 6px;
+}
+
+.avatar-grid-content::-webkit-scrollbar-thumb {
+  background-color: #e53935;
+  border-radius: 6px;
+  border: 1px solid #222;
+  min-height: 30px;
+}
+
+.avatar-grid-content::-webkit-scrollbar-thumb:hover {
+  background-color: #d32f2f;
+}
+
+.avatar-grid-content::-webkit-scrollbar-thumb:active {
+  background-color: #b71c1c;
 }
 /* Overlay para bloquear toda la pantalla */
 .avatar-grid-overlay {
@@ -207,6 +297,13 @@
   z-index: 999999;
 }
 
+/* Fondo opaco en móvil para evitar transparencia */
+@media (max-width: 768px) {
+  .avatar-grid-overlay {
+    background: rgb(24, 24, 24); /* Fondo sólido sin transparencia */
+  }
+}
+
 /* Modal principal */
 .avatar-grid-modal {
   position: fixed;
@@ -217,7 +314,7 @@
   z-index: 1000000;
   display: flex;
   flex-direction: row;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 /* Grid de logos a la izquierda */
@@ -228,6 +325,7 @@
   display: flex;
   flex-direction: column;
   pointer-events: auto;
+  cursor: var(--cursor-hand) !important;
 }
 
 /* Preview del avatar a la derecha */
@@ -318,65 +416,27 @@
   border: none;
   font-size: 1rem;
 }
-.avatar-grid-selector-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
-  overflow-y: auto;
-  max-height: 73vh;
-  margin-bottom: 18px;
-}
-.avatar-grid-selector-item {
-  background: #232323a9;
-  border-radius: 8px;
-  padding: 8px 2px 4px 2px;
-  text-align: center;
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
-  transition: box-shadow 0.1, background 0.2s;
-  min-height: 130px;
-  min-width: 130px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.avatar-grid-selector-item.selected {
-  box-shadow: 0 2px 12px #a41d1d6f;
-  transform: scale(1.01);
-  background-color: #7a28277a;
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
 
-.avatar-grid-selector-item:hover {
-  box-shadow: 0 1px 12px #b422225f;
-  transform: scale(1.02);
-  background-color: #7a292793;
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
-.avatar-grid-selector-item img {
-  max-width: 110px;
-  max-height: 100px;
-  margin-bottom: 4px;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.753));
-}
+/* Estilos de imagen consolidados en .avatar-grid-logo */
+
 .avatar-grid-selector-footer {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
 }
 .avatar-grid-selector-footer button {
-  padding: 8px 18px;
+  padding: 6px 16px;
+  background: #e53935;
   border-radius: 6px;
   border: none;
   color: #fff;
-  font-weight: bold;
-  font-size: 1rem;
-  cursor: url("/images/pointers/hand.png") 10 10, pointer;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: var(--cursor-hand) !important;
   transition: background 0.2s;
 }
 .avatar-grid-selector-footer button:disabled {
-  background: #888;
+  background: #e53935;
   cursor: not-allowed;
 }
 .avatar-grid-selector-footer button:last-child {
@@ -441,6 +501,399 @@
   position: relative;
 }
 
+/* ===================================== */
+/* RESPONSIVE DESIGN - MOBILE FIRST */
+/* ===================================== */
+
+/* Mobile Layout (Portrait) - Avatar arriba, Grid en medio, Botones abajo */
+@media (max-width: 768px) {
+  .avatar-grid-modal {
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* Header más compacto en móvil */
+  .avatar-grid-selector-header {
+    padding: 16px 12px 12px 12px;
+    min-height: 70px;
+    gap: 10px;
+    flex-shrink: 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden; /* Evitar desbordamiento del header */
+  }
+
+  /* Primera fila en móvil: búsqueda y animaciones en la misma línea */
+  .header-row-1 {
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .search-input {
+    width: 50%;
+    flex: none;
+    font-size: 14px;
+    height: 36px;
+  }
+
+  /* Switch de transiciones al lado de la búsqueda */
+  .transitions-switch-container {
+    flex: 1;
+    justify-content: flex-end;
+    align-self: center;
+  }
+
+  .transitions-switch-label {
+    font-size: 12px;
+  }
+
+  .transitions-switch {
+    width: 36px;
+    height: 18px;
+  }
+
+  .transitions-switch-slider {
+    border-radius: 18px;
+  }
+
+  .transitions-switch-slider:before {
+    height: 12px;
+    width: 12px;
+    left: 2px;
+    bottom: 2px;
+  }
+
+  .transitions-switch input:checked + .transitions-switch-slider:before {
+    transform: translateX(16px);
+  }
+
+  /* Segunda fila en móvil: selectores */
+  .header-row-2 {
+    gap: 8px;
+    width: 100%;
+  }
+
+  .header-row-2 select {
+    width: calc(50% - 4px);
+    font-size: 14px;
+    height: 36px;
+    max-width: calc(50vw - 20px); /* Evitar desbordamiento */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Limitar ancho de las opciones del select en mobile */
+  .header-row-2 select option {
+    max-width: calc(50vw - 20px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Preview del avatar - más compacto pero prominente */
+  .avatar-grid-preview {
+    height: 35vh;
+    flex-shrink: 0;
+    padding: 12px;
+    border-bottom: 1px solid #333;
+  }
+
+  .avatar-preview-img {
+    width: 260px;
+    height: 260px;
+    max-width: 65vw; /* Limitar ancho máximo al 65% del viewport en mobile */
+    max-height: 25vh; /* Limitar altura máxima al 25% del viewport en mobile */
+    object-fit: contain; /* Mantener proporción */
+  }
+
+  .avatar-preview-name {
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+
+  .avatar-preview-meta {
+    font-size: 14px;
+  }
+
+  /* Grid section - área principal con más espacio */
+  .avatar-grid-left {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0; /* Permite que flex funcione correctamente */
+    overflow: hidden; /* Evitar scroll doble en mobile */
+  }
+
+  /* Contenedor del grid que puede hacer scroll */
+  .avatar-grid-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden; /* Evitar scroll horizontal en mobile */
+    min-height: 0;
+  }
+
+  /* Grid más compacto para móvil */
+  .avatar-grid-selector-grid {
+    padding: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 12px;
+    max-width: 100%; /* Asegurar que no desborde */
+    box-sizing: border-box;
+  }
+
+  .avatar-grid-selector-item {
+    min-height: 85px;
+    min-width: 85px;
+    padding: 6px 2px 2px 2px;
+  }
+
+  .avatar-grid-logo {
+    max-width: 70px;
+    max-height: 60px;
+    margin-bottom: 2px;
+  }
+
+  /* Footer fijo en la parte inferior de la pantalla */
+  .avatar-grid-selector-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 8px;
+    background: #181818;
+    border-top: 2px solid #333;
+    z-index: 10;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Switch de animaciones con label en el footer mobile */
+  .footer-transitions-switch {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-right: auto; /* Empuja los botones a la derecha */
+    padding-left: 4px;
+  }
+
+  .footer-transitions-label {
+    font-size: 15px;
+    font-weight: 500;
+    color: #f1f1f1;
+    white-space: nowrap;
+  }
+
+  .footer-transitions-switch .transitions-switch {
+    width: 40px;
+    height: 22px;
+  }
+
+  .footer-transitions-switch .transitions-switch-slider:before {
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 2px;
+  }
+
+  .footer-transitions-switch
+    .transitions-switch
+    input:checked
+    + .transitions-switch-slider:before {
+    transform: translateX(16px);
+  }
+
+  /* Botón OK más compacto en mobile - ROJO */
+  .footer-ok-btn {
+    padding: 10px 16px !important;
+    font-size: 15px !important;
+    min-height: 44px !important;
+    min-width: 60px !important;
+    flex-shrink: 0;
+    touch-action: manipulation;
+    border-radius: 8px;
+    font-weight: 600;
+    background: #e53935 !important;
+    color: #fff !important;
+    border: none !important;
+  }
+
+  .footer-ok-btn:disabled {
+    background: #a7a7a7 !important;
+    color: #eee !important;
+  }
+
+  .footer-ok-btn:not(:disabled):hover {
+    background: #b71c1c !important;
+  }
+
+  /* Botón Cancelar más compacto con flecha en mobile */
+  .footer-cancel-btn {
+    padding: 10px 14px !important;
+    font-size: 20px !important;
+    min-height: 44px !important;
+    min-width: 50px !important;
+    flex-shrink: 0;
+    touch-action: manipulation;
+    border-radius: 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 4px; /* Espacio del borde derecho */
+  }
+
+  .cancel-icon {
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  /* Ocultar el switch del header en mobile */
+  .header-row-1 .transitions-switch-container {
+    display: none;
+  }
+
+  /* Agregar padding bottom al modal para que el contenido no quede tapado por el footer */
+  .avatar-grid-modal {
+    padding-bottom: 80px;
+  }
+
+  /* Ocultar scrollbar de avatar-grid-left en mobile (solo debe aparecer en avatar-grid-content) */
+  .avatar-grid-left::-webkit-scrollbar {
+    display: none;
+  }
+
+  .avatar-grid-left {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE y Edge antiguos */
+  }
+}
+
+/* Mobile Landscape - Avatar a la izquierda, Grid a la derecha, Botones fijos */
+@media (max-width: 768px) and (orientation: landscape) {
+  .avatar-grid-modal {
+    flex-direction: row;
+    padding-bottom: 80px; /* Espacio para botones fijos */
+  }
+
+  .avatar-grid-preview {
+    width: 40vw;
+    height: 100vh;
+    border-bottom: none;
+    border-right: 1px solid #333;
+  }
+
+  /* Grid section - overflow hidden para evitar scroll doble */
+  .avatar-grid-left {
+    width: 60vw;
+    height: 100vh;
+    overflow: hidden; /* Evitar scroll doble */
+  }
+
+  .avatar-grid-content {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden; /* Evitar scroll horizontal */
+  }
+
+  /* Ocultar scrollbar de avatar-grid-left en landscape mobile también */
+  .avatar-grid-left::-webkit-scrollbar {
+    display: none;
+  }
+
+  .avatar-grid-left {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE y Edge antiguos */
+  }
+
+  .avatar-preview-img {
+    width: 200px;
+    height: 200px;
+  }
+
+  .avatar-preview-name {
+    font-size: 16px;
+  }
+
+  .avatar-preview-meta {
+    font-size: 12px;
+  }
+
+  .avatar-grid-selector-grid {
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 8px;
+  }
+
+  .avatar-grid-selector-item {
+    min-height: 70px;
+    min-width: 70px;
+  }
+
+  .avatar-grid-logo {
+    max-width: 55px;
+    max-height: 50px;
+  }
+
+  /* Footer sigue fijo en landscape */
+  .avatar-grid-selector-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    padding: 12px 16px;
+  }
+
+  .avatar-grid-selector-footer button {
+    padding: 8px 20px;
+    font-size: 14px;
+    min-height: 36px;
+    min-width: 100px;
+  }
+}
+
+/* Tablet - Layout híbrido */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .avatar-grid-left {
+    width: 65vw;
+  }
+
+  .avatar-grid-selector-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 20px;
+  }
+
+  .avatar-grid-selector-item {
+    min-height: 100px;
+    min-width: 100px;
+  }
+
+  .avatar-grid-logo {
+    max-width: 90px;
+    max-height: 80px;
+  }
+
+  .avatar-preview-img {
+    width: 350px;
+    height: 350px;
+  }
+
+  .avatar-preview-name {
+    font-size: 22px;
+  }
+
+  .avatar-preview-meta {
+    font-size: 16px;
+  }
+}
+
 /* Bloquear interacción durante transiciones */
 .avatar-grid-selector-grid.transitioning {
   pointer-events: none;
@@ -463,4 +916,143 @@
 .avatar-grid-selector-grid.transitioning .avatar-grid-selector-item {
   cursor: wait;
   filter: brightness(0.6);
+}
+
+/* Ajustes específicos para componentes móviles */
+@media (max-width: 768px) {
+  /* Placeholder más pequeño en móvil */
+  .avatar-preview-placeholder {
+    font-size: 16px;
+    padding: 20px;
+  }
+
+  /* Scrollbar más delgada en móvil para el contenido del grid */
+  .avatar-grid-content::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .avatar-grid-content::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    border: 1px solid #181818;
+  }
+
+  /* Transiciones más rápidas en móvil */
+  .avatar-grid-selector-item {
+    transition: box-shadow 0.15s, background 0.15s, transform 0.15s;
+  }
+
+  .avatar-grid-selector-item.selected,
+  .avatar-grid-selector-item:hover {
+    transform: scale(1.05);
+  }
+
+  /* Botones más touch-friendly */
+  .avatar-grid-selector-footer button {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+
+  /* Input más touch-friendly */
+  .avatar-grid-selector-header input[type="text"],
+  .avatar-grid-selector-header select {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+}
+
+/* Desktop Layout - Todo en una sola línea */
+@media (min-width: 1025px) {
+  /* Header en una sola fila para escritorio */
+  .avatar-grid-selector-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px 16px 24px;
+    min-height: 60px;
+  }
+
+  /* Ocultar las filas separadas en escritorio */
+  .header-row-1,
+  .header-row-2 {
+    display: contents; /* Los elementos fluyen directamente al contenedor padre */
+  }
+
+  /* Orden específico para cada elemento */
+  .search-input {
+    order: 1;
+    width: 280px;
+    flex: none;
+  }
+
+  /* Primer select (Género) */
+  .header-row-2 select:first-child {
+    order: 2;
+    width: 140px;
+  }
+
+  /* Segundo select (Época) */
+  .header-row-2 select:last-child {
+    order: 3;
+    width: 140px;
+  }
+
+  /* Switch de transiciones al final */
+  .transitions-switch-container {
+    order: 4;
+    margin-left: auto; /* Empuja hacia la derecha */
+    flex-shrink: 0;
+  }
+
+  .transitions-switch-label {
+    font-size: 14px;
+  }
+
+  /* Footer normal en desktop - NO fijo, dentro del avatar-grid-left */
+  .avatar-grid-selector-footer {
+    position: static !important; /* No fixed */
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    padding: 12px 24px !important; /* Padding original dentro del contenedor */
+    background: transparent !important; /* Sin background especial */
+    border-top: none !important; /* Sin border */
+    z-index: auto !important;
+    box-shadow: none !important; /* Sin sombra */
+    justify-content: flex-end !important; /* Alineación original a la derecha */
+    gap: 12px !important; /* Gap original */
+    margin-top: 8px !important; /* Menos separación del grid */
+  }
+
+  /* Botones originales en desktop */
+  .footer-ok-btn,
+  .footer-cancel-btn {
+    padding: 6px 16px !important; /* Tamaño original */
+    font-size: 14px !important; /* Tamaño original */
+    min-height: initial !important; /* Sin altura mínima */
+    min-width: initial !important; /* Sin ancho mínimo */
+  }
+
+  /* Mostrar texto "Cancelar" en desktop y ocultar flecha */
+  .footer-cancel-btn::after {
+    content: "Cancelar";
+  }
+
+  .cancel-icon {
+    display: none;
+  }
+
+  /* Ocultar switch de footer en desktop, mostrar el del header */
+  .footer-transitions-switch {
+    display: none !important;
+  }
+
+  .header-row-1 .transitions-switch-container {
+    display: flex !important;
+  }
+
+  /* Modal sin padding bottom en desktop */
+  .avatar-grid-modal {
+    padding-bottom: 0 !important;
+  }
 }
