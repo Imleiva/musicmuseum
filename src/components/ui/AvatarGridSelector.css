@@ -414,6 +414,14 @@
   border: none;
   font-size: 1rem;
 }
+.avatar-grid-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  overflow-y: auto;
+  max-height: 73vh;
+  margin-bottom: 18px;
+}
 
 /* Estilos de imagen consolidados en .avatar-grid-logo */
 
