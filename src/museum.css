@@ -147,7 +147,9 @@ body.cursor-eye [role="button"] {
 .avatar-grid-modal,
 .avatar-grid-modal *,
 .avatar-grid-selector-modal,
-.avatar-grid-selector-modal * {
+.avatar-grid-selector-modal *,
+.avatar-grid-logo,
+img.avatar-grid-logo {
   cursor: var(--cursor-hand) !important;
 }
 

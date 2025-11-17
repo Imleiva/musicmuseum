@@ -220,6 +220,7 @@
   display: block;
   margin: 0 auto 4px auto;
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.753));
+  cursor: var(--cursor-hand) !important;
 }
 
 /* Scrollbar personalizado para la columna izquierda */
@@ -295,6 +296,7 @@
   height: 100vh;
   background: rgba(24, 24, 24, 0.98);
   z-index: 999999;
+  cursor: var(--cursor-hand) !important;
 }
 
 /* Fondo opaco en móvil para evitar transparencia */
@@ -315,6 +317,7 @@
   display: flex;
   flex-direction: row;
   pointer-events: auto;
+  cursor: var(--cursor-hand) !important;
 }
 
 /* Grid de logos a la izquierda */
@@ -336,6 +339,7 @@
   align-items: center;
   justify-content: center;
   pointer-events: auto;
+  cursor: var(--cursor-hand) !important;
 }
 
 /* Placeholder preview */
@@ -394,6 +398,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: var(--cursor-hand) !important;
 }
 .avatar-grid-selector-modal {
   border-radius: 16px;
@@ -403,6 +408,7 @@
   max-height: 98vh;
   display: flex;
   flex-direction: column;
+  cursor: var(--cursor-hand) !important;
 }
 .avatar-grid-selector-header {
   display: flex;
