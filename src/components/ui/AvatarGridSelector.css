@@ -213,8 +213,8 @@
 }
 
 .avatar-grid-logo {
-  max-width: 160px;
-  max-height: 160px;
+  max-width: 110px;
+  max-height: 100px;
   object-fit: contain;
   display: block;
   margin: 0 auto 4px auto;
