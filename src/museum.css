@@ -139,6 +139,18 @@ body.cursor-eye [role="button"] {
   cursor: var(--cursor-hand) !important;
 }
 
+/* 6. Avatar Grid Modal - siempre usar cursor hand */
+.avatar-grid-overlay,
+.avatar-grid-overlay *,
+.avatar-grid-selector-overlay,
+.avatar-grid-selector-overlay *,
+.avatar-grid-modal,
+.avatar-grid-modal *,
+.avatar-grid-selector-modal,
+.avatar-grid-selector-modal * {
+  cursor: var(--cursor-hand) !important;
+}
+
 /* Reset completo */
 * {
   margin: 0;
