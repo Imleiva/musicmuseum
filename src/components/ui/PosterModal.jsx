@@ -210,13 +210,16 @@ export default function PosterModal({ concert, onClose }) {
               <h3>🎸 {concert.band}</h3>
               <span className="poster-modal-genre-tag">{concert.genre}</span>
             </div>
-            <button
-              className="poster-modal-close"
-              onClick={onClose}
-              aria-label="Close poster modal"
-            >
-              ✕
-            </button>
+            {/* Botón de cierre en el header solo para desktop */}
+            {!isMobile && (
+              <button
+                className="poster-modal-close"
+                onClick={onClose}
+                aria-label="Close poster modal"
+              >
+                ✕
+              </button>
+            )}
           </header>
 
           {/* Image carousel section */}
@@ -299,6 +302,17 @@ export default function PosterModal({ concert, onClose }) {
         <div className="poster-scroll-indicator-fixed">
           <div className="poster-scroll-arrow"></div>
         </div>
+      )}
+
+      {/* Botón de cierre flotante independiente para móvil - DESPUÉS del modal */}
+      {isMobile && (
+        <button
+          className="poster-modal-close-floating"
+          onClick={onClose}
+          aria-label="Close poster modal"
+        >
+          ✕
+        </button>
       )}
     </div>
   );

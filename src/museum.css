@@ -48,6 +48,12 @@ textarea,
   --cursor-rock: url("../public/images/pointers/rockhand.png") 16 16, auto;
   --cursor-hand: url("../public/images/pointers/hand.png") 10 10, pointer;
   --cursor-eye: url("../public/images/pointers/cursorojo.png") 6 6, pointer;
+  
+  /* Safe area insets para notch de iPhone y barras de navegación */
+  --safe-area-inset-top: env(safe-area-inset-top, 0px);
+  --safe-area-inset-right: env(safe-area-inset-right, 0px);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-inset-left: env(safe-area-inset-left, 0px);
 }
 
 /* 1. CURSOR BASE: rockhand.png en toda la aplicación por defecto */
@@ -255,8 +261,8 @@ canvas {
 /* Navigation controls - Panel premium con diseño mejorado */
 .rock-navigator {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: calc(20px + var(--safe-area-inset-top));
+  left: calc(20px + var(--safe-area-inset-left));
   z-index: 100000;
   background: linear-gradient(
     135deg,
@@ -529,8 +535,8 @@ canvas {
 .controls-help {
   cursor: url("../public/images/pointers/rockhand.png") 16 16, auto;
   position: absolute;
-  bottom: 20px;
-  left: 20px;
+  bottom: calc(20px + var(--safe-area-inset-bottom));
+  left: calc(20px + var(--safe-area-inset-left));
   z-index: 50000;
   background: rgba(0, 0, 0, 0.7);
   padding: 15px;
@@ -1100,27 +1106,6 @@ div[data-r3f]:not(.poster-modal-overlay *) {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   box-shadow: 0 2px 8px rgba(255, 68, 68, 0.3);
-}
-
-.poster-modal-close {
-  background: #ff4444;
-  border: none;
-  color: white;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(255, 68, 68, 0.4);
-}
-
-.poster-modal-close:hover {
-  background: #ff6666;
-  box-shadow: 0 6px 20px rgba(255, 68, 68, 0.6);
 }
 
 /* Forzar que TODOS los demás elementos estén por debajo cuando el overlay está activo */

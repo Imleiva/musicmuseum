@@ -22,6 +22,11 @@
 .carousel-row .carousel-container {
   position: relative;
   margin: 0;
+  z-index: 1;
+}
+.carousel-row .carousel-container {
+  position: relative;
+  margin: 0;
 }
 /* Poster Modal Styles - Mobile & Desktop */
 .poster-modal-overlay {
@@ -49,7 +54,7 @@
   max-width: 720px !important;
   min-width: 260px !important;
   min-height: 320px !important;
-  max-height: 85vh !important;
+  max-height: 90vh !important;
   background: rgba(24, 24, 24, 0.85) !important;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 0 2px #ff4444 !important;
   border-radius: 18px !important;
@@ -61,11 +66,12 @@
     sans-serif !important;
   color: #fff !important;
   overflow-y: auto !important;
+  overflow-x: visible !important;
   margin: auto !important;
   pointer-events: all !important;
   isolation: isolate !important;
   align-items: center !important;
-  justify-content: center !important;
+  justify-content: flex-start !important;
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }
@@ -77,6 +83,34 @@
   min-height: 48px;
   margin-bottom: 8px;
 }
+
+/* Botón de cierre - Desktop: flotando fuera del modal */
+.poster-modal-close {
+  position: fixed;
+  top: calc(50vh - (90vh / 2) - 22px);
+  right: calc(50vw - min(720px, 92vw) / 2 - 60px);
+  background: rgba(255, 68, 68, 0.9);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 2147483649;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.poster-modal-close:hover {
+  background: #fff;
+  color: #ff4444;
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(255, 68, 68, 0.6);
+}
+
 .poster-modal-band-info h3 {
   font-size: 1.35rem;
   font-weight: 700;
@@ -111,7 +145,7 @@
   font-size: 0.8rem;
   border-radius: 6px;
   padding: 2px 8px;
-  z-index: 10007;
+  z-index: 1;
 }
 
 .concert-details {
@@ -151,6 +185,67 @@
 }
 
 @media (max-width: 600px) {
+  /* Modal normal centrado */
+  .poster-modal {
+    border-radius: 18px !important;
+    padding: 1.5rem 1.2rem !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    max-height: 90vh !important;
+  }
+
+  /* Header sin botón de cierre en móvil */
+  .poster-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 48px;
+    margin-bottom: 8px;
+    position: relative;
+  }
+
+  /* Botón de cierre flotante independiente - solo móvil */
+  .poster-modal-close-floating {
+    position: fixed !important;
+    top: calc(20px + env(safe-area-inset-top, 0px)) !important;
+    right: calc(20px + env(safe-area-inset-right, 0px)) !important;
+    background: rgba(236, 53, 53, 0.783) !important;
+    color: #f2f2f2 !important;
+    border-color: rgba(201, 201, 201, 0.922);
+    border-radius: 50% !important;
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    z-index: 2999999999 !important;
+    flex-shrink: 0;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .poster-modal-close-floating:active {
+    background: #f3f3f3 !important;
+    color: #ff4444c8 !important;
+    transform: scale(0.9) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7) !important;
+  }
+
+  /* Ocultar el botón de cierre original en móvil */
+  .poster-modal-close {
+    display: none !important;
+  }
+
+  .poster-modal-close:active {
+    background: #f2f1f1 !important;
+    color: #e03a3ae1 !important;
+    transform: scale(0.95);
+  }
+
   /* Ocultar scrollbar completamente en mobile */
   .poster-modal::-webkit-scrollbar {
     display: none !important;
@@ -165,11 +260,11 @@
   /* Indicador de scroll fijo en la parte inferior de la pantalla - solo mobile */
   .poster-scroll-indicator-fixed {
     position: fixed;
-    bottom: 0;
+    bottom: env(safe-area-inset-bottom, 0px);
     left: 0;
     right: 0;
     width: 100vw;
-    height: 70px;
+    height: calc(70px + env(safe-area-inset-bottom, 0px));
     display: flex;
     justify-content: center;
     align-items: center;
@@ -196,7 +291,7 @@
     height: 0;
     border-left: 18px solid transparent;
     border-right: 18px solid transparent;
-    border-top: 22px solid #ff4444;
+    border-top: 22px solid #db3535e6;
     filter: drop-shadow(0 0 10px #ff4444) drop-shadow(0 0 18px #ff4444);
     animation: bounce 1.5s ease-in-out infinite;
     display: inline-block;
@@ -233,6 +328,7 @@
   .carousel-container {
     height: auto !important;
     min-height: 180px !important;
+    margin-top: 12px !important;
     margin-bottom: 0 !important;
     position: relative !important;
     display: flex !important;
@@ -243,22 +339,9 @@
     display: flex !important;
     justify-content: center !important;
     width: 100% !important;
-    margin-top: 8px !important;
+    margin-top: 1px !important;
     gap: 16px !important;
   }
-  .carousel-btn {
-    position: static !important;
-    margin: 0 !important;
-    transform: none !important;
-    display: inline-block !important;
-    font-size: 2.2rem !important;
-    background: rgba(24, 24, 24, 0.7) !important;
-    color: #ff4444 !important;
-    border-radius: 8px !important;
-    padding: 0 14px !important;
-    z-index: 1 !important;
-  }
-
   .carousel-btn {
     position: static !important;
     margin: 8px 6px 0 6px !important;
@@ -289,7 +372,10 @@
     min-width: 0 !important;
     min-height: 100vh !important;
     max-height: 100vh !important;
-    padding: 32px 24px 48px 24px !important;
+    padding: calc(32px + env(safe-area-inset-top, 0px)) 
+             calc(24px + env(safe-area-inset-right, 0px)) 
+             calc(90px + env(safe-area-inset-bottom, 0px)) 
+             calc(24px + env(safe-area-inset-left, 0px)) !important;
     border-radius: 0 !important;
     left: 0 !important;
     top: 0 !important;

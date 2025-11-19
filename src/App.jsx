@@ -160,7 +160,7 @@ function App() {
               className="canvas-3d"
               raycaster={{
                 params: {
-                  Mesh: { threshold: 0.5 }, // Increase detection threshold for better mobile performance
+                  Mesh: { threshold: isMobile ? 4.0 : 1.5 }, // Increased threshold for better mobile detection
                 },
               }}
               gl={{
@@ -227,9 +227,11 @@ function App() {
                 maxAzimuthAngle={Infinity}
                 target={controlTargets[currentRoom]}
                 enableDamping={true}
-                dampingFactor={0.1}
-                rotateSpeed={0.4}
-                zoomSpeed={0.8}
+                dampingFactor={isMobile ? 0.05 : 0.1}
+                rotateSpeed={isMobile ? 0.6 : 0.4}
+                zoomSpeed={isMobile ? 1.0 : 0.8}
+                touchRotateSpeed={isMobile ? 0.5 : 0.3}
+                touchZoomSpeed={isMobile ? 0.8 : 0.5}
                 autoRotate={false}
                 makeDefault
               />
