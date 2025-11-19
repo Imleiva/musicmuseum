@@ -48,7 +48,7 @@ textarea,
   --cursor-rock: url("../public/images/pointers/rockhand.png") 16 16, auto;
   --cursor-hand: url("../public/images/pointers/hand.png") 10 10, pointer;
   --cursor-eye: url("../public/images/pointers/cursorojo.png") 6 6, pointer;
-  
+
   /* Safe area insets para notch de iPhone y barras de navegación */
   --safe-area-inset-top: env(safe-area-inset-top, 0px);
   --safe-area-inset-right: env(safe-area-inset-right, 0px);
