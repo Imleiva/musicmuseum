@@ -203,17 +203,6 @@ export default function PosterModal({ concert, onClose }) {
 
   const overlayContent = (
     <div className="poster-modal-overlay" onClick={handleOverlayClick}>
-      {/* Botón de cierre flotante - fuera del modal */}
-      <button
-        className={`poster-modal-close ${
-          isMobile ? "poster-modal-close-floating" : ""
-        }`}
-        onClick={onClose}
-        aria-label="Close poster modal"
-      >
-        ✕
-      </button>
-
       <div className="poster-modal" ref={modalRef}>
         <div className="poster-modal-inner" ref={innerRef}>
           <header className="poster-modal-header">
@@ -304,6 +293,17 @@ export default function PosterModal({ concert, onClose }) {
           <div className="poster-scroll-arrow"></div>
         </div>
       )}
+
+      {/* Botón de cierre flotante - DESPUÉS del modal para que esté encima */}
+      <button
+        className={`poster-modal-close ${
+          isMobile ? "poster-modal-close-floating" : ""
+        }`}
+        onClick={onClose}
+        aria-label="Close poster modal"
+      >
+        ✕
+      </button>
     </div>
   );
 

@@ -13,10 +13,16 @@ export const useAutoTooltips = () => {
     useTooltipContext();
   const lastTipIndex = useRef(0);
   const tipInterval = useRef(null);
+  const hasStarted = useRef(false);
 
   // Iniciar tips automáticos cada 30 segundos
   useEffect(() => {
     if (!tooltip || tooltip.priority === undefined) return;
+
+    // Prevenir ejecución inmediata en el primer render
+    if (!hasStarted.current) {
+      hasStarted.current = true;
+    }
 
     const autoTips = [
       TooltipMessages.autoTips.avatarChange,
@@ -43,8 +49,9 @@ export const useAutoTooltips = () => {
       }, 15000); // Cada 15 segundos para pruebas
     };
 
-    // Esperar 5 segundos antes del primer tip (para pruebas)
-    const initialDelay = setTimeout(startAutoTips, 5000);
+    // Esperar más tiempo en móvil antes del primer tip para mejor experiencia inicial
+    const isMobile = window.innerWidth <= 768;
+    const initialDelay = setTimeout(startAutoTips, isMobile ? 15000 : 8000);
 
     return () => {
       if (tipInterval.current) {
