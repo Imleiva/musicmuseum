@@ -85,6 +85,7 @@ export default function GuideToolbar({
                 ? " disabled"
                 : ""
             }`}
+            style={{ cursor: 'var(--cursor-hand)' }}
             title={item.label}
             onClick={() => onSelect(item.key)}
             onMouseEnter={() => {

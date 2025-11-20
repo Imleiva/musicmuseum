@@ -285,7 +285,7 @@ export default function RockPoster({ concert, onSelect }) {
         )}
       </mesh>
 
-      {/* Área de detección invisible más grande para mejor hover (especialmente en móvil) */}
+      {/* Área de detección invisible ajustada al marco para mayor precisión */}
       <mesh
         position={[0, 0, 0.05]}
         onPointerOver={handlePointerOver}
@@ -296,7 +296,7 @@ export default function RockPoster({ concert, onSelect }) {
         onTouchStart={handleClick}
         onTouchEnd={handleClick}
       >
-        <planeGeometry args={[frameWidth + 5.0, frameHeight + 5.0]} />
+        <planeGeometry args={[frameWidth + 0.5, frameHeight + 0.5]} />
         <meshBasicMaterial transparent opacity={0} />
       </mesh>
 

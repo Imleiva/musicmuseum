@@ -1,16 +1,26 @@
 import React, { useState } from "react";
 import "./MobileDrawerMenu.css";
 
-export default function MobileDrawerMenu({ onNavigate }) {
+export default function MobileDrawerMenu({ onNavigate, onMenuOpen }) {
   const [open, setOpen] = useState(false);
   const [showRooms, setShowRooms] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+    if (onMenuOpen) onMenuOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    if (onMenuOpen) onMenuOpen(false);
+  };
 
   return (
     <>
       {/* Botón hamburguesa fijo arriba a la izquierda */}
       <button
         className="drawer-hamburger"
-        onClick={() => setOpen(true)}
+        onClick={handleOpen}
         aria-label="Abrir menú"
       >
         <span className="drawer-hamburger-icon">☰</span>
@@ -19,7 +29,7 @@ export default function MobileDrawerMenu({ onNavigate }) {
       {/* Drawer lateral */}
       <div
         className={`drawer-menu-overlay${open ? " open" : ""}`}
-        onClick={() => setOpen(false)}
+        onClick={handleClose}
       />
       <nav className={`drawer-menu${open ? " open" : ""}`}>
         {/* Header con logo del museo */}
@@ -67,7 +77,7 @@ export default function MobileDrawerMenu({ onNavigate }) {
                   <button
                     onClick={() => {
                       onNavigate("metal");
-                      setOpen(false);
+                      handleClose();
                     }}
                     className="drawer-menu-btn"
                   >
@@ -78,7 +88,7 @@ export default function MobileDrawerMenu({ onNavigate }) {
                   <button
                     onClick={() => {
                       onNavigate("rock");
-                      setOpen(false);
+                      handleClose();
                     }}
                     className="drawer-menu-btn"
                   >
@@ -89,7 +99,7 @@ export default function MobileDrawerMenu({ onNavigate }) {
                   <button
                     onClick={() => {
                       onNavigate("punk");
-                      setOpen(false);
+                      handleClose();
                     }}
                     className="drawer-menu-btn"
                   >
@@ -103,7 +113,7 @@ export default function MobileDrawerMenu({ onNavigate }) {
             <button
               onClick={() => {
                 onNavigate("avatar");
-                setOpen(false);
+                handleClose();
               }}
               className="drawer-menu-btn"
             >
@@ -114,7 +124,7 @@ export default function MobileDrawerMenu({ onNavigate }) {
             <button
               onClick={() => {
                 onNavigate("settings");
-                setOpen(false);
+                handleClose();
               }}
               className="drawer-menu-btn"
             >
@@ -126,7 +136,7 @@ export default function MobileDrawerMenu({ onNavigate }) {
         {/* Botón volver al final */}
         <button
           className="drawer-back"
-          onClick={() => setOpen(false)}
+          onClick={handleClose}
           aria-label="Volver"
         >
           Volver

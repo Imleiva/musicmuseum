@@ -23,6 +23,7 @@ import {
   TooltipProvider,
   TooltipContainer,
   AutoTooltipManager,
+  useTooltipContext,
 } from "./components/tooltips";
 
 import concertData from "./data/concerts";
@@ -30,7 +31,10 @@ import MobileDrawerMenu from "./components/ui/MobileDrawerMenu";
 
 import AvatarGridSelector from "./components/ui/AvatarGridSelector.jsx";
 
-function App() {
+// Componente interno que necesita acceso al contexto de tooltips
+function AppContent() {
+  const { hideTooltip } = useTooltipContext();
+  
   const [currentRoom, setCurrentRoom] = useState(0);
   const [selectedConcert, setSelectedConcert] = useState(null);
   const [showBlur, setShowBlur] = useState(false);
@@ -106,11 +110,9 @@ function App() {
   const isMobile = window.innerWidth <= 768;
 
   return (
-    <TranslationProvider>
-      <TooltipProvider>
-        <WebGLErrorFallback>
-          <div className="app">
-            <BlurBackground show={showBlur} />
+    <WebGLErrorFallback>
+      <div className="app">
+        <BlurBackground show={showBlur} />
             {isMobile && (
               <MobileDrawerMenu
                 onNavigate={(section) => {
@@ -119,6 +121,11 @@ function App() {
                   if (section === "punk") setCurrentRoom(2);
                   if (section === "settings") setShowSettingsModal(true);
                   if (section === "avatar") setShowAvatarGrid(true);
+                }}
+                onMenuOpen={(isOpen) => {
+                  if (isOpen) {
+                    hideTooltip();
+                  }
                 }}
               />
             )}
@@ -267,6 +274,15 @@ function App() {
             <AutoTooltipManager currentRoom={currentRoom} />
           </div>
         </WebGLErrorFallback>
+  );
+}
+
+// Wrapper que proporciona el contexto de tooltips
+function App() {
+  return (
+    <TranslationProvider>
+      <TooltipProvider>
+        <AppContent />
       </TooltipProvider>
     </TranslationProvider>
   );
