@@ -232,17 +232,30 @@ export default function AvatarGridSelector({
                   const selectedItem = [...bands, ...avatars].find(
                     (item) => item.key === preview
                   );
-                  
+
                   let avatarToSelect = preview;
-                  
+
                   // Si es una banda (no un avatar), buscar su avatar en el mapping
-                  if (selectedItem && selectedItem.genre !== "Avatar" && bandAvatarMapping[preview]) {
+                  if (
+                    selectedItem &&
+                    selectedItem.genre !== "Avatar" &&
+                    bandAvatarMapping[preview]
+                  ) {
                     avatarToSelect = bandAvatarMapping[preview];
                   }
-                  
-                  console.log("Banda seleccionada:", preview, "Avatar:", avatarToSelect);
+
+                  console.log(
+                    "Banda seleccionada:",
+                    preview,
+                    "Avatar:",
+                    avatarToSelect
+                  );
                   onAvatarSelect(avatarToSelect);
-                  onClose();
+
+                  // Pequeño delay para que el cambio se vea antes de cerrar el modal
+                  setTimeout(() => {
+                    onClose();
+                  }, 100);
                 }
               }}
             >

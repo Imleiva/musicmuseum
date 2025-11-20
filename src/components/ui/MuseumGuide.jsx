@@ -5,7 +5,7 @@
  * • Sistema de burbujas de texto con hechos de cada banda/avatar
  * • Integración con selector de avatares y modal de configuración
  */
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import "./MuseumGuide.css";
 import "./AvatarImages.css";
 import GuideToolbar from "./GuideToolbar";
@@ -19,10 +19,14 @@ import { getImagePath } from "../../utils/assetPaths";
 
 const AVATAR_SRC = getImagePath("/images/avatars/tete.png");
 
-export default function MuseumGuide({ onOverlay, onOpenSettings }) {
+export default function MuseumGuide({
+  onOverlay,
+  onOpenSettings,
+  currentAvatar,
+}) {
   const { t, language } = useTranslation();
   const [activeTool, setActiveTool] = useState("curiosities");
-  const [avatar, setAvatar] = useState("leiva");
+  const [avatar, setAvatar] = useState(currentAvatar || "leiva");
   const [showBubbles, setShowBubbles] = useState(true);
   const [curiositiesEnabled, setCuriositiesEnabled] = useState(true);
   const [bubbleIdx, setBubbleIdx] = useState(0);
@@ -32,6 +36,7 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
   const [settings, setSettings] = useState({
     avatarTransitions: true,
   });
+  const previousAvatarRef = useRef(currentAvatar || "leiva");
 
   // Cargar configuraciones desde localStorage
   useEffect(() => {
@@ -198,6 +203,26 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
     [language]
   );
 
+  // Sincronizar avatar cuando cambie desde fuera (App.jsx)
+  useEffect(() => {
+    if (currentAvatar && currentAvatar !== previousAvatarRef.current) {
+      console.log('[MuseumGuide] Sync from App.jsx:', currentAvatar);
+      previousAvatarRef.current = currentAvatar;
+      setAvatar(currentAvatar);
+      // Generar nuevas burbujas para el nuevo avatar
+      const newBubbles = generateAvatarBubbles(currentAvatar);
+      setAvatarBubbles((prev) => ({
+        ...prev,
+        [currentAvatar]: newBubbles,
+      }));
+      setCurrentGreeting((prev) => ({
+        ...prev,
+        [currentAvatar]: newBubbles[0] || null,
+      }));
+      setBubbleIdx(0);
+    }
+  }, [currentAvatar, generateAvatarBubbles]);
+
   // Inicializar bubbles para el avatar actual
   useEffect(() => {
     const newBubbles = generateAvatarBubbles(avatar);
@@ -214,6 +239,8 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
 
   const AVATAR_MAP = {
     leiva: getImagePath("/images/avatars/tete.png"),
+    tete: getImagePath("/images/avatars/tete.png"),
+    angusacdc: getImagePath("/images/avatars/angusacdc.png"),
     thewarning: getImagePath("/images/avatars/thewarning.png"),
     ghost: getImagePath("/images/avatars/ghost.png"),
     acdc: getImagePath("/images/avatars/angusacdc.png"),
@@ -261,6 +288,11 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
     johnmayer: getImagePath("/images/avatars/johnmayer.png"),
     jimihendrix: getImagePath("/images/avatars/jimihendrix.png"),
     prince: getImagePath("/images/avatars/prince.png"),
+    painofsalvation: getImagePath("/images/avatars/painofsalvation.png"),
+    muse: getImagePath("/images/avatars/muse.png"),
+    gojira: getImagePath("/images/avatars/gojira.png"),
+    dreamtheater: getImagePath("/images/avatars/dreamtheater.png"),
+    aliceinchains: getImagePath("/images/avatars/aliceinchains.png"),
   };
 
   return (
@@ -274,7 +306,7 @@ export default function MuseumGuide({ onOverlay, onOpenSettings }) {
             title="Maese Leiva"
           >
             <GuideAvatar
-              src={AVATAR_MAP[avatar]}
+              src={AVATAR_MAP[avatar] || AVATAR_MAP['leiva']}
               alt="Maese Leiva"
               className={`museum-guide-avatar avatar-img-${avatar}`}
               onClick={(e) => {
