@@ -34,7 +34,7 @@ import AvatarGridSelector from "./components/ui/AvatarGridSelector.jsx";
 // Componente interno que necesita acceso al contexto de tooltips
 function AppContent() {
   const { hideTooltip } = useTooltipContext();
-  
+
   const [currentRoom, setCurrentRoom] = useState(0);
   const [selectedConcert, setSelectedConcert] = useState(null);
   const [showBlur, setShowBlur] = useState(false);
@@ -113,167 +113,167 @@ function AppContent() {
     <WebGLErrorFallback>
       <div className="app">
         <BlurBackground show={showBlur} />
-            {isMobile && (
-              <MobileDrawerMenu
-                onNavigate={(section) => {
-                  if (section === "metal") setCurrentRoom(0);
-                  if (section === "rock") setCurrentRoom(1);
-                  if (section === "punk") setCurrentRoom(2);
-                  if (section === "settings") setShowSettingsModal(true);
-                  if (section === "avatar") setShowAvatarGrid(true);
-                }}
-                onMenuOpen={(isOpen) => {
-                  if (isOpen) {
-                    hideTooltip();
-                  }
-                }}
-              />
-            )}
-            {/* AvatarGridSelector modal for avatar selection */}
-            {showAvatarGrid && (
-              <AvatarGridSelector
-                isOpen={showAvatarGrid}
-                onAvatarSelect={(avatarKey) => {
-                  setCurrentAvatar(avatarKey);
-                  setShowAvatarGrid(false);
-                }}
-                onClose={() => setShowAvatarGrid(false)}
-                currentAvatar={currentAvatar}
-                transitionsEnabled={true}
-              />
-            )}
-            {!isMobile && (
-              <RockNavigator
-                currentRoom={currentRoom}
-                onRoomChange={setCurrentRoom}
-                totalRooms={3}
-              />
-            )}
+        {isMobile && (
+          <MobileDrawerMenu
+            onNavigate={(section) => {
+              if (section === "metal") setCurrentRoom(0);
+              if (section === "rock") setCurrentRoom(1);
+              if (section === "punk") setCurrentRoom(2);
+              if (section === "settings") setShowSettingsModal(true);
+              if (section === "avatar") setShowAvatarGrid(true);
+            }}
+            onMenuOpen={(isOpen) => {
+              if (isOpen) {
+                hideTooltip();
+              }
+            }}
+          />
+        )}
+        {/* AvatarGridSelector modal for avatar selection */}
+        {showAvatarGrid && (
+          <AvatarGridSelector
+            isOpen={showAvatarGrid}
+            onAvatarSelect={(avatarKey) => {
+              setCurrentAvatar(avatarKey);
+              setShowAvatarGrid(false);
+            }}
+            onClose={() => setShowAvatarGrid(false)}
+            currentAvatar={currentAvatar}
+            transitionsEnabled={true}
+          />
+        )}
+        {!isMobile && (
+          <RockNavigator
+            currentRoom={currentRoom}
+            onRoomChange={setCurrentRoom}
+            totalRooms={3}
+          />
+        )}
 
-            <ControlsHelp />
+        <ControlsHelp />
 
-            <PosterModal
-              concert={selectedConcert}
-              onClose={() => setSelectedConcert(null)}
+        <PosterModal
+          concert={selectedConcert}
+          onClose={() => setSelectedConcert(null)}
+        />
+
+        <Canvas
+          camera={{
+            position: initialCameraPosition,
+            fov: isMobile ? 50 : 40, // FOV más amplio en mobile
+            near: 0.3,
+            far: 1000,
+          }}
+          className="canvas-3d"
+          raycaster={{
+            params: {
+              Mesh: { threshold: isMobile ? 4.0 : 1.5 }, // Increased threshold for better mobile detection
+            },
+          }}
+          gl={{
+            powerPreference: "default",
+            antialias: false,
+            alpha: false,
+            preserveDrawingBuffer: false,
+            failIfMajorPerformanceCaveat: false,
+          }}
+          dpr={window.devicePixelRatio > 2 ? 2 : window.devicePixelRatio}
+        >
+          <ambientLight intensity={0.4} color="#ffffff" />
+          <directionalLight position={[2, 50, 1]} intensity={0.9} />
+
+          <VenueRoom
+            position={
+              currentRoom === 0
+                ? [0, 0, 0]
+                : currentRoom === 1
+                ? [100, 0, 0]
+                : [200, 0, 0]
+            }
+            theme={roomGenres[currentRoom]}
+            shouldResetCamera={shouldResetCamera}
+            rotationDirection={roomRotationDirections[currentRoom]}
+          />
+
+          {currentRoomConcerts.map((concert) => (
+            <RockPoster
+              key={concert.id}
+              concert={concert}
+              onSelect={setSelectedConcert}
             />
+          ))}
 
-            <Canvas
-              camera={{
-                position: initialCameraPosition,
-                fov: isMobile ? 50 : 40, // FOV más amplio en mobile
-                near: 0.3,
-                far: 1000,
-              }}
-              className="canvas-3d"
-              raycaster={{
-                params: {
-                  Mesh: { threshold: isMobile ? 4.0 : 1.5 }, // Increased threshold for better mobile detection
-                },
-              }}
-              gl={{
-                powerPreference: "default",
-                antialias: false,
-                alpha: false,
-                preserveDrawingBuffer: false,
-                failIfMajorPerformanceCaveat: false,
-              }}
-              dpr={window.devicePixelRatio > 2 ? 2 : window.devicePixelRatio}
-            >
-              <ambientLight intensity={0.4} color="#ffffff" />
-              <directionalLight position={[2, 50, 1]} intensity={0.9} />
+          {currentRoom === 0 && (
+            <Projector position={[0, 0, 0]} genre="metal" />
+          )}
+          {currentRoom === 1 && (
+            <Projector position={[100, 0, 0]} genre="rock" />
+          )}
+          {currentRoom === 2 && (
+            <Projector position={[200, 0, 0]} genre="punk" />
+          )}
 
-              <VenueRoom
-                position={
-                  currentRoom === 0
-                    ? [0, 0, 0]
-                    : currentRoom === 1
-                    ? [100, 0, 0]
-                    : [200, 0, 0]
-                }
-                theme={roomGenres[currentRoom]}
-                shouldResetCamera={shouldResetCamera}
-                rotationDirection={roomRotationDirections[currentRoom]}
-              />
+          <ContactShadows
+            position={[0, -3.99, 0]}
+            opacity={0.3}
+            scale={50}
+            blur={2}
+            far={4}
+          />
 
-              {currentRoomConcerts.map((concert) => (
-                <RockPoster
-                  key={concert.id}
-                  concert={concert}
-                  onSelect={setSelectedConcert}
-                />
-              ))}
+          <OrbitControls
+            ref={controlsRef}
+            enablePan={false}
+            enableZoom={true}
+            enableRotate={true}
+            maxPolarAngle={Math.PI * 0.5}
+            minPolarAngle={Math.PI * 0.02}
+            minDistance={2}
+            maxDistance={21.5}
+            minAzimuthAngle={-Infinity}
+            maxAzimuthAngle={Infinity}
+            target={controlTargets[currentRoom]}
+            enableDamping={true}
+            dampingFactor={isMobile ? 0.05 : 0.1}
+            rotateSpeed={isMobile ? 0.6 : 0.4}
+            zoomSpeed={isMobile ? 1.0 : 0.8}
+            touchRotateSpeed={isMobile ? 0.5 : 0.3}
+            touchZoomSpeed={isMobile ? 0.8 : 0.5}
+            autoRotate={false}
+            makeDefault
+          />
+        </Canvas>
 
-              {currentRoom === 0 && (
-                <Projector position={[0, 0, 0]} genre="metal" />
-              )}
-              {currentRoom === 1 && (
-                <Projector position={[100, 0, 0]} genre="rock" />
-              )}
-              {currentRoom === 2 && (
-                <Projector position={[200, 0, 0]} genre="punk" />
-              )}
+        <MuseumGuide
+          onOverlay={handleGuideOverlay}
+          onOpenSettings={handleOpenSettings}
+          onCustomizeAvatar={() => setShowAvatarGridDesktop(true)}
+          currentAvatar={currentAvatar}
+        />
 
-              <ContactShadows
-                position={[0, -3.99, 0]}
-                opacity={0.3}
-                scale={50}
-                blur={2}
-                far={4}
-              />
+        {/* Show AvatarGridSelector on desktop when customizing avatar */}
+        {!isMobile && showAvatarGridDesktop && (
+          <AvatarGridSelector
+            isOpen={showAvatarGridDesktop}
+            onAvatarSelect={(avatarKey) => {
+              setCurrentAvatar(avatarKey);
+              setShowAvatarGridDesktop(false);
+            }}
+            onClose={() => setShowAvatarGridDesktop(false)}
+            currentAvatar={currentAvatar}
+            transitionsEnabled={true}
+          />
+        )}
 
-              <OrbitControls
-                ref={controlsRef}
-                enablePan={false}
-                enableZoom={true}
-                enableRotate={true}
-                maxPolarAngle={Math.PI * 0.5}
-                minPolarAngle={Math.PI * 0.02}
-                minDistance={2}
-                maxDistance={21.5}
-                minAzimuthAngle={-Infinity}
-                maxAzimuthAngle={Infinity}
-                target={controlTargets[currentRoom]}
-                enableDamping={true}
-                dampingFactor={isMobile ? 0.05 : 0.1}
-                rotateSpeed={isMobile ? 0.6 : 0.4}
-                zoomSpeed={isMobile ? 1.0 : 0.8}
-                touchRotateSpeed={isMobile ? 0.5 : 0.3}
-                touchZoomSpeed={isMobile ? 0.8 : 0.5}
-                autoRotate={false}
-                makeDefault
-              />
-            </Canvas>
+        <SettingsModal
+          isOpen={showSettingsModal}
+          onClose={handleCloseSettings}
+        />
 
-            <MuseumGuide
-              onOverlay={handleGuideOverlay}
-              onOpenSettings={handleOpenSettings}
-              onCustomizeAvatar={() => setShowAvatarGridDesktop(true)}
-              currentAvatar={currentAvatar}
-            />
-
-            {/* Show AvatarGridSelector on desktop when customizing avatar */}
-            {!isMobile && showAvatarGridDesktop && (
-              <AvatarGridSelector
-                isOpen={showAvatarGridDesktop}
-                onAvatarSelect={(avatarKey) => {
-                  setCurrentAvatar(avatarKey);
-                  setShowAvatarGridDesktop(false);
-                }}
-                onClose={() => setShowAvatarGridDesktop(false)}
-                currentAvatar={currentAvatar}
-                transitionsEnabled={true}
-              />
-            )}
-
-            <SettingsModal
-              isOpen={showSettingsModal}
-              onClose={handleCloseSettings}
-            />
-
-            <TooltipContainer />
-            <AutoTooltipManager currentRoom={currentRoom} />
-          </div>
-        </WebGLErrorFallback>
+        <TooltipContainer />
+        <AutoTooltipManager currentRoom={currentRoom} />
+      </div>
+    </WebGLErrorFallback>
   );
 }
 
