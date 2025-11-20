@@ -46,8 +46,19 @@ function FallbackMaterial({ color }) {
 
 export default function RockPoster({ concert, onSelect }) {
   const [hovered, setHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const frameRef = useRef();
   const hoverTimeoutRef = useRef();
+
+  // Detectar cambios de tamaño para mobile
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Asegurar cursor rock hand en canvas
   useEffect(() => {
@@ -232,8 +243,13 @@ export default function RockPoster({ concert, onSelect }) {
 
   const wallRotation = getWallRotation(concert.position);
 
+  // Ajustar posición Y en mobile para que los posters se vean más arriba (isMobile definido arriba)
+  const adjustedPosition = isMobile
+    ? [concert.position[0], concert.position[1] + 2.0, concert.position[2]]
+    : concert.position;
+
   return (
-    <group position={concert.position} rotation={wallRotation} scale={1.35}>
+    <group position={adjustedPosition} rotation={wallRotation} scale={1.35}>
       {/* Marco metálico exterior - adaptativo al tipo de póster */}
       <mesh ref={frameRef} position={[0, 0, -0.08]} castShadow receiveShadow>
         <boxGeometry args={[outerFrameWidth, outerFrameHeight, 0.15]} />
