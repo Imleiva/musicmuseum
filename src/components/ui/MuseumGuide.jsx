@@ -206,7 +206,7 @@ export default function MuseumGuide({
   // Sincronizar avatar cuando cambie desde fuera (App.jsx)
   useEffect(() => {
     if (currentAvatar && currentAvatar !== previousAvatarRef.current) {
-      console.log('[MuseumGuide] Sync from App.jsx:', currentAvatar);
+      console.log("[MuseumGuide] Sync from App.jsx:", currentAvatar);
       previousAvatarRef.current = currentAvatar;
       setAvatar(currentAvatar);
       // Generar nuevas burbujas para el nuevo avatar
@@ -306,7 +306,7 @@ export default function MuseumGuide({
             title="Maese Leiva"
           >
             <GuideAvatar
-              src={AVATAR_MAP[avatar] || AVATAR_MAP['leiva']}
+              src={AVATAR_MAP[avatar] || AVATAR_MAP["leiva"]}
               alt="Maese Leiva"
               className={`museum-guide-avatar avatar-img-${avatar}`}
               onClick={(e) => {
