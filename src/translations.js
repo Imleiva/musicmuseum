@@ -52,6 +52,29 @@ export const translations = {
       cancel: "Cancelar",
     },
 
+    // FAQ Mobile
+    faq: {
+      title: "❓ Ayuda y Consejos",
+      rooms: "Salas del Museo",
+      roomsDesc:
+        "El museo se divide en tres salas temáticas: Metal, Rock y Punk. Puedes navegar entre ellas desde el menú principal. Cada sala muestra posters de conciertos relacionados con su género musical.",
+      settings: "Configuración",
+      settingsDesc:
+        "Accede a los ajustes del museo para cambiar el idioma, activar/desactivar efectos de sonido y personalizar tu experiencia.",
+      avatar: "Personalizar Avatar",
+      avatarDesc:
+        "Cambia tu guía del museo eligiendo entre diferentes avatares de bandas y artistas icónicos del rock. Cada avatar tiene su propia personalidad y datos curiosos.",
+      curiosities: "Curiosidades",
+      curiositiesDesc:
+        "Activa o desactiva las curiosidades automáticas que aparecen mientras exploras el museo. Son datos interesantes sobre las bandas y la historia del rock.",
+      posters: "Posters de Conciertos",
+      postersDesc:
+        "Haz clic en los posters para ver información detallada sobre el concierto, incluyendo fecha, lugar, asistencia y highlights del setlist. Es como revivir la experiencia del show.",
+      navigation: "Navegación",
+      navigationDesc:
+        "Arrastra para rotar la cámara 360°, usa la rueda del ratón para hacer zoom. En móvil, desliza con un dedo para rotar y pellizca para zoom.",
+    },
+
     // Modal de poster
     posterModal: {
       concertDetails: "Detalles del Concierto",
@@ -932,6 +955,29 @@ export const translations = {
       ok: "OK",
       cancel: "Cancel",
       confirm: "Done!",
+    },
+
+    // FAQ Mobile
+    faq: {
+      title: "❓ Help & Tips",
+      rooms: "Museum Rooms",
+      roomsDesc:
+        "The museum is divided into three themed rooms: Metal, Rock, and Punk. You can navigate between them from the main menu. Each room displays concert posters related to its musical genre.",
+      settings: "Settings",
+      settingsDesc:
+        "Access museum settings to change language, enable/disable sound effects, and customize your experience.",
+      avatar: "Customize Avatar",
+      avatarDesc:
+        "Change your museum guide by choosing from different iconic rock band and artist avatars. Each avatar has its own personality and fun facts.",
+      curiosities: "Curiosities",
+      curiositiesDesc:
+        "Enable or disable automatic curiosities that appear while exploring the museum. These are interesting facts about bands and rock history.",
+      posters: "Concert Posters",
+      postersDesc:
+        "Click on posters to see detailed concert information, including date, venue, attendance, and setlist highlights. It's like reliving the show experience.",
+      navigation: "Navigation",
+      navigationDesc:
+        "Drag to rotate the camera 360°, use mouse wheel to zoom in/out. On mobile, swipe with one finger to rotate and pinch to zoom.",
     },
 
     // Poster modal

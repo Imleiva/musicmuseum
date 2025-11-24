@@ -22,8 +22,30 @@ export const TooltipProvider = ({ children }) => {
 
   const [isEnabled, setIsEnabled] = useState(true);
   const [autoTipsBlocked, setAutoTipsBlocked] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const timeoutRef = useRef(null);
   const blockAutoTipsTimeoutRef = useRef(null);
+
+  // Detectar cambios de tamaño de pantalla
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+
+      // Ocultar tooltips activos cuando se cambia a mobile
+      if (mobile && tooltip.visible) {
+        setTooltip({
+          visible: false,
+          content: "",
+          title: "",
+          priority: "none",
+        });
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [tooltip.visible]);
 
   // Cargar configuración de tooltips desde localStorage
   useEffect(() => {
@@ -107,7 +129,8 @@ export const TooltipProvider = ({ children }) => {
 
   const showTooltip = useCallback(
     (content, title = "", priority = "manual") => {
-      if (!isEnabled) return;
+      // Deshabilitar tooltips emergentes en mobile
+      if (isMobile || !isEnabled) return;
 
       // Bloquear tooltips automáticos si están bloqueados
       if (autoTipsBlocked && priority === "auto") {
@@ -145,7 +168,7 @@ export const TooltipProvider = ({ children }) => {
         priority,
       });
     },
-    [isEnabled, tooltip.priority, autoTipsBlocked]
+    [isEnabled, isMobile, tooltip.priority, autoTipsBlocked]
   );
 
   const hideTooltip = useCallback(
@@ -187,7 +210,7 @@ export const TooltipProvider = ({ children }) => {
 
   const updateTooltip = useCallback(
     (content, title = "") => {
-      if (!isEnabled) return;
+      if (isMobile || !isEnabled) return;
 
       setTooltip((prev) => ({
         ...prev,
@@ -195,13 +218,13 @@ export const TooltipProvider = ({ children }) => {
         title,
       }));
     },
-    [isEnabled]
+    [isEnabled, isMobile]
   );
 
   // Mostrar tooltip automático (tip del sistema)
   const showAutoTip = useCallback(
     (content, title = "💡 Tip", duration = 5000) => {
-      if (!isEnabled) return;
+      if (isMobile || !isEnabled) return;
 
       // No mostrar si los tooltips automáticos están bloqueados
       if (autoTipsBlocked) {
@@ -236,13 +259,13 @@ export const TooltipProvider = ({ children }) => {
         timeoutRef.current = null;
       }, duration);
     },
-    [isEnabled, tooltip.priority, autoTipsBlocked]
+    [isEnabled, isMobile, tooltip.priority, autoTipsBlocked]
   );
 
   // Mostrar notificación especial (avatar cambiado, etc.)
   const showNotification = useCallback(
     (content, title = "✨ Nuevo", duration = 4000) => {
-      if (!isEnabled) return;
+      if (isMobile || !isEnabled) return;
 
       // Las notificaciones tienen prioridad sobre tooltips automáticos
       // pero no sobre manuales
@@ -273,7 +296,7 @@ export const TooltipProvider = ({ children }) => {
         timeoutRef.current = null;
       }, duration);
     },
-    [isEnabled, tooltip.priority]
+    [isEnabled, isMobile, tooltip.priority]
   );
 
   const value = useMemo(
@@ -285,6 +308,7 @@ export const TooltipProvider = ({ children }) => {
       showAutoTip,
       showNotification,
       isEnabled,
+      isMobile,
       autoTipsBlocked,
     }),
     [
@@ -295,6 +319,7 @@ export const TooltipProvider = ({ children }) => {
       showAutoTip,
       showNotification,
       isEnabled,
+      isMobile,
       autoTipsBlocked,
     ]
   );

@@ -26,22 +26,25 @@ export default function MobileDrawerMenu({ onNavigate, onMenuOpen }) {
         <span className="drawer-hamburger-icon">☰</span>
       </button>
 
-      {/* Drawer lateral */}
-      <div
-        className={`drawer-menu-overlay${open ? " open" : ""}`}
-        onClick={handleClose}
-      />
-      <nav className={`drawer-menu${open ? " open" : ""}`}>
-        {/* Header con logo del museo */}
-        <div className="drawer-menu-header">
-          <img
-            src="/musicmuseum/images/logoLRHF.png"
-            alt="Logo Leiva'n Roll Hall Of Fame"
-            className="drawer-menu-logo"
+      {/* Overlay y Drawer lateral */}
+      {open && (
+        <>
+          <div
+            className="drawer-menu-overlay open"
+            onClick={handleClose}
+            style={{ cursor: 'pointer' }}
           />
-        </div>
+          <nav className="drawer-menu open">
+            {/* Header con logo del museo */}
+            <div className="drawer-menu-header">
+              <img
+                src="/musicmuseum/images/logoLRHF.png"
+                alt="Logo Leiva'n Roll Hall Of Fame"
+                className="drawer-menu-logo"
+              />
+            </div>
 
-        <ul>
+            <ul>
           <li style={{ position: "relative", width: "100%" }}>
             <button
               onClick={() => setShowRooms(!showRooms)}
@@ -142,6 +145,8 @@ export default function MobileDrawerMenu({ onNavigate, onMenuOpen }) {
           Volver
         </button>
       </nav>
+        </>
+      )}
     </>
   );
 }

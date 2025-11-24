@@ -49,7 +49,6 @@
   flex-direction: column;
   align-items: flex-end;
   justify-content: flex-end;
-  /* Quitamos las reglas de .museum-guide-avatar de aquí - no deberían estar */
   height: 100%;
 }
 
@@ -174,7 +173,7 @@
   .museum-guide-avatar-toolbar-container {
     order: 2; /* Después de la toolbar */
     position: fixed; /* Posición fija en la parte inferior */
-    bottom: 100px; /* Más cerca del borde inferior */
+    bottom: 110px;
     left: 0;
     right: 0;
     flex-direction: column; /* Vertical: avatar arriba, burbuja abajo */
@@ -182,7 +181,7 @@
     justify-content: flex-end; /* Alineados al fondo */
     margin: 0;
     padding: 8px 16px calc(8px + env(safe-area-inset-bottom));
-    gap: 4px; /* Gap mínimo para que queden pegados */
+    gap: 8px;
     width: auto;
     height: auto;
     z-index: 20;
@@ -195,25 +194,22 @@
     flex-shrink: 1;
     width: 100%;
     display: flex;
-    justify-content: center; /* Centrar la burbuja */
+    justify-content: center;
   }
 
   .museum-guide-avatar-wrapper {
     order: 1; /* Avatar arriba */
     margin: 0;
     flex-shrink: 0;
-    width: auto;
+    width: 100%;
     display: flex;
-    justify-content: center; /* Centrar el avatar */
-    padding: 0;
+    justify-content: flex-end; /* Alinear a la derecha */
+    padding-right: 0; /* Separación del borde derecho */
     z-index: 20; /* Avatar encima de la bubble */
     position: relative; /* Para que z-index funcione */
   }
 
   .museum-guide-avatar {
-    width: 180px; /* Tamaño más grande para ocupar espacio */
-    max-width: 200px !important;
-    min-width: 160px;
     height: auto;
     margin: 0;
     transition: none;
@@ -238,7 +234,7 @@
     min-width: 280px;
     max-height: 160px;
     overflow: hidden;
-    text-align: center; /* Centrar texto en mobile */
+    text-align: center;
     font-size: 0.85rem;
     padding: 12px 14px;
     border-radius: 12px;
@@ -311,11 +307,6 @@
 
   .museum-guide-avatar-wrapper {
     order: 1;
-  }
-
-  .museum-guide-avatar {
-    width: 100px;
-    min-width: 100px;
   }
 }
 

@@ -28,6 +28,7 @@ import {
 
 import concertData from "./data/concerts";
 import MobileDrawerMenu from "./components/ui/MobileDrawerMenu";
+import MobileFAQ from "./components/ui/MobileFAQ";
 
 import AvatarGridSelector from "./components/ui/AvatarGridSelector.jsx";
 
@@ -269,6 +270,9 @@ function AppContent() {
           isOpen={showSettingsModal}
           onClose={handleCloseSettings}
         />
+
+        {/* FAQ component for mobile - replaces floating tooltips */}
+        {isMobile && <MobileFAQ />}
 
         <TooltipContainer />
         <AutoTooltipManager currentRoom={currentRoom} />

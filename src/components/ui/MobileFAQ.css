@@ -1,0 +1,218 @@
+/* Botón flotante de interrogación */
+.mobile-faq-trigger {
+  display: none; /* Oculto por defecto, solo visible en mobile */
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #394eab 0%, #553675 100%);
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  z-index: 999;
+  transition: all 0.3s ease;
+}
+
+.mobile-faq-trigger:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.mobile-faq-trigger:active {
+  transform: scale(0.95);
+}
+
+/* Overlay del modal */
+.mobile-faq-overlay {
+  display: none; /* Oculto por defecto */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Contenedor del FAQ */
+.mobile-faq-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease;
+}
+
+/* Header */
+.mobile-faq-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-faq-header h2 {
+  margin: 0;
+  color: white;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.mobile-faq-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s ease;
+}
+
+.mobile-faq-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Contenido scrollable */
+.mobile-faq-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+/* Items FAQ */
+.mobile-faq-item {
+  margin-bottom: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: background 0.2s ease;
+}
+
+.mobile-faq-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Pregunta/Header del item */
+.mobile-faq-question {
+  width: 100%;
+  padding: 16px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s ease;
+}
+
+.mobile-faq-question.expanded {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-faq-title {
+  flex: 1;
+  font-weight: 500;
+}
+
+.mobile-faq-arrow {
+  font-size: 14px;
+  transition: transform 0.3s ease;
+}
+
+/* Respuesta/Contenido del item */
+.mobile-faq-answer {
+  padding: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.6;
+  animation: expandAnswer 0.3s ease;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes expandAnswer {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
+/* Mobile only - mostrar solo en dispositivos móviles */
+@media (max-width: 768px) {
+  .mobile-faq-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-faq-overlay {
+    display: block;
+  }
+}
+
+/* Scrollbar styling */
+.mobile-faq-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mobile-faq-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.mobile-faq-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.mobile-faq-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}

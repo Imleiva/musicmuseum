@@ -266,8 +266,8 @@ export default function SettingsModal({ isOpen, onClose }) {
           </div>
           */}
 
-          {/* Tooltips */}
-          <div className="settings-group">
+          {/* Tooltips - Solo visible en desktop */}
+          <div className="settings-group settings-group-desktop-only">
             <h3 className="settings-group-title">{t("settings.help")}</h3>
             <div className="settings-option">
               <span className="settings-label">

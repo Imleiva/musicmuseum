@@ -321,6 +321,13 @@ input:checked + .rock-slider:before {
 }
 
 /* Responsive */
+@media (max-width: 768px) {
+  /* Ocultar tooltips en mobile */
+  .settings-group-desktop-only {
+    display: none;
+  }
+}
+
 @media (max-width: 600px) {
   .settings-modal {
     width: 95%;
