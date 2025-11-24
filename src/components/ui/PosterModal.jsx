@@ -263,7 +263,9 @@ export default function PosterModal({ concert, onClose }) {
           <div className="concert-details">
             <p className="venue-info">📍 {concert.venue}</p>
             <p className="concert-date">📅 {concert.date}</p>
-            <p className="attendance">👥 {concert.attendance || t("posterModal.soldOut")}</p>
+            <p className="attendance">
+              👥 {concert.attendance || t("posterModal.soldOut")}
+            </p>
           </div>
 
           <div className="concert-description">

@@ -18,7 +18,10 @@ export default function RockNavigator({
 }) {
   const { t, translations } = useTranslation();
   const { showTooltip, hideTooltip } = useTooltipContext();
-  const tooltipMessages = useMemo(() => getTooltipMessages(translations), [translations]);
+  const tooltipMessages = useMemo(
+    () => getTooltipMessages(translations),
+    [translations]
+  );
 
   // Estado para controlar si el navigator está contraído - iniciar cerrado por defecto
   const [isCollapsed, setIsCollapsed] = useState(true);

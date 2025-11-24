@@ -8,7 +8,9 @@
 export const getTooltipMessages = (t) => {
   // Verificar si existen las traducciones de tooltips
   if (!t || !t.tooltips) {
-    console.warn('Tooltips translations not found, using TooltipMessages fallback');
+    console.warn(
+      "Tooltips translations not found, using TooltipMessages fallback"
+    );
     return TooltipMessages;
   }
 
@@ -91,8 +93,10 @@ export const TooltipMessages = {
       "Personaliza tu avatar de banda. Haz clic para abrir el selector",
     curiosities:
       "Descubre datos curiosos sobre las bandas. Haz clic para activar/desactivar",
-    curiositiesEnabled: "Descubre datos curiosos sobre las bandas. Haz clic para desactivar",
-    curiositiesDisabled: "Las curiosidades están desactivadas. Haz clic para activarlas",
+    curiositiesEnabled:
+      "Descubre datos curiosos sobre las bandas. Haz clic para desactivar",
+    curiositiesDisabled:
+      "Las curiosidades están desactivadas. Haz clic para activarlas",
     search: "Busca bandas por nombre o género",
     filters: "Filtra por género o década",
   },

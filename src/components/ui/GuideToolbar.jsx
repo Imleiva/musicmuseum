@@ -22,8 +22,11 @@ export default function GuideToolbar({
 }) {
   const { t, translations } = useTranslation();
   const { showTooltip, hideTooltip } = useTooltipContext();
-  const tooltipMessages = useMemo(() => getTooltipMessages(translations), [translations]);
-  
+  const tooltipMessages = useMemo(
+    () => getTooltipMessages(translations),
+    [translations]
+  );
+
   const icons = [
     {
       key: "curiosities",

@@ -238,7 +238,7 @@
     min-width: 280px;
     max-height: 160px;
     overflow: hidden;
-    text-align: left;
+    text-align: center; /* Centrar texto en mobile */
     font-size: 0.85rem;
     padding: 12px 14px;
     border-radius: 12px;
