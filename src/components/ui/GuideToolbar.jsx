@@ -6,10 +6,11 @@
  * • Tooltips localizados para cada botón
  * • Diseño compacto para móvil
  */
-import React from "react";
+import React, { useMemo } from "react";
 import "./GuideToolbar.css";
 import { useTranslation } from "../../hooks/useTranslation";
-import { useTooltipContext, TooltipMessages } from "../tooltips";
+import { useTooltipContext } from "../tooltips";
+import { getTooltipMessages } from "../tooltips/messages";
 import { getImagePath } from "../../utils/assetPaths";
 
 export default function GuideToolbar({
@@ -19,13 +20,15 @@ export default function GuideToolbar({
   isCollapsed = false,
   onToggleCollapse,
 }) {
-  const { t } = useTranslation();
+  const { t, translations } = useTranslation();
   const { showTooltip, hideTooltip } = useTooltipContext();
+  const tooltipMessages = useMemo(() => getTooltipMessages(translations), [translations]);
+  
   const icons = [
     {
       key: "curiosities",
       label: t("toolbar.curiosities"),
-      tooltipMessage: TooltipMessages.controls.curiosities,
+      tooltipMessage: tooltipMessages.controls.curiosities,
       icon: (
         <img
           src={getImagePath("/images/icons/curiosidades.png")}
@@ -38,7 +41,7 @@ export default function GuideToolbar({
     {
       key: "customize",
       label: t("toolbar.customize"),
-      tooltipMessage: TooltipMessages.controls.customize,
+      tooltipMessage: tooltipMessages.controls.customize,
       icon: (
         <img
           src={getImagePath("/images/icons/customavatar.png")}
@@ -51,7 +54,7 @@ export default function GuideToolbar({
     {
       key: "settings",
       label: t("toolbar.settings"),
-      tooltipMessage: TooltipMessages.controls.settings,
+      tooltipMessage: tooltipMessages.controls.settings,
       icon: (
         <img
           src={getImagePath("/images/icons/settings.png")}
@@ -93,14 +96,12 @@ export default function GuideToolbar({
 
               if (item.key === "curiosities") {
                 tooltipText = curiositiesEnabled
-                  ? "Descubre datos curiosos sobre las bandas. Haz clic para desactivar"
-                  : "Las curiosidades están desactivadas. Haz clic para activarlas";
+                  ? tooltipMessages.controls.curiositiesEnabled
+                  : tooltipMessages.controls.curiositiesDisabled;
               } else if (item.key === "customize") {
-                tooltipText =
-                  "Personaliza tu avatar de banda. Haz clic para abrir el selector";
+                tooltipText = tooltipMessages.controls.customize;
               } else if (item.key === "settings") {
-                tooltipText =
-                  "Abre la configuración del museo. Haz clic para personalizar tu experiencia";
+                tooltipText = tooltipMessages.controls.settings;
               }
 
               showTooltip(tooltipText, `🎸 ${item.label}`);

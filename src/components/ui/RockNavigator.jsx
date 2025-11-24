@@ -6,17 +6,19 @@
  * • Descripciones localizadas de cada sala
  * • Panel contraíble para móvil
  */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "../../hooks/useTranslation";
-import { useTooltipContext, TooltipMessages } from "../tooltips";
+import { useTooltipContext } from "../tooltips";
+import { getTooltipMessages } from "../tooltips/messages";
 
 export default function RockNavigator({
   currentRoom,
   onRoomChange,
   totalRooms,
 }) {
-  const { t } = useTranslation();
+  const { t, translations } = useTranslation();
   const { showTooltip, hideTooltip } = useTooltipContext();
+  const tooltipMessages = useMemo(() => getTooltipMessages(translations), [translations]);
 
   // Estado para controlar si el navigator está contraído - iniciar cerrado por defecto
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -36,7 +38,7 @@ export default function RockNavigator({
 
   const getTooltipMessage = (roomIndex) => {
     const roomType = roomTypes[roomIndex];
-    const message = TooltipMessages.navigation[roomType];
+    const message = tooltipMessages.navigation[roomType];
     return message;
   };
 

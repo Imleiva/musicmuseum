@@ -807,6 +807,57 @@ export const translations = {
       error: "Error",
       success: "Éxito",
     },
+
+    // Tooltips
+    tooltips: {
+      navigation: {
+        metal: "Explora la colección de Heavy Metal, Thrash y Death Metal",
+        rock: "Descubre clásicos del Rock, Hard Rock y Progressive",
+        punk: "Sumérgete en Punk Rock, Hardcore y Alternative",
+      },
+      controls: {
+        settings: "Abre la configuración del museo. Haz clic para personalizar tu experiencia",
+        customize: "Personaliza tu avatar de banda. Haz clic para abrir el selector",
+        curiosities: "Descubre datos curiosos sobre las bandas. Haz clic para activar/desactivar",
+        curiositiesEnabled: "Descubre datos curiosos sobre las bandas. Haz clic para desactivar",
+        curiositiesDisabled: "Las curiosidades están desactivadas. Haz clic para activarlas",
+        search: "Busca bandas por nombre o género",
+        filters: "Filtra por género o década",
+      },
+      interactions: {
+        poster: "Haz clic para ver información detallada del concierto",
+        avatar: "Selecciona este avatar para tu perfil",
+        playAudio: "Reproduce audio relacionado con este concierto",
+        carousel: "Navega por las imágenes del concierto",
+      },
+      actions: {
+        save: "Guardar cambios realizados",
+        cancel: "Cancelar y descartar cambios",
+        reset: "Restaurar valores predeterminados",
+        apply: "Aplicar configuración seleccionada",
+      },
+      avatars: {
+        selection: "Cambia tu avatar para descubrir curiosidades únicas de cada banda",
+        newBand: "¡Nuevo avatar seleccionado! Ahora puedes explorar datos exclusivos de esta banda",
+        leiva: "Maestro Leiva te guía por el museo con su sabiduría musical",
+        interactive: "Cada avatar tiene curiosidades diferentes. ¡Pruébalos todos!",
+      },
+      autoTips: {
+        avatarChange: "💡 Tip: Cambia tu avatar para descubrir datos únicos de cada banda",
+        exploration: "🎸 ¿Sabías que cada sala tiene proyectores con videos temáticos?",
+        interaction: "✨ Haz clic en los pósters para ver información detallada de cada concierto",
+        navigation: "🎵 Usa las flechas del teclado o el mouse para navegar por las salas",
+        settings: "⚙️ Personaliza tu experiencia en el menú de configuración",
+        curiosities: "🤘 El botón de curiosidades revela datos fascinantes sobre las bandas",
+        hidden: "🔍 Explora cada rincón del museo, hay sorpresas ocultas",
+      },
+      museum: {
+        projector: "Proyector mostrando videos temáticos de la sala actual",
+        floor: "Suelo de madera vintage que evoca los clásicos estudios de grabación",
+        poster: "Póster de concierto histórico - Haz clic para más información",
+        guide: "Tu guía personal del museo, siempre listo para ayudar",
+      },
+    },
   },
 
   en: {
@@ -1610,6 +1661,57 @@ export const translations = {
       loading: "Loading...",
       error: "Error",
       success: "Success",
+    },
+
+    // Tooltips
+    tooltips: {
+      navigation: {
+        metal: "Explore the Heavy Metal, Thrash and Death Metal collection",
+        rock: "Discover Rock, Hard Rock and Progressive classics",
+        punk: "Dive into Punk Rock, Hardcore and Alternative",
+      },
+      controls: {
+        settings: "Open museum settings. Click to customize your experience",
+        customize: "Customize your band avatar. Click to open selector",
+        curiosities: "Discover fun facts about the bands. Click to enable/disable",
+        curiositiesEnabled: "Discover fun facts about the bands. Click to disable",
+        curiositiesDisabled: "Curiosities are disabled. Click to enable them",
+        search: "Search bands by name or genre",
+        filters: "Filter by genre or decade",
+      },
+      interactions: {
+        poster: "Click to see detailed concert information",
+        avatar: "Select this avatar for your profile",
+        playAudio: "Play audio related to this concert",
+        carousel: "Browse through concert images",
+      },
+      actions: {
+        save: "Save changes",
+        cancel: "Cancel and discard changes",
+        reset: "Restore default values",
+        apply: "Apply selected settings",
+      },
+      avatars: {
+        selection: "Change your avatar to discover unique facts about each band",
+        newBand: "New avatar selected! Now you can explore exclusive data about this band",
+        leiva: "Master Leiva guides you through the museum with his musical wisdom",
+        interactive: "Each avatar has different fun facts. Try them all!",
+      },
+      autoTips: {
+        avatarChange: "💡 Tip: Change your avatar to discover unique facts about each band",
+        exploration: "🎸 Did you know each room has projectors with themed videos?",
+        interaction: "✨ Click on posters to see detailed information about each concert",
+        navigation: "🎵 Use keyboard arrows or mouse to navigate through rooms",
+        settings: "⚙️ Customize your experience in the settings menu",
+        curiosities: "🤘 The curiosities button reveals fascinating band facts",
+        hidden: "🔍 Explore every corner of the museum, there are hidden surprises",
+      },
+      museum: {
+        projector: "Projector showing themed videos from the current room",
+        floor: "Vintage wooden floor evoking classic recording studios",
+        poster: "Historic concert poster - Click for more information",
+        guide: "Your personal museum guide, always ready to help",
+      },
     },
   },
 };
