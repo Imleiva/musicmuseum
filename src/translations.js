@@ -52,6 +52,13 @@ export const translations = {
       cancel: "Cancelar",
     },
 
+    // Modal de poster
+    posterModal: {
+      concertDetails: "Detalles del Concierto",
+      soldOut: "Sold Out",
+      setlistHighlights: "Setlist Highlights",
+    },
+
     // Modal de ajustes
     settings: {
       title: "Ajustes del Museo",
@@ -911,6 +918,13 @@ export const translations = {
       ok: "OK",
       cancel: "Cancel",
       confirm: "Done!",
+    },
+
+    // Poster modal
+    posterModal: {
+      concertDetails: "Concert Details",
+      soldOut: "Sold Out",
+      setlistHighlights: "Setlist Highlights",
     },
 
     // Settings modal

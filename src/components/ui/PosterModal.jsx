@@ -9,8 +9,10 @@ import { useEffect, useState, useRef } from "react";
 import "./PosterModal.css";
 import { createPortal } from "react-dom";
 import MusicLinks from "./MusicLinks";
+import { useTranslation } from "../../hooks/useTranslation";
 
 export default function PosterModal({ concert, onClose }) {
+  const { t } = useTranslation();
   // Detectar si es mobile (ancho <= 600px)
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
@@ -261,16 +263,16 @@ export default function PosterModal({ concert, onClose }) {
           <div className="concert-details">
             <p className="venue-info">📍 {concert.venue}</p>
             <p className="concert-date">📅 {concert.date}</p>
-            <p className="attendance">👥 {concert.attendance || "Sold Out"}</p>
+            <p className="attendance">👥 {concert.attendance || t("posterModal.soldOut")}</p>
           </div>
 
           <div className="concert-description">
-            <h4>Concert Details</h4>
+            <h4>{t("posterModal.concertDetails")}</h4>
             <p>{concert.description}</p>
 
             {concert.setlist && (
               <div className="setlist">
-                <h5>🎵 Setlist Highlights</h5>
+                <h5>🎵 {t("posterModal.setlistHighlights")}</h5>
                 <ul>
                   {concert.setlist.map((song, index) => (
                     <li key={index}>{song}</li>
