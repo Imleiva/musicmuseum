@@ -37,34 +37,32 @@ const EnergyTransition = ({
     // Avatar opaco hasta 2.4s, difuminado gradual hasta 2.61s, cambio rápido
     const currentTime = video.currentTime;
 
-    if (currentTime >= 2.4 && energyPhase === "appearing") {
+    if (currentTime >= 1.8 && energyPhase === "appearing") {
       setenergyPhase("covering");
-    } else if (currentTime >= 2.61 && energyPhase === "covering") {
+    } else if (currentTime >= 2.0 && energyPhase === "covering") {
       setenergyPhase("peak");
-    } else if (currentTime >= 2.612 && energyPhase === "peak") {
+    } else if (currentTime >= 2.01 && energyPhase === "peak") {
       setenergyPhase("disappearing");
-    } else if (currentTime >= 2.8 && energyPhase === "disappearing") {
+    } else if (currentTime >= 2.2 && energyPhase === "disappearing") {
       setenergyPhase("finalizing");
-    } else if (progress >= 0.85 && energyPhase === "finalizing") {
+    } else if (progress >= 0.7 && energyPhase === "finalizing") {
       const energyElement = e.target;
       energyElement.style.opacity = "0";
-      energyElement.style.transition = "opacity 0.3s ease-out";
-      // Finalizar transición inmediatamente
+      energyElement.style.transition = "opacity 0.15s ease-out";
       setTimeout(() => {
         setIsTransitioning(false);
         setenergyPhase("none");
         onTransitionComplete && onTransitionComplete();
-      }, 300);
+      }, 150);
     }
   };
 
   const handleVideoEnd = () => {
-    console.log("energy transition completed");
     setTimeout(() => {
       setIsTransitioning(false);
       setenergyPhase("none");
       onTransitionComplete && onTransitionComplete();
-    }, 600);
+    }, 100);
   };
 
   const handleVideoError = () => {

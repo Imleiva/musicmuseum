@@ -34,32 +34,30 @@ const FireTransition = ({
     const video = e.target;
     const progress = video.currentTime / video.duration;
 
-    if (progress >= 0.15 && firePhase === "appearing") {
+    if (progress >= 0.08 && firePhase === "appearing") {
       setFirePhase("covering");
-    } else if (progress >= 0.25 && firePhase === "covering") {
+    } else if (progress >= 0.15 && firePhase === "covering") {
       setFirePhase("peak");
-    } else if (progress >= 0.35 && firePhase === "peak") {
+    } else if (progress >= 0.22 && firePhase === "peak") {
       setFirePhase("disappearing");
-    } else if (progress >= 0.45 && firePhase === "disappearing") {
+    } else if (progress >= 0.32 && firePhase === "disappearing") {
       const fireElement = e.target;
       fireElement.style.opacity = "0";
-      fireElement.style.transition = "opacity 0.3s ease-out";
-      // Finalizar transición inmediatamente para mejor UX
+      fireElement.style.transition = "opacity 0.15s ease-out";
       setTimeout(() => {
         setIsTransitioning(false);
         setFirePhase("none");
         onTransitionComplete && onTransitionComplete();
-      }, 300);
+      }, 150);
     }
   };
 
   const handleVideoEnd = () => {
-    console.log("Fire transition completed");
     setTimeout(() => {
       setIsTransitioning(false);
       setFirePhase("none");
       onTransitionComplete && onTransitionComplete();
-    }, 150);
+    }, 100);
   };
 
   const handleVideoError = () => {

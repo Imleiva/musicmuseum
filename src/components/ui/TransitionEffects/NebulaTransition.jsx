@@ -34,34 +34,32 @@ const NebulaTransition = ({
     const video = e.target;
     const progress = video.currentTime / video.duration;
 
-    if (progress >= 0.25 && nebulaPhase === "appearing") {
+    if (progress >= 0.15 && nebulaPhase === "appearing") {
       setNebulaPhase("peak");
-    } else if (progress >= 0.4 && nebulaPhase === "peak") {
+    } else if (progress >= 0.28 && nebulaPhase === "peak") {
       setNebulaPhase("disappearing");
-    } else if (progress >= 0.5 && nebulaPhase === "disappearing") {
+    } else if (progress >= 0.38 && nebulaPhase === "disappearing") {
       const nebulaElement = e.target;
       nebulaElement.style.opacity = "0";
-      nebulaElement.style.transition = "opacity 0.8s ease-out";
-      // Finalizar transición suavemente
+      nebulaElement.style.transition = "opacity 0.2s ease-out";
       setTimeout(() => {
         if (nebulaPhase !== "none") {
           setIsTransitioning(false);
           setNebulaPhase("none");
           onTransitionComplete && onTransitionComplete();
         }
-      }, 800);
+      }, 200);
     }
   };
 
   const handleVideoEnd = () => {
-    console.log("Red smoke transition completed");
     setTimeout(() => {
       if (nebulaPhase !== "none") {
         setIsTransitioning(false);
         setNebulaPhase("none");
         onTransitionComplete && onTransitionComplete();
       }
-    }, 150);
+    }, 100);
   };
 
   const handleVideoError = () => {

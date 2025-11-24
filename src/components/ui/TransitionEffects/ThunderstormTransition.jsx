@@ -34,34 +34,32 @@ const ThunderstormTransition = ({
     const video = e.target;
     const progress = video.currentTime / video.duration;
 
-    if (progress >= 0.25 && thunderstormPhase === "appearing") {
+    if (progress >= 0.15 && thunderstormPhase === "appearing") {
       setThunderstormPhase("peak");
-    } else if (progress >= 0.4 && thunderstormPhase === "peak") {
+    } else if (progress >= 0.28 && thunderstormPhase === "peak") {
       setThunderstormPhase("disappearing");
-    } else if (progress >= 0.5 && thunderstormPhase === "disappearing") {
+    } else if (progress >= 0.38 && thunderstormPhase === "disappearing") {
       const thunderstormElement = e.target;
       thunderstormElement.style.opacity = "0";
-      thunderstormElement.style.transition = "opacity 0.8s ease-out";
-      // Finalizar transición suavemente
+      thunderstormElement.style.transition = "opacity 0.2s ease-out";
       setTimeout(() => {
         if (thunderstormPhase !== "none") {
           setIsTransitioning(false);
           setThunderstormPhase("none");
           onTransitionComplete && onTransitionComplete();
         }
-      }, 800);
+      }, 200);
     }
   };
 
   const handleVideoEnd = () => {
-    console.log("Thunderstorm transition completed");
     setTimeout(() => {
       if (thunderstormPhase !== "none") {
         setIsTransitioning(false);
         setThunderstormPhase("none");
         onTransitionComplete && onTransitionComplete();
       }
-    }, 150);
+    }, 100);
   };
 
   const handleVideoError = () => {
