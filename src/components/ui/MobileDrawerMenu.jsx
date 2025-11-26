@@ -32,7 +32,7 @@ export default function MobileDrawerMenu({ onNavigate, onMenuOpen }) {
           <div
             className="drawer-menu-overlay open"
             onClick={handleClose}
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: "pointer" }}
           />
           <nav className="drawer-menu open">
             {/* Header con logo del museo */}
@@ -45,106 +45,106 @@ export default function MobileDrawerMenu({ onNavigate, onMenuOpen }) {
             </div>
 
             <ul>
-          <li style={{ position: "relative", width: "100%" }}>
-            <button
-              onClick={() => setShowRooms(!showRooms)}
-              className="drawer-menu-btn drawer-menu-salas-btn"
-              style={{
-                position: "relative",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "100%",
-              }}
-            >
-              <span style={{ flex: 1, textAlign: "center" }}>Salas</span>
-              <span
-                className="drawer-arrow"
-                style={{
-                  position: "absolute",
-                  right: 18,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  fontSize: "0.9em",
-                  color: "#ff4444",
-                  pointerEvents: "none",
-                  transition: "color 0.2s",
-                }}
-              >
-                {showRooms ? "▲" : "▼"}
-              </span>
-            </button>
-            {showRooms && (
-              <ul className="drawer-submenu">
-                <li>
-                  <button
-                    onClick={() => {
-                      onNavigate("metal");
-                      handleClose();
+              <li style={{ position: "relative", width: "100%" }}>
+                <button
+                  onClick={() => setShowRooms(!showRooms)}
+                  className="drawer-menu-btn drawer-menu-salas-btn"
+                  style={{
+                    position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "100%",
+                  }}
+                >
+                  <span style={{ flex: 1, textAlign: "center" }}>Salas</span>
+                  <span
+                    className="drawer-arrow"
+                    style={{
+                      position: "absolute",
+                      right: 18,
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      fontSize: "0.9em",
+                      color: "#ff4444",
+                      pointerEvents: "none",
+                      transition: "color 0.2s",
                     }}
-                    className="drawer-menu-btn"
                   >
-                    Metal
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => {
-                      onNavigate("rock");
-                      handleClose();
-                    }}
-                    className="drawer-menu-btn"
-                  >
-                    Rock
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => {
-                      onNavigate("punk");
-                      handleClose();
-                    }}
-                    className="drawer-menu-btn"
-                  >
-                    Punk
-                  </button>
-                </li>
-              </ul>
-            )}
-          </li>
-          <li>
-            <button
-              onClick={() => {
-                onNavigate("avatar");
-                handleClose();
-              }}
-              className="drawer-menu-btn"
-            >
-              Cambiar avatar
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => {
-                onNavigate("settings");
-                handleClose();
-              }}
-              className="drawer-menu-btn"
-            >
-              Ajustes
-            </button>
-          </li>
-        </ul>
+                    {showRooms ? "▲" : "▼"}
+                  </span>
+                </button>
+                {showRooms && (
+                  <ul className="drawer-submenu">
+                    <li>
+                      <button
+                        onClick={() => {
+                          onNavigate("metal");
+                          handleClose();
+                        }}
+                        className="drawer-menu-btn"
+                      >
+                        Metal
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => {
+                          onNavigate("rock");
+                          handleClose();
+                        }}
+                        className="drawer-menu-btn"
+                      >
+                        Rock
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => {
+                          onNavigate("punk");
+                          handleClose();
+                        }}
+                        className="drawer-menu-btn"
+                      >
+                        Punk
+                      </button>
+                    </li>
+                  </ul>
+                )}
+              </li>
+              <li>
+                <button
+                  onClick={() => {
+                    onNavigate("avatar");
+                    handleClose();
+                  }}
+                  className="drawer-menu-btn"
+                >
+                  Cambiar avatar
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => {
+                    onNavigate("settings");
+                    handleClose();
+                  }}
+                  className="drawer-menu-btn"
+                >
+                  Ajustes
+                </button>
+              </li>
+            </ul>
 
-        {/* Botón volver al final */}
-        <button
-          className="drawer-back"
-          onClick={handleClose}
-          aria-label="Volver"
-        >
-          Volver
-        </button>
-      </nav>
+            {/* Botón volver al final */}
+            <button
+              className="drawer-back"
+              onClick={handleClose}
+              aria-label="Volver"
+            >
+              Volver
+            </button>
+          </nav>
         </>
       )}
     </>

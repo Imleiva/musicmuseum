@@ -48,7 +48,7 @@ export const greetings = {
     ],
 
     // AC/DC - Angus Young
-    acdc: [
+    angusacdc: [
       "¡Hola, compañero! Soy Angus Young de AC/DC. ¡Vamos a rockear toda la noche y festejar todos los días!",
       "¡Ey! Angus aquí. ¡AC/DC está a punto de volar tu maldita mente con rock thunderstruck!",
       "¡Se acabó la escuela! Es hora de rock and roll de alto voltaje con AC/DC!",
@@ -506,7 +506,7 @@ export const greetings = {
     ],
 
     // AC/DC - Angus Young
-    acdc: [
+    angusacdc: [
       "G'day mate! I'm Angus Young from AC/DC. Let's rock and roll all night and party every day!",
       "Oi! Angus here. AC/DC's about to blow your bloody mind with some thunderstruck rock!",
       "School's out! Time for some high voltage rock and roll with AC/DC!",

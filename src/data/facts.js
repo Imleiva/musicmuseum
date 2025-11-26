@@ -58,7 +58,7 @@ export const facts = {
     ],
 
     // AC/DC
-    acdc: [
+    angusacdc: [
       "AC/DC significa 'Alternating Current/Direct Current' (Corriente Alterna/Corriente Continua).",
       "Angus Young siempre usa uniforme escolar en el escenario, idea de su hermana.",
       "Su álbum 'Back in Black' es uno de los más vendidos de la historia.",
@@ -700,7 +700,7 @@ export const facts = {
     ],
 
     // AC/DC
-    acdc: [
+    angusacdc: [
       "AC/DC stands for 'Alternating Current/Direct Current'.",
       "Angus Young always wears school uniform on stage, his sister's idea.",
       "Their album 'Back in Black' is one of the best-selling albums in history.",

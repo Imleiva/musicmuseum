@@ -295,6 +295,14 @@ export default function MuseumGuide({
     aliceinchains: getImagePath("/images/avatars/aliceinchains.png"),
   };
 
+  // Avatares con imagen real (no solo logo de banda)
+  const hasRealAvatar = [
+    "leiva", "tete", "angusacdc", "thewarning", "ghost", "acdc",
+    "queen", "ironmaiden", "pinkfloyd", "ozzy", "brucespringsteen",
+    "oasis", "blondie", "thebaboonshow", "jeffscottsoto", "eltonjohn",
+    "judaspriest"
+  ].includes(avatar);
+
   return (
     <div className="museum-guide">
       <div className="museum-guide-avatar-toolbar-container">
@@ -307,7 +315,7 @@ export default function MuseumGuide({
           >
             <GuideAvatar
               src={AVATAR_MAP[avatar] || AVATAR_MAP["leiva"]}
-              alt="Maese Leiva"
+              alt={hasRealAvatar ? "Avatar" : "Avatar proximamente disponible"}
               className={`museum-guide-avatar avatar-img-${avatar}`}
               onClick={(e) => {
                 e.stopPropagation();
