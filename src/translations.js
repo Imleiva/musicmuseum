@@ -21,7 +21,7 @@ export const translations = {
 
     // Navegador
     navigator: {
-      title: "Leiva'n Roll Hall of Fame",
+      title: "Salas del Museo",
       mobileTitle: "Elegir sala",
       descriptions: {
         metal: "Heavy Metal, Thrash, Death Metal",
@@ -925,7 +925,7 @@ export const translations = {
 
     // Navigator
     navigator: {
-      title: "Leiva'n Roll Hall of Fame",
+      title: "Salas del Museo",
       mobileTitle: "Choose room",
       descriptions: {
         metal: "Heavy Metal, Thrash, Death Metal",

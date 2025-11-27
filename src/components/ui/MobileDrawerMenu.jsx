@@ -39,7 +39,7 @@ export default function MobileDrawerMenu({ onNavigate, onMenuOpen }) {
             <div className="drawer-menu-header">
               <img
                 src="/musicmuseum/images/logoLRHF.png"
-                alt="Logo Leiva'n Roll Hall Of Fame"
+                alt="Logo Salas del Museo"
                 className="drawer-menu-logo"
               />
             </div>
