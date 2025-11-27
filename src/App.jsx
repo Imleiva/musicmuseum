@@ -12,6 +12,7 @@ import { OrbitControls, ContactShadows } from "@react-three/drei";
 import VenueRoom from "./components/3d/VenueRoom";
 import RockPoster from "./components/3d/RockPoster";
 import Projector from "./components/3d/Projector";
+import NeonSign from "./components/3d/NeonSign";
 import RockNavigator from "./components/ui/RockNavigator";
 import PosterModal from "./components/ui/PosterModal";
 import MuseumGuide from "./components/ui/MuseumGuide";
@@ -213,6 +214,9 @@ function AppContent() {
           {currentRoom === 2 && (
             <Projector position={[200, 0, 0]} genre="punk" />
           )}
+
+          {/* Letrero de neón en la entrada */}
+          <NeonSign position={[0, 16, -29.8]} />
 
           <ContactShadows
             position={[0, -3.99, 0]}

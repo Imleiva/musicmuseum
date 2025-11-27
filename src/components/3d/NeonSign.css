@@ -1,0 +1,18 @@
+/* NeonSign.css */
+
+.neon-sign-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+.neon-sign-image {
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 20px #ff0033) drop-shadow(0 0 40px #ff0033);
+  border-radius: 10px; /* Difumina los bordes */
+}
