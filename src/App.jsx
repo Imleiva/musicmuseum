@@ -216,7 +216,10 @@ function AppContent() {
           )}
 
           {/* Letrero de neón en la entrada */}
-          <NeonSign position={[0, 14, -29.8]} scale={[1.2, 1.2, 1]} />
+          <NeonSign
+            position={isMobile ? [0, 15, -21.8] : [0, 14, -29.8]}
+            scale={[1.2, 1.2, 1]}
+          />
 
           <ContactShadows
             position={[0, -3.99, 0]}
