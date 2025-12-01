@@ -251,6 +251,7 @@ export default function AvatarGridSelector({
                     avatarToSelect
                   );
                   onAvatarSelect(avatarToSelect);
+                  onClose();
 
                   // Pequeño delay para que el cambio se vea antes de cerrar el modal
                   setTimeout(() => {
